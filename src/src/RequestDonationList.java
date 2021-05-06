@@ -23,8 +23,8 @@ public class RequestDonationList {
         if(rdEntities.contains(obj)) {
             // enhmerwsh posothtas tou obj
         }
-        else if(obj) {
-            //exception
+        else if(!(rdEntities.contains(obj))) {
+
         }
         else {
          rdEntities.add(index,obj);
