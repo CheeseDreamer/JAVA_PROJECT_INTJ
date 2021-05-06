@@ -14,8 +14,8 @@ public class RequestDonation implements Comparator {
         return entity;
     }
     public double getQuantity(){ return quantity; }
-    public void addQuantity(){ quantity++; }
-    public void subQuantity(){ quantity--; }
+    public static void addQuantity(){ quantity++; }
+    public static void subQuantity(){ quantity--; }
 
     public int getId(Entity entity){ return entity.getId(); }
     public String getEntityInfo(Entity entity){return entity.getEntityInfo();}
