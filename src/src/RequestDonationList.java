@@ -8,11 +8,9 @@ public class RequestDonationList {
         for (var rd:rdEntities){
             if (rd.getId(entity) == entity.getId()) {
                 return rdEntities;
-            }else {
-                return null;
             }
         }
-
+        return null;
 
    /* public ArrayList<RequestDonation> getRdEntities(Entity id) {
         return rdEntities;
@@ -22,7 +20,6 @@ public class RequestDonationList {
 }    // Entity class for id , forEach loop
 
     public void add(int index, RequestDonation obj){
-    for(var x: rdEntities) {
         if(rdEntities.contains(obj)) {
             // enhmerwsh posothtas tou obj
         }
@@ -32,7 +29,7 @@ public class RequestDonationList {
         else {
          rdEntities.add(index,obj);
         }
-    }
+
     rdEntities.add(index,obj);
     }
 
