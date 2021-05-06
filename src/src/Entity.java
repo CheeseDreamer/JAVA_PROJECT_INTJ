@@ -2,8 +2,6 @@ public abstract class Entity
 {
     private String name, description;
     private int id;
-
-
     public Entity(String name, String description, int id)
     {
         this.name = name;
