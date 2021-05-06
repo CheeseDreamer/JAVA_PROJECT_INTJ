@@ -10,5 +10,6 @@ public abstract class Entity
     }
     public String getEntityInfo(){return name;}
     public String getDetails(){return  description;}
-    public String toString(){return getEntityInfo() + getDetails(); }
+    @Override
+    public String toString(){return "Name: " + getEntityInfo() + "\nDetails:" + getDetails(); }
 }
