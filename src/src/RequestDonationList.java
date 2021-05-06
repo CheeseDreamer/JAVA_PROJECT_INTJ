@@ -2,16 +2,24 @@ import java.util.ArrayList;
 
 public class RequestDonationList {
 
-    private ArrayList<RequestDonation> rdEntities = new ArrayList();
+    private ArrayList<RequestDonation> rdEntities = new ArrayList<>();
 
-    public ArrayList<RequestDonation> get(Entity id){
+    public ArrayList<RequestDonation> get(Entity entity){
         for (var rd:rdEntities){
-            if (rd.id == id) return rd;
-        }
-        return rdEntities;
+            if (rd.getId(entity) == entity.getId()) {
+                return rdEntities;
+            }else {
+                return null;
+            }
     }
 
-    } // Entity class for id , forEach loop
+
+   /* public ArrayList<RequestDonation> getRdEntities(Entity id) {
+        return rdEntities;
+    }
+    */
+
+}    // Entity class for id , forEach loop
 
     public void add(int index, RequestDonation obj){
     for(var x: rdEntities) {
@@ -47,11 +55,11 @@ public class RequestDonationList {
 
     public void reset() {
     rdEntities.clear();
-    }
+    }     //clears all items
 
     public void resetOne(int index){
     rdEntities.remove(index);
-    }
+    }   //deletes a specific item
 
 }
 
