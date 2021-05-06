@@ -23,12 +23,12 @@ public class RequestDonationList {
         if(rdEntities.contains(obj)) {
             // enhmerwsh posothtas tou obj
         }
-        else if(!(rdEntities.contains(obj))) {
-
+        else if(!(rdEntities.contains(obj))){
+            rdEntities.add(index,obj);
         }
-        else {
-         rdEntities.add(index,obj);
-        }
+        /*else if(!(rdEntities.contains(obj))|| //needs method in organisation) {
+            //exception
+        }*/
 
     rdEntities.add(index,obj);
     }
