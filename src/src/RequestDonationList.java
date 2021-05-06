@@ -12,7 +12,7 @@ public class RequestDonationList {
         }
         return null;
 
-   /* public ArrayList<RequestDonation> getRdEntities(Entity id) {
+   /* public ArrayList<RequestDonati    on> getRdEntities(Entity id) {
         return rdEntities;
     }
     */
@@ -37,16 +37,15 @@ public class RequestDonationList {
         rdEntities.remove(index);
     }
 
-    public void modify(RequestDonation obj, int index){    //process of quantity
+    public void modify(RequestDonation obj, int index) {    //process of quantity
         //index: 1 for subtraction, 2 for addition
-        while(index!=1 || index!=2){
-            if(index==2){
+        while (index != 1 || index != 2) {
+            if (index == 2) {
                 RequestDonation.addQuantity();
-            }
-            else if(index==1){
+            } else if (index == 1) {
                 RequestDonation.subQuantity();
             }
-            if(obj.getQuantity()<0 && index == 1) {       //can't reduce the quantity, already 0.
+            if (obj.getQuantity() < 0 && index == 1) {       //can't reduce the quantity, already 0.
                 //Throws Exception
             }
         }
@@ -55,7 +54,6 @@ public class RequestDonationList {
     public void monitor(Entity entity){
         for(var rd: rdEntities){
             System.out.println(rd.getEntityInfo(entity) + rd.getQuantity());
-        // + posothtes
         }
     }
 
