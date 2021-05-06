@@ -11,7 +11,7 @@ public class RequestDonationList {
             }else {
                 return null;
             }
-    }
+        }
 
 
    /* public ArrayList<RequestDonation> getRdEntities(Entity id) {
@@ -46,9 +46,9 @@ public class RequestDonationList {
 
     }
 
-    public void monitor(){
+    public void monitor(Entity entity){
         for(var rd: rdEntities){
-            System.out.println(rd.getEntityInfo()+ );
+            System.out.println(rd.getEntityInfo(entity) );
         // + posothtes
         }
     }

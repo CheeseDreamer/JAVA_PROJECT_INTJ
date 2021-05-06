@@ -18,6 +18,7 @@ public class RequestDonation implements Comparator {
     }
 
     public int getId(Entity entity){ return entity.getId(); }
+    public String getEntityInfo(Entity entity){return entity.getEntityInfo();}
 
     @Override
     public int compare(Object o1, Object o2) {
