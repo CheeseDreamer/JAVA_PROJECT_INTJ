@@ -23,7 +23,7 @@ public class RequestDonationList {
 
     public void add(int index, RequestDonation obj){
     for(var x: rdEntities) {
-        if(obj==x) {
+        if(rdEntities.contains(obj)) {
             // enhmerwsh posothtas tou obj
         }
         else if(obj) {
