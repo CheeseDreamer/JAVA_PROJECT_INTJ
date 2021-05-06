@@ -40,12 +40,11 @@ public class RequestDonationList {
     public void modify(RequestDonation obj){    //process of quantity
          if(obj.getQuantity()<0) {       //can't reduce the quantity, already 0.
          }
-
     }
 
     public void monitor(Entity entity){
         for(var rd: rdEntities){
-            System.out.println(rd.getEntityInfo(entity) );
+            System.out.println(rd.getEntityInfo(entity) + rd.getQuantity());
         // + posothtes
         }
     }
@@ -53,10 +52,6 @@ public class RequestDonationList {
     public void reset() {
     rdEntities.clear();
     }     //clears all items
-
-    public void resetOne(int index){
-    rdEntities.remove(index);
-    }   //deletes a specific item
 
 }
 
