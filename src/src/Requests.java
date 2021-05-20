@@ -1,14 +1,14 @@
 public class Requests extends RequestDonationList{
 
     @Override
-    public void add(int index, RequestDonation obj){
-       /* if(rdEntities.contains(obj)) {
-            // enhmerwsh posothtas tou obj
+    public void add(int index, RequestDonation obj) {
+        if (getRdEntities().contains(obj)) {
+            RequestDonation.addQuantity();
+        } else if (!(getRdEntities().contains(obj))) {
+            getRdEntities().add(index, obj);
+
         }
-        else if(!(rdEntities.contains(obj))){
-            rdEntities.add(index,obj);
-            */
-        }
+    }
 
     @Override
     public void modify(RequestDonation obj, int index) {    //process of quantity
