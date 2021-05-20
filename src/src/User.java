@@ -7,4 +7,10 @@ public abstract class User
         this.name=name;
         this.phone=phone;
     }
+    String getName(){
+        return name;
+    }
+    String getPhone(){
+        return phone;
+    }
 }
