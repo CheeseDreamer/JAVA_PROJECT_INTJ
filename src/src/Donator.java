@@ -20,18 +20,21 @@ public class Donator extends User
         do{
             String donateChoice;
             switch (choice) {
+                //READ THIS!!
+                /*We place the materials at the beginning of the list
+                and the services at the end of the list*/
                 case 1:
                     System.out.println("You choose Materials:\n\tDo you want to donate?(y/n)");
                     donateChoice = s.nextLine();
                     if (donateChoice =="y"){
-                        offersList.add(new Offers());
+                        offersList.add(0,new Offers());
                     }else{ cancel = "y";}
                     break;
                 case 2:
                     System.out.println("You choose Services:\n\tDo you want to donate?(y/n)");
                     donateChoice = s.nextLine();
                     if (donateChoice =="y"){
-                        offersList.add(new Offers());
+                        offersList.add(offersList.size()-1,new Offers());
                     }else{ cancel = "y";}
                     break;
                 default:
@@ -42,7 +45,13 @@ public class Donator extends User
             }
         }while(cancel!="y");
     }
-    public void remove() { }
+    public void showOffers() {
+        if(!offersList.isEmpty()){
+            for (var obj:offersList){
+                obj.monitor();
+            }
+        }else{ System.out.println("You have no offers right now"); }
+    }
     public void commit(Organization currentDonations, RequestDonationList rdEntities){
         currentDonations.addCurrentDonations(rdEntities);
         //if successful
