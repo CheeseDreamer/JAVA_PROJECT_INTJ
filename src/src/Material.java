@@ -38,11 +38,13 @@ public class Material extends Entity
             }
         }
 
-
+    public String getType(){
+        return "Material";
+    }
     @Override
     public String getDetails(){
         return  super.getDetails() +
             "\nLevels:" + "\n\tLevel 1: " + level1 + "\n\tLevel 2: " +
             level2 + "\n\tLevel 3: " + level3 +
-            "\nDonation type: Material";}
+            "\nDonation type: "+getType();}
 }

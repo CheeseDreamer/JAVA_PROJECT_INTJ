@@ -1,38 +1,73 @@
 import java.util.ArrayList;
 
 public class RequestDonationList {
-
-    private ArrayList<RequestDonation> rdEntities = new ArrayList<>();
+    int entityTypesCount = 2;//0 for Material, 1 for Services
+    private ArrayList<ArrayList<RequestDonation>> rdEntities = new ArrayList<>(entityTypesCount);
+    public RequestDonationList(){
+        //Initialize rdEntities
+        for(int i=0; i<entityTypesCount;i++){
+            rdEntities.add(new ArrayList());
+        }
+    }
 
     public Entity get(int entityID) {
+        for(int i=0; i<entityTypesCount;i++){
+            int entitiesCount = rdEntities.get(i).size();
+            for(int j=0;j<entitiesCount;j++){
+                if(rdEntities.get(i).get(j).getId()==entityID){
+                    return rdEntities.get(i).get(j).getEntity();
+                }
+            }
+        }
+        System.out.println("Entity Not Found!");
+        return null;
+        /* //Old code
         for (var rd : rdEntities) {
             if (rd.getId() == entityID) {
                 return rd.getEntity();
             }
         }
         return null;
+        */
     }
 
-    public ArrayList<RequestDonation> getRdEntities() {
+    public void init(){
+        //Initialize rdEntities with some Materials and Services
+
+        Entity ent=new Material("Cake","Chocolate Cake",2);
+        RequestDonation rd = new RequestDonation(ent,3);
+        rdEntities.get(0).add(rd);
+
+        ent = new Service("Martial Arts","Taekwondo",1);
+        rd = new RequestDonation(ent,2);
+        rdEntities.get(1).add(rd);
+    }
+
+    public ArrayList<ArrayList<RequestDonation>> getRdEntities() {
         return rdEntities;
     }
 
     public void add(int index, RequestDonation obj){
-        if(rdEntities.contains(obj)) {
-            // enhmerwsh posothtas tou obj
-            //idea: obj.search(rdEntities).addQuantity();
-            obj.addQuantity();
-        }
-        else if(!(rdEntities.contains(obj))){
-            rdEntities.add(index,obj);
+        for(int i=0;i<entityTypesCount;i++) {
+            if (rdEntities.get(i).contains(obj)) {
+                // enhmerwsh posothtas tou obj
+                //idea: obj.search(rdEntities).addQuantity();
+                obj.addQuantity();
+            } else if (!(rdEntities.contains(obj))) {
+                rdEntities.get(i).add(index, obj);
+            }
         }
         /*else if(!(rdEntities.contains(obj))|| //needs method in organization) {
             //exception
         }*/
     }
 
-    public void remove(int index){
-        rdEntities.remove(index);
+    public void remove(String entityType, int index){
+        if(rdEntities.get(0).get(index).getEntityType()=="Material"){
+            rdEntities.get(0).remove(index);
+        }else if(rdEntities.get(1).get(index).getEntityType()=="Service") {
+            rdEntities.get(1).remove(index);
+        }else System.out.println("Entity was not found in list");
     }
 
     public void modify(RequestDonation obj, int index) {    //process of quantity
@@ -51,8 +86,11 @@ public class RequestDonationList {
     }
 
     public void monitor(){
-        for(var rd: rdEntities){
-            System.out.println(rd.getEntityInfo() + rd.getQuantity());
+        for(int i = 0;i<entityTypesCount;i++){
+            int entitiesCount = rdEntities.get(i).size();
+            for(int j=0;j<entitiesCount;j++) {
+                System.out.println(rdEntities.get(i).get(j).getEntityInfo() + rdEntities.get(i).get(j).getQuantity());
+            }
         }
     }
 

@@ -4,12 +4,14 @@ public class RequestDonation implements Comparator {
     //use interface Comparator, or check id for grouping same kind of entities.
     private Entity entity;
     private double quantity;
+    public RequestDonation(){}
     public RequestDonation(Entity entity, double quantity)
     {
         this.entity = entity;
         this.quantity = quantity;
     }
 
+    public void setEntity(Entity entity){ this.entity=entity; }
     public Entity getEntity(){
         return entity;
     }
@@ -19,7 +21,7 @@ public class RequestDonation implements Comparator {
 
     public int getId(){ return entity.getId(); }
     public String getEntityInfo(){return entity.getEntityInfo();}
-
+    public String getEntityType(){return entity.getType();}
     @Override
     public int compare(Object o1, Object o2) {
         // if they are equal it returns 1, otherwise it returns 0.

@@ -5,7 +5,11 @@ public class Service extends Entity
     {
         super(name, description, id);
     }
+
+    public String getType(){
+        return "Service";
+    }
     @Override
     public String getDetails(){
-        return super.getDetails() + "\nDonation type: Service";}
+        return super.getDetails() + "\nDonation type: "+getType();}
 }
