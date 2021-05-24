@@ -47,12 +47,15 @@ public class Menu {
                     isRegisteredUser=false;
                     if (admin.isAdminPhone()) {
                         System.out.println("Welcome Admin " + admin.getName());
+                        userType="Admin";
                         doLoop=false;
                     } else if (ben.isBeneficiaryPhone()) {
                         System.out.println("Welcome Beneficiary " + admin.getName());
+                        userType="Beneficiary";
                         doLoop=false;
                     } else if (don.isDonatorPhone()) {
                         System.out.println("Welcome Donator " + admin.getName());
+                        userType="Donator";
                         doLoop=false;
                     } else {
                         System.out.print("Your credentials did not match our database" +
@@ -87,6 +90,16 @@ public class Menu {
                     }
                 }
             } while (doLoop);
+            if(userType.equals("donator")||userType.equals("Donator")) {
+                System.out.println("Welcome to Donator Menu, User: "+admin.getName());
+                System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
+            }else if(userType.equals("beneficiary")||userType.equals("Beneficiary")){
+                System.out.println("Welcome to Beneficiary Menu, User: "+admin.getName());
+                System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
+            }else if(userType.equals("admin")||userType.equals("Admin")){
+                System.out.println("Welcome to Admin Menu, User: "+admin.getName());
+                System.out.println("\t[1]View\n\t[2]Monitor Organization\n\t[3]Back\n\t[4]Logout\n\t[5]Exit");
+            }
         }
     }
 }
