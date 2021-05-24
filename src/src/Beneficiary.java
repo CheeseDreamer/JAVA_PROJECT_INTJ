@@ -2,21 +2,46 @@ import java.util.ArrayList;
 public class Beneficiary extends User
 {
     private int noPersons = 1;
+    ArrayList<String> beneficiaryPhones = new ArrayList<String>();
+    ArrayList<String> beneficiaryNames = new ArrayList<>();
 
+    public  Beneficiary(){
+        beneficiaryPhones.add("6915720947");
+        beneficiaryPhones.add("6983746329");
+        beneficiaryPhones.add("6984736150");
+    }
     public Beneficiary(String name, String phone, int noPersons)
     {
         super(name,phone);
         this.noPersons = noPersons; // Make an exception, or check for correct input with if statements
+        beneficiaryPhones.add("6915720947");
+        beneficiaryPhones.add("6983746329");
+        beneficiaryPhones.add("6984736150");
+
+        beneficiaryNames.add("");
+        beneficiaryNames.add("");
+        beneficiaryNames.add("");
     }
 
     private ArrayList<RequestDonationList> receivedList = new ArrayList();
     private ArrayList<Requests> requestsList = new ArrayList();
 
+    public int getNoPersons(){return noPersons;}
+
+    public boolean isBeneficiaryPhone(){
+        for (var phone:beneficiaryPhones){
+            if(getPhone().equals(phone)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //"WRAPPER METHODS"(copy-pasting)
     //Need to finish RequestDonationList and Requests methods
 
     //Make the different methods for the 2 different ArrayLists
-    void addReceivedList(RequestDonationList obj){
+    public void addReceivedList(RequestDonationList obj){
         receivedList.add(obj);
     }
     public ArrayList<RequestDonationList> getReceivedList(){
@@ -25,7 +50,8 @@ public class Beneficiary extends User
     public void removeReceivedList(int index){
         receivedList.remove(index);
     }
-    public void modifyReceivedList(int index, RequestDonationList obj){
-        receivedList.add(index,obj);
+    public Requests addRequestList(){
+        requestsList.add(new Requests());
+        return requestsList.get(requestsList.size()-1);
     }
 }

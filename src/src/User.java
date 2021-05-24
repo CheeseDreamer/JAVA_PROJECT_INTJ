@@ -3,14 +3,22 @@ public abstract class User
     private String name;
     private String phone;
 
-    User(String name,String phone){
+    public User(){ }
+    public User(String name,String phone){
         this.name=name;
         this.phone=phone;
     }
-    String getName(){
+    //Needed for the 1st constructor
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setPhone(String phone){
+        this.phone = phone;
+    }
+    public String getName(){
         return name;
     }
-    String getPhone(){
+    public String getPhone(){
         return phone;
     }
 }
