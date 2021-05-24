@@ -5,28 +5,27 @@ public class Beneficiary extends User
     ArrayList<String> beneficiaryPhones = new ArrayList<String>();
     ArrayList<String> beneficiaryNames = new ArrayList<>();
 
-    public  Beneficiary(){
-        beneficiaryPhones.add("6915720947");
-        beneficiaryPhones.add("6983746329");
-        beneficiaryPhones.add("6984736150");
-    }
+    public  Beneficiary(){ }
     public Beneficiary(String name, String phone, int noPersons)
     {
         super(name,phone);
         this.noPersons = noPersons; // Make an exception, or check for correct input with if statements
-        beneficiaryPhones.add("6915720947");
-        beneficiaryPhones.add("6983746329");
-        beneficiaryPhones.add("6984736150");
-
-        beneficiaryNames.add("");
-        beneficiaryNames.add("");
-        beneficiaryNames.add("");
     }
 
     private ArrayList<RequestDonationList> receivedList = new ArrayList();
     private ArrayList<Requests> requestsList = new ArrayList();
 
     public int getNoPersons(){return noPersons;}
+
+    public void init(){
+        beneficiaryPhones.add("6915720947");
+        beneficiaryPhones.add("6983746329");
+        beneficiaryPhones.add("6984736150");
+
+        beneficiaryNames.add("");
+        beneficiaryNames.add("");
+        beneficiaryNames.add("");
+    }
 
     public boolean isBeneficiaryPhone(){
         for (var phone:beneficiaryPhones){

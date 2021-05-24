@@ -4,6 +4,9 @@ public class Menu {
     Beneficiary ben = new Beneficiary();
     Donator don = new Donator();
     public void initMenu() {
+        admin.init();
+        ben.init();
+        don.init();
         try (Scanner scan = new Scanner(System.in)) {
             System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
             System.out.print("Are you a registered user?(y/n): ");

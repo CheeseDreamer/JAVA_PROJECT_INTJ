@@ -5,15 +5,7 @@ public class Admin extends User{
     ArrayList<String> adminPhones = new ArrayList<String>();
     ArrayList<String> adminNames = new ArrayList<>();
     //Admin sets the type of products available!
-    public Admin(){
-        adminPhones.add("6922546678");
-        adminPhones.add("6972643844");
-        adminPhones.add("6976432144");
-
-        adminNames.add("Marios");
-        adminNames.add("");
-        adminNames.add("");
-    }
+    public Admin(){}
     public Admin(String name, String phone, boolean isAdmin)
     {
         super(name, phone);
