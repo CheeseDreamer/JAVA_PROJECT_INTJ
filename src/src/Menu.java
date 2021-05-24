@@ -24,9 +24,11 @@ public class Menu {
                                 System.out.print("Please enter a valid user type: ");
                             }
                         }while(!(userType.equals("donator")||userType.equals("Donator")||userType.equals("beneficiary")||userType.equals("Beneficiary")));
+                        System.out.print("Enter your name: ");
+                        admin.setName(scan.nextLine());
                     }
-                    System.out.print("Enter your name: ");
-                    admin.setName(scan.nextLine());
+                    //System.out.print("Enter your name: ");
+                    //admin.setName(scan.nextLine());
                     System.out.print("Enter your phone: ");
                     admin.setPhone(scan.nextLine());
                     do {
@@ -80,19 +82,87 @@ public class Menu {
                             isNamePhoneInit=true;
                             isRegisteredUser=true;
                         }
-                    }
-                    if(userType.equals("donator")||userType.equals("Donator")){
-                        System.out.println("Congratulations, you are now a new Donator");
-                        doLoop=false;
-                    }else if(userType.equals("beneficiary")||userType.equals("Beneficiary")){
-                        System.out.println("Congratulations, you are now a new Beneficiary");
-                        doLoop=false;
+                    }else {
+                        if (userType.equals("donator") || userType.equals("Donator")) {
+                            System.out.println("Congratulations, you are now a new Donator");
+                            doLoop = false;
+                        } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
+                            System.out.println("Congratulations, you are now a new Beneficiary");
+                            doLoop = false;
+                        }
                     }
                 }
             } while (doLoop);
+
+            Material mat1 = new Material();
+            Service serv1 = new Service();
+            RequestDonation reqDonMat = new RequestDonation(mat1,10);
+            RequestDonation reqDonServ = new RequestDonation(serv1,5);
+            RequestDonationList rdlMat = new RequestDonationList();
+            RequestDonationList rdlServ = new RequestDonationList();
+
+            rdlMat.add(0,reqDonMat);
+            rdlServ.add(0,reqDonServ);
+
+            boolean menuLoop=true;
+            boolean subMenuLoop=false;
+            int menuChoice,subMenuChoice;
             if(userType.equals("donator")||userType.equals("Donator")) {
                 System.out.println("Welcome to Donator Menu, User: "+admin.getName());
                 System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
+                System.out.print("Choice: ");
+                menuChoice = scan.nextInt();
+                do {
+                    switch (menuChoice) {
+                        case 1:
+                            System.out.println("Add Offer:\n\t[1]Material: Quantity("+(int)reqDonMat.getQuantity()+")\n\t[2]Service: Quantity("+(int)reqDonServ.getQuantity()+")");
+                            System.out.print("Choice: ");
+                            subMenuChoice=scan.nextInt();
+                            do {
+                                switch (subMenuChoice) {
+                                    case 1:
+                                        System.out.println("[1]Materials:");
+                                        rdlMat.monitor();
+                                        subMenuLoop=false;
+                                        break;
+                                    case 2:
+                                        System.out.println("[2]Services:");
+                                        rdlServ.monitor();
+                                        subMenuLoop=false;
+                                        subMenuLoop=false;
+                                        break;
+                                    default:
+                                        subMenuLoop = true;
+                                        System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
+                                        subMenuChoice = scan.nextInt();
+                                        break;
+                                }
+                            }while(subMenuLoop);
+                            menuLoop=false;
+                            break;
+                        case 2:
+                            menuLoop=false;
+                            break;
+                        case 3:
+                            menuLoop=false;
+                            break;
+                        case 4:
+                            menuLoop=false;
+                            break;
+                        case 5:
+                            menuLoop=false;
+                            break;
+                        case 6:
+                            //This one is complete, just as is
+                            menuLoop=false;
+                            break;
+                        default:
+                            menuLoop=true;
+                            System.out.print("Enter Valid Menu Choice (1-6): ");
+                            menuChoice = scan.nextInt();
+                            break;
+                    }
+                }while(menuLoop);
             }else if(userType.equals("beneficiary")||userType.equals("Beneficiary")){
                 System.out.println("Welcome to Beneficiary Menu, User: "+admin.getName());
                 System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
