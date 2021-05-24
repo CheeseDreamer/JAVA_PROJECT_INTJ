@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Menu {
     Admin admin = new Admin();
@@ -109,63 +110,76 @@ public class Menu {
 
             boolean menuLoop=true;
             boolean subMenuLoop=false;
-            int menuChoice,subMenuChoice;
+            int menuChoice;
+            int subMenuChoice;
+            boolean validSubMenuChoice;
             if(userType.equals("donator")||userType.equals("Donator")) {
                 System.out.println("Welcome to Donator Menu, User: "+admin.getName());
                 System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                 System.out.print("Choice: ");
-                menuChoice = scan.nextInt();
                 do {
-                    switch (menuChoice) {
-                        case 1:
-                            System.out.println("Add Offer:\n\t[1]Material: Quantity("+(int)reqDonMat.getQuantity()+")\n\t[2]Service: Quantity("+(int)reqDonServ.getQuantity()+")");
-                            System.out.print("Choice: ");
-                            subMenuChoice=scan.nextInt();
-                            do {
-                                switch (subMenuChoice) {
-                                    case 1:
-                                        System.out.println("[1]Materials:");
-                                        rdlMat.monitor();
-                                        subMenuLoop=false;
-                                        break;
-                                    case 2:
-                                        System.out.println("[2]Services:");
-                                        rdlServ.monitor();
-                                        subMenuLoop=false;
-                                        subMenuLoop=false;
-                                        break;
-                                    default:
-                                        subMenuLoop = true;
-                                        System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
-                                        subMenuChoice = scan.nextInt();
-                                        break;
-                                }
-                            }while(subMenuLoop);
-                            menuLoop=false;
-                            break;
-                        case 2:
-                            menuLoop=false;
-                            break;
-                        case 3:
-                            menuLoop=false;
-                            break;
-                        case 4:
-                            menuLoop=false;
-                            break;
-                        case 5:
-                            menuLoop=false;
-                            break;
-                        case 6:
-                            //This one is complete, just as is
-                            menuLoop=false;
-                            break;
-                        default:
-                            menuLoop=true;
-                            System.out.print("Enter Valid Menu Choice (1-6): ");
-                            menuChoice = scan.nextInt();
-                            break;
+                    validNumber = true;
+                    try{
+                        validSubMenuChoice= false;
+                        menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
+                        do {
+                            switch (menuChoice) {
+                                case 1:
+                                    System.out.println("Add Offer:\n\t[1]Material: Quantity(" + (int) rdlMat.getRdEntities().get(0).size() + ")\n\t[2]Service: Quantity(" + (int) rdlMat.getRdEntities().get(1).size() + ")");
+                                    System.out.print("Choice: ");
+                                    subMenuChoice = scan.nextInt();
+                                    validSubMenuChoice=true;
+                                    do {
+                                        switch (subMenuChoice) {
+                                            case 1:
+                                                System.out.println("[1]Materials:");
+                                                rdlMat.monitor();
+                                                subMenuLoop = false;
+                                                break;
+                                            case 2:
+                                                System.out.println("[2]Services:");
+                                                rdlServ.monitor();
+                                                subMenuLoop = false;
+                                                subMenuLoop = false;
+                                                break;
+                                            default:
+                                                subMenuLoop = true;
+                                                System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
+                                                subMenuChoice = scan.nextInt();
+                                                break;
+                                        }
+                                    } while (subMenuLoop);
+                                    menuLoop = false;
+                                    break;
+                                case 2:
+                                    menuLoop = false;
+                                    break;
+                                case 3:
+                                    menuLoop = false;
+                                    break;
+                                case 4:
+                                    menuLoop = false;
+                                    break;
+                                case 5:
+                                    menuLoop = false;
+                                    break;
+                                case 6:
+                                    //This one is complete, just as is
+                                    menuLoop = false;
+                                    break;
+                                default:
+                                    menuLoop = true;
+                                    System.out.print("Enter Valid Menu Choice (1-6): ");
+                                    menuChoice = scan.nextInt();
+                                    break;
+                            }
+                        } while (menuLoop);
+                    } catch(InputMismatchException ime) {
+                        validNumber = false;
+                        System.out.print("Give valid menu choice: ");
+                        scan.nextLine();
                     }
-                }while(menuLoop);
+                }while(!validNumber);
             }else if(userType.equals("beneficiary")||userType.equals("Beneficiary")){
                 System.out.println("Welcome to Beneficiary Menu, User: "+admin.getName());
                 System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
