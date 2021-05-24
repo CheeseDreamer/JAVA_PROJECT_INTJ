@@ -18,13 +18,6 @@ public class Admin extends User{
     {
         super(name, phone);
         this.isAdmin= isAdmin;
-        adminPhones.add("6922546678");
-        adminPhones.add("6972643844");
-        adminPhones.add("6976432144");
-
-        adminNames.add("Marios");
-        adminNames.add("Vicky");
-        adminNames.add("");
     }
 
     public boolean isAdminPhone(){
@@ -35,6 +28,15 @@ public class Admin extends User{
             }
         }
         return false;
+    }
+    public void init(){
+        adminPhones.add("6922546678");
+        adminPhones.add("6972643844");
+        adminPhones.add("6976432144");
+
+        adminNames.add("Marios");
+        adminNames.add("Vicky");
+        adminNames.add("");
     }
     public void view(){
         if(isAdmin){

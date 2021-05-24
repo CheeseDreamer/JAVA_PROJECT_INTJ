@@ -3,10 +3,10 @@ public class Requests extends RequestDonationList{
     @Override
     public void add(int index, RequestDonation obj) {
         if (getRdEntities().contains(obj)) {
-            RequestDonation.addQuantity();
+            // enhmerwsh posothtas tou obj
+            obj.addQuantity();
         } else if (!(getRdEntities().contains(obj))) {
             getRdEntities().add(index, obj);
-
         }
     }
 
@@ -14,9 +14,9 @@ public class Requests extends RequestDonationList{
     public void modify(RequestDonation obj, int index) {    //process of quantity
         //index: 1 for subtraction, 2 for addition
         if (index == 2) {
-            RequestDonation.addQuantity();
+            obj.addQuantity();
         } else if (index == 1) {
-            RequestDonation.subQuantity();
+            obj.subQuantity();
         }else{//(index!=1||index!=2)
             //Throws Exception
         }
@@ -26,7 +26,10 @@ public class Requests extends RequestDonationList{
 
     }
 
-    public void validRequestDonation(){
+    public void validRequestDonation(){ }
+    public void commit(){ }
+    public void addOffer(){
+        System.out.println("Choose 1 for Material, 2 for Services:");
     }
-    public void commit(){}
+
 }

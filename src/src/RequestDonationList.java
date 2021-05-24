@@ -20,8 +20,8 @@ public class RequestDonationList {
     public void add(int index, RequestDonation obj){
         if(rdEntities.contains(obj)) {
             // enhmerwsh posothtas tou obj
-            //RequestDonation.addQuantity();
-            //might need rework
+            //idea: obj.search(rdEntities).addQuantity();
+            obj.addQuantity();
         }
         else if(!(rdEntities.contains(obj))){
             rdEntities.add(index,obj);
@@ -38,9 +38,9 @@ public class RequestDonationList {
     public void modify(RequestDonation obj, int index) {    //process of quantity
         //index: 1 for subtraction, 2 for addition
         if (index == 2) {
-            RequestDonation.addQuantity();
+            obj.addQuantity();
         } else if (index == 1) {
-            RequestDonation.subQuantity();
+            obj.subQuantity();
         }
         if (index != 1 || index != 2) {
             //Throw exception index out of bounds or smth

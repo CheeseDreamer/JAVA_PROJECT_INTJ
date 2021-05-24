@@ -3,7 +3,7 @@ import java.util.Comparator;
 public class RequestDonation implements Comparator {
     //use interface Comparator, or check id for grouping same kind of entities.
     private Entity entity;
-    private static double quantity;
+    private double quantity;
     public RequestDonation(Entity entity, double quantity)
     {
         this.entity = entity;
@@ -14,8 +14,8 @@ public class RequestDonation implements Comparator {
         return entity;
     }
     public double getQuantity(){ return quantity; }
-    public static void addQuantity(){ quantity++; }
-    public static void subQuantity(){ quantity--; }
+    public void addQuantity(){ quantity++; }
+    public void subQuantity(){ quantity--; }
 
     public int getId(){ return entity.getId(); }
     public String getEntityInfo(){return entity.getEntityInfo();}
