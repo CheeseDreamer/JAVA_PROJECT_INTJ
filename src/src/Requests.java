@@ -2,11 +2,13 @@ public class Requests extends RequestDonationList{
 
     @Override
     public void add(int index, RequestDonation obj) {
-        if (getRdEntities().contains(obj)) {
-            // enhmerwsh posothtas tou obj
-            obj.addQuantity();
-        } else if (!(getRdEntities().contains(obj))) {
-            getRdEntities().add(index, obj);
+        for(int i=0;i<getRdEntities().size();i++) {
+            if (getRdEntities().get(i).contains(obj)) {
+                // enhmerwsh posothtas tou obj
+                obj.addQuantity();
+            } else if (!(getRdEntities().get(i).contains(obj))) {
+                getRdEntities().get(i).add(index, obj);
+            }
         }
     }
 
