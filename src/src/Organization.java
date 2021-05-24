@@ -8,17 +8,14 @@ public class Organization
     ArrayList<Donator> donatorList = new ArrayList<Donator>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<Beneficiary>();
     ArrayList<RequestDonationList> currentDonations = new ArrayList<RequestDonationList>();
-    public Organization(String name, ArrayList<Entity> entityList, ArrayList<Donator> donatorList, ArrayList<Beneficiary> beneficiaryList, ArrayList<RequestDonationList> currentDonations)
-    {
-        this.name = name;
-        this.entityList = entityList;
-        this.donatorList = donatorList;
-        this.beneficiaryList = beneficiaryList;
-        this.currentDonations = currentDonations;
-    }
 
+    public void setName(String name){this.name=name;}
     public void setAdmin(){this.admin = admin;}
     public Admin getAdmin(){return this.admin;}
+    public void setEntityList(ArrayList<Entity> entityList){this.entityList=entityList;}
+    public void setDonatorList(ArrayList<Donator> donatorList){this.donatorList=donatorList;}
+    public void setBeneficiaryList(ArrayList<Beneficiary> beneficiaryList){this.beneficiaryList=beneficiaryList;}
+    public void setCurrentDonations(ArrayList<RequestDonationList> currentDonations){this.currentDonations=currentDonations;}
     public void addEntity(Entity entity){
         entityList.add(entity);
         //Needs Exceptions if entity already exists
@@ -71,6 +68,7 @@ public class Organization
         currentDonations.add(rdEntity);
     }
     //public void getCurrentDonations(){} //Left this one as reminder on what to do, it's actually useless
+
     /*public Entity get(int entityID) {
         for (var rd : currentDonations) {
             //Might need to override getId() in RequestDonationList;
