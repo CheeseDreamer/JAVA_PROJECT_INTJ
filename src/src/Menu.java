@@ -2,11 +2,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 public class Menu {
-    Organization organization = new Organization();
+    //Organization organization = new Organization();
     Admin admin = new Admin();
     Beneficiary ben = new Beneficiary();
     Donator don = new Donator();
-    public void initMenu() {
+    public void initMenu(Organization organization) {
         try (Scanner scan = new Scanner(System.in)) {
             //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
             JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
@@ -170,7 +170,6 @@ public class Menu {
                                                 case 2:
                                                     System.out.println("[2]Services:");
                                                     rdlServ.monitor();
-                                                    subMenuLoop = false;
                                                     subMenuLoop = false;
                                                     break;
                                                 case 3:
