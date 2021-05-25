@@ -12,9 +12,10 @@ public class Admin extends User{
     }
 
     public boolean isAdminPhone(Organization org){
-        for (var phone:org.getAdminListPhone()){
-            if(getPhone().equals(phone)){
-                isAdmin = false;
+        for(int i=0;i<org.getAdminListPhone().size();i++){
+            if(getPhone().equals(org.getAdminListPhone().get(i))){
+                setName(org.adminListName.get(i));
+                isAdmin=true;
                 return true;
             }
         }

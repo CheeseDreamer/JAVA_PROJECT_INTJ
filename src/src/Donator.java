@@ -13,8 +13,9 @@ public class Donator extends User
 
     //MENU NECESSARY METHOD
     public boolean isDonatorPhone(Organization org){
-        for (var phone:org.getDonatorList()){
-            if(getPhone().equals(phone.getPhone())){
+        for(int i = 0; i<org.getDonatorList().size();i++){
+            if(getPhone().equals(org.getDonatorList().get(i).getPhone())){
+                setName(org.getDonatorList().get(i).getName());
                 return true;
             }
         }

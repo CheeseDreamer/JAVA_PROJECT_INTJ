@@ -17,8 +17,10 @@ public class Beneficiary extends User
 
 
     public boolean isBeneficiaryPhone(Organization org){
-        for (var phone:org.getBeneficiaryList()){
-            if(getPhone().equals(phone.getPhone())){
+
+        for(int i = 0; i<org.getBeneficiaryList().size();i++){
+            if(getPhone().equals((org.getBeneficiaryList().get(i).getPhone()))){
+                setName(org.getBeneficiaryList().get(i).getName());
                 return true;
             }
         }
