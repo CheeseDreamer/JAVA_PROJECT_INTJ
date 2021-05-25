@@ -5,18 +5,17 @@ public class Organization
     String name;
     Admin admin;
     private int cols=2;
-    ArrayList<Entity> entityList = new ArrayList<>();
+    ArrayList<ArrayList<Entity>> entityList = new ArrayList<>();
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
     ArrayList<RequestDonationList> currentDonations = new ArrayList<>();
 
-    public Organization(){ }
+    public Organization(){}
 
     public void setName(String name){this.name=name;}
     public void setAdmin(Admin admin){this.admin = admin;}
     public Admin getAdmin(){return this.admin;}
 
-    public void setEntityList(ArrayList<Entity> entityList){this.entityList=entityList;}
     public void setDonatorList(ArrayList<Donator> donatorList){this.donatorList=donatorList;}
     public void setBeneficiaryList(ArrayList<Beneficiary> beneficiaryList){this.beneficiaryList=beneficiaryList;}
     public void setCurrentDonations(ArrayList<RequestDonationList> currentDonations){this.currentDonations=currentDonations;}
@@ -25,12 +24,20 @@ public class Organization
     public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
 
     public void addEntity(Entity entity){
-        entityList.add(entity);
+        if(entity.getType().equals("Material")){
+            this.entityList.get(0).add(entity);
+        }else if(entity.getType().equals("Service")){
+            this.entityList.get(1).add(entity);
+        }
         //Needs Exceptions if entity already exists
     }
     public void removeEntity(Entity entity){
         //if isAdmin=true;
-        entityList.remove(entity);
+        if(entity.getType().equals("Material")){
+            this.entityList.get(0).remove(entity);
+        }else if(entity.getType().equals("Service")){
+            this.entityList.get(1).remove(entity);
+        }
         //Exception in case it doesnt exist.
     }
     public void insertDonator(Donator donator){
@@ -50,8 +57,12 @@ public class Organization
         //Exception needed
     }
     public void listEntities(){
-        System.out.println("Material/Services");
-        for(var ent: entityList){
+        System.out.println("Materials");
+        for(var ent: entityList.get(0)){
+            System.out.println("\t"+ent.getDetails());
+        }
+        System.out.println("Services");
+        for(var ent:entityList.get(1)){
             System.out.println("\t"+ent.getDetails());
         }
     }
