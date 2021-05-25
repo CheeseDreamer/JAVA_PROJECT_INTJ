@@ -173,6 +173,7 @@ public class Menu {
                                                     subMenuLoop = false;
                                                     break;
                                                 case 3:
+                                                    //[3]Break
                                                     break;
                                                 default:
                                                     subMenuLoop = true;
@@ -189,7 +190,7 @@ public class Menu {
                                     case 3:
                                         menuLoop = false;
                                         break;
-                                    case 4:
+                                    case 4://Back is the same as Logout
                                     case 5:
                                         //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
                                         //JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
