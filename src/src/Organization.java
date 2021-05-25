@@ -91,13 +91,15 @@ public class Organization
     public void listBeneficiaries(){
         System.out.println("Beneficiaries Names:");
         for(var ben: beneficiaryList){
-            System.out.println("\t"+ben.getName() + " " + ben.getPhone());
+            System.out.println("\t"+ben.getName() + " " + ben.getPhone() + " " + ben.getReceivedList());
         }
     }
     public void listDonators(){
         System.out.println("Donators Names:");
         for(var don:donatorList){
-            System.out.println("\t"+don.getName() + " " + don.getPhone());
+            System.out.print("\t"+don.getName() + " " + don.getPhone() + " ");
+            don.showOffers();
+            System.out.println();
         }
     }
     //currentDonations setters, getters are different from wrappers, also might need to make them
