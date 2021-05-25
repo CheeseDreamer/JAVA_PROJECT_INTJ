@@ -23,6 +23,7 @@ public class Menu {
                 if(logAgain) {
                     logAgain=false;
                     do {
+                        //Do you need to initialize Name and Phone?
                         if (!isNamePhoneInit) {
                             //If you are a new user
                             if (!(logged.equals("y") || logged.equals("Y"))) {
@@ -36,8 +37,7 @@ public class Menu {
                                 System.out.print("Enter your name: ");
                                 admin.setName(scan.nextLine());
                             }
-                            //System.out.print("Enter your name: ");
-                            //admin.setName(scan.nextLine());
+                            //You enter your phone eitherways
                             System.out.print("Enter your phone: ");
                             admin.setPhone(scan.nextLine());
                             do {
@@ -81,6 +81,7 @@ public class Menu {
                             }
                         } else {//If you are a new user
                             //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
+                            //If the phone you've given belongs to an already registered user
                             if (admin.isAdminPhone(organization) || ben.isBeneficiaryPhone(organization) || don.isDonatorPhone(organization)) {
                                 System.out.println("Warning the credentials you've given belongs to a registered user");
                                 System.out.print("Do you want to log in? (y/n): ");
@@ -105,8 +106,9 @@ public class Menu {
                                     System.out.println("Congratulations, you are now a new Donator");
                                     don.setName(admin.getName());
                                     don.setPhone(admin.getPhone());
-                                    organization.getDonatorList().add(don);
+                                    organization.insertDonator(new Donator(don.getName(),don.getPhone()));
                                     don.isDonatorPhone(organization);
+
                                     doLoop = false;
                                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
                                     System.out.println("Congratulations, you are now a new Beneficiary");
@@ -137,6 +139,13 @@ public class Menu {
                 boolean validSubMenuChoice;
                 if (userType.equals("donator") || userType.equals("Donator")) {
                     System.out.println("Welcome to Donator Menu, User: " + don.getName());
+
+                    System.out.println("Donator List");
+                    for(int i=0;i<organization.getDonatorList().size();i++) {
+                        System.out.println(organization.getDonatorList().get(i).getName() + " " + organization.getDonatorList().get(i).getPhone());
+                    }
+                    System.out.println("End of Donator List");
+
                     System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
                     do {
@@ -148,7 +157,7 @@ public class Menu {
                                 switch (menuChoice) {
                                     case 1:
                                         logAgain=false;
-                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + (int) rdlMat.getRdEntities().get(0).size() + ")\n\t[2]Service: Quantity(" + (int) rdlMat.getRdEntities().get(1).size() + ")");
+                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + (int) rdlMat.getRdEntities().get(0).size() + ")\n\t[2]Service: Quantity(" + (int) rdlMat.getRdEntities().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
                                         do {
@@ -163,6 +172,8 @@ public class Menu {
                                                     rdlServ.monitor();
                                                     subMenuLoop = false;
                                                     subMenuLoop = false;
+                                                    break;
+                                                case 3:
                                                     break;
                                                 default:
                                                     subMenuLoop = true;
