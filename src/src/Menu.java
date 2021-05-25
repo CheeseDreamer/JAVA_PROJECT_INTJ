@@ -26,7 +26,7 @@ public class Menu {
                             userType = scan.nextLine();
                             if(!(userType.equals("donator")||userType.equals("Donator")||userType.equals("beneficiary")||userType.equals("Beneficiary"))){
                                 //System.out.print("Please enter a valid user type: ");
-                                JOptionPane.showMessageDialog(null, "Careful!","Please enter a valid user type: ", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Please enter a valid user type: ","Careful!", JOptionPane.WARNING_MESSAGE);
                             }
                         }while(!(userType.equals("donator")||userType.equals("Donator")||userType.equals("beneficiary")||userType.equals("Beneficiary")));
                         System.out.print("Enter your name: ");
@@ -43,7 +43,7 @@ public class Menu {
                         } catch (NumberFormatException nfe) {
                             validNumber=false;
                             //System.out.print("Give valid phone number: ");
-                            JOptionPane.showMessageDialog(null, "Careful!","Give valid phone number: ", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Give valid phone number: ","Careful!", JOptionPane.WARNING_MESSAGE);
                             admin.setPhone(scan.nextLine());
                         }
                     }while(!validNumber);
@@ -79,7 +79,8 @@ public class Menu {
                 } else {//If you are a new user
                     //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
                     if (admin.isAdminPhone(organization) || ben.isBeneficiaryPhone(organization) || don.isDonatorPhone(organization)) {
-                        System.out.println("Warning the credentials you've given belongs to a registered user");
+                        //System.out.println("Warning the credentials you've given belongs to a registered user");
+                        JOptionPane.showMessageDialog(null, "The credentials you've given already belong to a registered user","Careful!", JOptionPane.WARNING_MESSAGE);
                         System.out.print("Do you want to log in? (y/n): ");
                         logged = scan.nextLine();
                         isNamePhoneInit=false;
@@ -90,7 +91,8 @@ public class Menu {
                         }
                     }else {
                         if (userType.equals("donator") || userType.equals("Donator")) {
-                            System.out.println("Congratulations, you are now a new Donator");
+                            //System.out.println("Congratulations, you are now a new Donator");
+                            JOptionPane.showMessageDialog(null,"Congratulations, you are now a new Donator");
                             doLoop = false;
                         } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
                             System.out.println("Congratulations, you are now a new Beneficiary");
@@ -146,7 +148,8 @@ public class Menu {
                                                 break;
                                             default:
                                                 subMenuLoop = true;
-                                                System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
+                                                //System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
+                                                JOptionPane.showMessageDialog(null, "Enter Valid Sub Menu Choice [1/2]: ","Careful!", JOptionPane.WARNING_MESSAGE);
                                                 subMenuChoice = scan.nextInt();
                                                 break;
                                         }
@@ -171,14 +174,16 @@ public class Menu {
                                     break;
                                 default:
                                     menuLoop = true;
-                                    System.out.print("Enter Valid Menu Choice (1-6): ");
+                                    //System.out.print("Enter Valid Menu Choice (1-6): ");
+                                    JOptionPane.showMessageDialog(null, "Enter Valid Menu Choice (1-6): ","Careful!", JOptionPane.WARNING_MESSAGE);
                                     menuChoice = scan.nextInt();
                                     break;
                             }
                         } while (menuLoop);
                     } catch(InputMismatchException ime) {
                         validNumber = false;
-                        System.out.print("Give valid menu choice: ");
+                        //System.out.print("Give valid menu choice: ");
+                        JOptionPane.showMessageDialog(null, "Give valid menu choice: ","Careful!", JOptionPane.WARNING_MESSAGE);
                         scan.nextLine();
                     }
                 }while(!validNumber);
