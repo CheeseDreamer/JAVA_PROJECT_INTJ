@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 public class Menu {
     Organization organization = new Organization();
     Admin admin = new Admin();
@@ -7,7 +8,8 @@ public class Menu {
     Donator don = new Donator();
     public void initMenu() {
         try (Scanner scan = new Scanner(System.in)) {
-            System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
+            //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
+            JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
             System.out.print("Are you a registered user?(y/n): ");
             String logged = scan.nextLine();
             boolean isRegisteredUser=true;
@@ -23,7 +25,8 @@ public class Menu {
                         do {
                             userType = scan.nextLine();
                             if(!(userType.equals("donator")||userType.equals("Donator")||userType.equals("beneficiary")||userType.equals("Beneficiary"))){
-                                System.out.print("Please enter a valid user type: ");
+                                //System.out.print("Please enter a valid user type: ");
+                                JOptionPane.showMessageDialog(null, "Careful!","Please enter a valid user type: ", JOptionPane.WARNING_MESSAGE);
                             }
                         }while(!(userType.equals("donator")||userType.equals("Donator")||userType.equals("beneficiary")||userType.equals("Beneficiary")));
                         System.out.print("Enter your name: ");
@@ -39,7 +42,8 @@ public class Menu {
                             Long.parseLong(admin.getPhone());
                         } catch (NumberFormatException nfe) {
                             validNumber=false;
-                            System.out.print("Give valid phone number: ");
+                            //System.out.print("Give valid phone number: ");
+                            JOptionPane.showMessageDialog(null, "Careful!","Give valid phone number: ", JOptionPane.WARNING_MESSAGE);
                             admin.setPhone(scan.nextLine());
                         }
                     }while(!validNumber);
@@ -73,7 +77,7 @@ public class Menu {
                         }
                     }
                 } else {//If you are a new user
-                        //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
+                    //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
                     if (admin.isAdminPhone(organization) || ben.isBeneficiaryPhone(organization) || don.isDonatorPhone(organization)) {
                         System.out.println("Warning the credentials you've given belongs to a registered user");
                         System.out.print("Do you want to log in? (y/n): ");
