@@ -136,6 +136,7 @@ public class Menu {
                 boolean subMenuLoop = false;
                 int menuChoice;
                 int subMenuChoice;
+                int entityID;
                 boolean validSubMenuChoice;
                 if (userType.equals("donator") || userType.equals("Donator")) {
                     System.out.println("Welcome to Donator Menu, User: " + don.getName());
@@ -157,6 +158,8 @@ public class Menu {
                             do {
                                 switch (menuChoice) {
                                     case 1:
+                                        String moreDonations; //(y/n)
+                                        String confirmDonation;//(y/n)
                                         logAgain=false;
                                         System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
@@ -168,14 +171,33 @@ public class Menu {
                                                     for(int i = 0;i<organization.getEntityList().get(0).size()-1;i++) {
                                                         System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo());
                                                     }
-                                                    //rdlMat.monitor();
-                                                    subMenuLoop = false;
+                                                    System.out.println("Insert the id of the Material you want to offer: ");
+                                                    System.out.print("id: ");
+                                                    entityID = scan.nextInt();
+                                                    scan.nextLine();//Clear the buffer
+                                                    System.out.print("Confirm?(y/n)");
+                                                    confirmDonation = scan.nextLine();
+                                                    if(confirmDonation.equals("y")||confirmDonation.equals("Y")){
+                                                        System.out.println("you gave ID: " + entityID);
+                                                    }
+                                                    System.out.print("Do you want to make another Donation?(y/n): ");
+                                                    moreDonations = scan.nextLine();
+                                                    if(moreDonations.equals("y")||moreDonations.equals("Y")){
+                                                        subMenuLoop=true;
+                                                    }else{
+                                                        subMenuLoop = false;
+                                                    }
                                                     break;
                                                 case 2:
                                                     System.out.println("[2]Services:");
                                                     for(int i = 0;i<organization.getEntityList().get(1).size()-1;i++) {
                                                         System.out.println(organization.getEntityList().get(1).get(i).getEntityInfo());
                                                     }
+                                                    System.out.println("Insert the id of the Service you want to offer: ");
+                                                    System.out.print("id: ");
+                                                    entityID = scan.nextInt();
+                                                    System.out.println("you gave ID: " + entityID);
+                                                    System.out.println("Do you want to make another Donation?(y/n): ");
                                                     //rdlServ.monitor();
                                                     subMenuLoop = false;
                                                     break;
@@ -192,13 +214,18 @@ public class Menu {
                                         menuLoop = false;
                                         break;
                                     case 2:
+                                        //note to self: Offer methods here
+                                        //Show what donations the Donator has given (RequestDonationList), prob rdEntities
+                                        //Else, show message, you have no offers at this momment
                                         menuLoop = false;
                                         break;
                                     case 3:
+                                        //don.commit(organization.currentDonations.get().getRdEntities());
+                                        //don.commit();
                                         menuLoop = false;
                                         break;
                                     case 4://Back is the same as Logout
-                                    case 5:
+                                    case 5://Logout
                                         //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
                                         //JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
                                         System.out.print("Are you a registered user?(y/n): ");
