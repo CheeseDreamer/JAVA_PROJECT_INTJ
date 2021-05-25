@@ -191,6 +191,7 @@ public class Menu {
                                         menuLoop = false;
                                         break;
                                     case 4:
+                                    case 5:
                                         //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
                                         //JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
                                         System.out.print("Are you a registered user?(y/n): ");
@@ -199,10 +200,6 @@ public class Menu {
                                         if(logged.equals("y")||logged.equals("Y")){
                                             isRegisteredUser=true;
                                         }
-                                        logAgain=true;
-                                        menuLoop = false;
-                                        break;
-                                    case 5:
                                         logAgain=true;
                                         menuLoop = false;
                                         break;
