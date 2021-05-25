@@ -85,6 +85,15 @@ public class Menu {
                                 System.out.println("Warning the credentials you've given belongs to a registered user");
                                 System.out.print("Do you want to log in? (y/n): ");
                                 logged = scan.nextLine();
+                                if(logged.equals("y")||logged.equals("Y")){
+                                    if(admin.isAdminPhone(organization)){
+                                        userType="Admin";
+                                    }else if(ben.isBeneficiaryPhone(organization)){
+                                        userType="Beneficiary";
+                                    }else if(don.isDonatorPhone(organization)){
+                                        userType="Donator";
+                                    }
+                                }
                                 isNamePhoneInit = false;
                                 isRegisteredUser = false;
                                 if (logged.equals("y") || logged.equals("Y")) {
@@ -94,9 +103,17 @@ public class Menu {
                             } else {
                                 if (userType.equals("donator") || userType.equals("Donator")) {
                                     System.out.println("Congratulations, you are now a new Donator");
+                                    don.setName(admin.getName());
+                                    don.setPhone(admin.getPhone());
+                                    organization.getDonatorList().add(don);
+                                    don.isDonatorPhone(organization);
                                     doLoop = false;
                                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
                                     System.out.println("Congratulations, you are now a new Beneficiary");
+                                    ben.setName(admin.getName());
+                                    ben.setPhone(admin.getPhone());
+                                    organization.getBeneficiaryList().add(ben);
+                                    ben.isBeneficiaryPhone(organization);
                                     doLoop = false;
                                 }
                             }
