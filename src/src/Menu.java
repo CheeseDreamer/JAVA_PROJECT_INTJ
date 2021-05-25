@@ -160,6 +160,7 @@ public class Menu {
                                     case 1:
                                         String moreDonations; //(y/n)
                                         String confirmDonation;//(y/n)
+                                        int donationQuantity;
                                         logAgain=false;
                                         System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
@@ -174,11 +175,14 @@ public class Menu {
                                                     System.out.println("Insert the id of the Material you want to offer: ");
                                                     System.out.print("id: ");
                                                     entityID = scan.nextInt();
+                                                    System.out.println("Insert how much you want to give");
+                                                    System.out.print("Quantity: ");
+                                                    donationQuantity=scan.nextInt();
                                                     scan.nextLine();//Clear the buffer
-                                                    System.out.print("Confirm?(y/n)");
+                                                    System.out.print("Confirm?(y/n): ");
                                                     confirmDonation = scan.nextLine();
                                                     if(confirmDonation.equals("y")||confirmDonation.equals("Y")){
-                                                        System.out.println("you gave ID: " + entityID);
+                                                        System.out.println("you gave ID: " + entityID + " Quantity: "+ donationQuantity );
                                                     }
                                                     System.out.print("Do you want to make another Donation?(y/n): ");
                                                     moreDonations = scan.nextLine();
@@ -196,10 +200,22 @@ public class Menu {
                                                     System.out.println("Insert the id of the Service you want to offer: ");
                                                     System.out.print("id: ");
                                                     entityID = scan.nextInt();
-                                                    System.out.println("you gave ID: " + entityID);
-                                                    System.out.println("Do you want to make another Donation?(y/n): ");
-                                                    //rdlServ.monitor();
-                                                    subMenuLoop = false;
+                                                    System.out.println("Insert how many hours of Service you want to give");
+                                                    System.out.print("Hours: ");
+                                                    donationQuantity=scan.nextInt();
+                                                    scan.nextLine();//Clear the buffer
+                                                    System.out.print("Confirm?(y/n): ");
+                                                    confirmDonation = scan.nextLine();
+                                                    if(confirmDonation.equals("y")||confirmDonation.equals("Y")){
+                                                        System.out.println("you gave ID: " + entityID + " Hours: "+ donationQuantity );
+                                                    }
+                                                    System.out.print("Do you want to make another Donation?(y/n): ");
+                                                    moreDonations = scan.nextLine();
+                                                    if(moreDonations.equals("y")||moreDonations.equals("Y")){
+                                                        subMenuLoop=true;
+                                                    }else{
+                                                        subMenuLoop = false;
+                                                    }
                                                     break;
                                                 case 3:
                                                     //[3]Break
