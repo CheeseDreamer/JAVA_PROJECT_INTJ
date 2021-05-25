@@ -140,11 +140,12 @@ public class Menu {
                 if (userType.equals("donator") || userType.equals("Donator")) {
                     System.out.println("Welcome to Donator Menu, User: " + don.getName());
 
+                    /*
                     System.out.println("Donator List");
                     for(int i=0;i<organization.getDonatorList().size();i++) {
                         System.out.println(organization.getDonatorList().get(i).getName() + " " + organization.getDonatorList().get(i).getPhone());
                     }
-                    System.out.println("End of Donator List");
+                    System.out.println("End of Donator List");*/
 
                     System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
@@ -157,7 +158,7 @@ public class Menu {
                                 switch (menuChoice) {
                                     case 1:
                                         logAgain=false;
-                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + (int) rdlMat.getRdEntities().get(0).size() + ")\n\t[2]Service: Quantity(" + (int) rdlMat.getRdEntities().get(1).size() + ")" + "\n\t[3]Back");
+                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
                                         do {

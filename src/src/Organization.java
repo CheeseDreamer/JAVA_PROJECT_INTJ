@@ -4,13 +4,17 @@ public class Organization
 {
     String name;
     Admin admin;
-    private int cols=2;
-    ArrayList<ArrayList<Entity>> entityList = new ArrayList<>();
+    private int entityTypes=2;
+    ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
     ArrayList<RequestDonationList> currentDonations = new ArrayList<>();
 
-    public Organization(){}
+    public Organization(){
+        for(int i = 0;i<entityTypes;i++) {
+            entityList.add(new ArrayList<>());
+        }
+    }
 
     public void setName(String name){this.name=name;}
     public void setAdmin(Admin admin){this.admin = admin;}
@@ -40,6 +44,8 @@ public class Organization
         }
         //Exception in case it doesnt exist.
     }
+    public ArrayList<ArrayList<Entity>> getEntityList(){return entityList;}
+
     public void insertDonator(Donator donator){
         donatorList.add(donator);
         //Exception needed
