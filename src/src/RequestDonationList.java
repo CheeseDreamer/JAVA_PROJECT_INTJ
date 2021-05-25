@@ -89,7 +89,7 @@ public class RequestDonationList {
         for(int i = 0;i<entityTypesCount;i++){
             int entitiesCount = rdEntities.get(i).size();
             for(int j=0;j<entitiesCount;j++) {
-                System.out.println(rdEntities.get(i).get(j).getEntityInfo() + rdEntities.get(i).get(j).getQuantity());
+                System.out.println(rdEntities.get(i).get(j).getEntity().getEntityInfo() + rdEntities.get(i).get(j).getQuantity());
             }
         }
     }

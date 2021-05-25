@@ -17,15 +17,6 @@ public class Beneficiary extends User
 
     public int getNoPersons(){return noPersons;}
 
-    public void init(){
-        beneficiaryPhones.add("6915720947");
-        beneficiaryPhones.add("6983746329");
-        beneficiaryPhones.add("6984736150");
-
-        beneficiaryNames.add("");
-        beneficiaryNames.add("");
-        beneficiaryNames.add("");
-    }
 
     public boolean isBeneficiaryPhone(){
         for (var phone:beneficiaryPhones){

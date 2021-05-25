@@ -5,16 +5,11 @@ public class Donator extends User
 {
     private ArrayList<Offers> offersList; //Maybe do it 2D ArrayList
     ArrayList<String> donatorPhones = new ArrayList<String>();
+    ArrayList<String> donatorNames = new ArrayList<>();
     public Donator(){}
     public Donator(String name, String phone)
     {
         super(name,phone);
-    }
-
-    public void init(){
-        donatorPhones.add("6934235609");
-        donatorPhones.add("6935239504");
-        donatorPhones.add("6983205728");
     }
 
     //MENU NECESSARY METHOD

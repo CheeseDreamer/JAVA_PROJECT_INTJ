@@ -21,48 +21,19 @@ public class Admin extends User{
         }
         return false;
     }
-    public void init(){
-        adminPhones.add("6922546678");
-        adminPhones.add("6972643844");
-        adminPhones.add("6976432144");
-
-        adminNames.add("Marios");
-        adminNames.add("Vicky");
-        adminNames.add("");
-    }
     public void view(){
-        if(isAdmin){
 
-        }else{
-            System.out.println("You're not an admin!");
-        }
     }
     public void monitorOrganization(){
-        if(isAdmin){
 
-        }else{
-            System.out.println("You're not an admin!");
-        }
     }
     public void back(){
-        if(isAdmin){
 
-        }else{
-            System.out.println("You're not an admin!");
-        }
     }
     public void logout() {
-        if(isAdmin){
 
-        }else{
-            System.out.println("You're not an admin!");
-        }
     }
     public void exit(){
-        if(isAdmin){
 
-        }else{
-            System.out.println("You're not an admin!");
-        }
     }
 }

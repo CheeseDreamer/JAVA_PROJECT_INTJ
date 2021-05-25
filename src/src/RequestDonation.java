@@ -20,7 +20,6 @@ public class RequestDonation implements Comparator {
     public void subQuantity(){ quantity--; }
 
     public int getId(){ return entity.getId(); }
-    public String getEntityInfo(){return entity.getEntityInfo();}
     public String getEntityType(){return entity.getType();}
     @Override
     public int compare(Object o1, Object o2) {
