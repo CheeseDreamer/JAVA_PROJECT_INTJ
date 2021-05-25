@@ -165,12 +165,18 @@ public class Menu {
                                             switch (subMenuChoice) {
                                                 case 1:
                                                     System.out.println("[1]Materials:");
-                                                    rdlMat.monitor();
+                                                    for(int i = 0;i<organization.getEntityList().get(0).size()-1;i++) {
+                                                        System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo());
+                                                    }
+                                                    //rdlMat.monitor();
                                                     subMenuLoop = false;
                                                     break;
                                                 case 2:
                                                     System.out.println("[2]Services:");
-                                                    rdlServ.monitor();
+                                                    for(int i = 0;i<organization.getEntityList().get(1).size()-1;i++) {
+                                                        System.out.println(organization.getEntityList().get(1).get(i).getEntityInfo());
+                                                    }
+                                                    //rdlServ.monitor();
                                                     subMenuLoop = false;
                                                     break;
                                                 case 3:
