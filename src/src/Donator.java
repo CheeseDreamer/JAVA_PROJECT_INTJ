@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class Donator extends User
 {
     private ArrayList<Offers> offersList; //Maybe do it 2D ArrayList
-    ArrayList<String> donatorPhones = new ArrayList<String>();
-    ArrayList<String> donatorNames = new ArrayList<>();
+
     public Donator(){}
     public Donator(String name, String phone)
     {
@@ -13,9 +12,9 @@ public class Donator extends User
     }
 
     //MENU NECESSARY METHOD
-    public boolean isDonatorPhone(){
-        for (var phone:donatorPhones){
-            if(getPhone().equals(phone)){
+    public boolean isDonatorPhone(Organization org){
+        for (var phone:org.getDonatorList()){
+            if(getPhone().equals(phone.getPhone())){
                 return true;
             }
         }

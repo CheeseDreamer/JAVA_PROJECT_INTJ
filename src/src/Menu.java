@@ -49,15 +49,15 @@ public class Menu {
                 //If you are a registered user
                 if ((logged.equals("y") || logged.equals("Y")) && isRegisteredUser) {
                     isRegisteredUser=false;
-                    if (admin.isAdminPhone()) {
+                    if (admin.isAdminPhone(organization)) {
                         System.out.println("Welcome Admin " + admin.getName());
                         userType="Admin";
                         doLoop=false;
-                    } else if (ben.isBeneficiaryPhone()) {
+                    } else if (ben.isBeneficiaryPhone(organization)) {
                         System.out.println("Welcome Beneficiary " + admin.getName());
                         userType="Beneficiary";
                         doLoop=false;
-                    } else if (don.isDonatorPhone()) {
+                    } else if (don.isDonatorPhone(organization)) {
                         System.out.println("Welcome Donator " + admin.getName());
                         userType="Donator";
                         doLoop=false;
@@ -74,7 +74,7 @@ public class Menu {
                     }
                 } else {//If you are a new user
                         //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
-                    if (admin.isAdminPhone() || ben.isBeneficiaryPhone() || don.isDonatorPhone()) {
+                    if (admin.isAdminPhone(organization) || ben.isBeneficiaryPhone(organization) || don.isDonatorPhone(organization)) {
                         System.out.println("Warning the credentials you've given belongs to a registered user");
                         System.out.print("Do you want to log in? (y/n): ");
                         logged = scan.nextLine();

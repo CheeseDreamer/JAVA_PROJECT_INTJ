@@ -2,8 +2,6 @@ import java.util.ArrayList;
 public class Beneficiary extends User
 {
     private int noPersons = 1;
-    ArrayList<String> beneficiaryPhones = new ArrayList<String>();
-    ArrayList<String> beneficiaryNames = new ArrayList<>();
 
     public  Beneficiary(){ }
     public Beneficiary(String name, String phone, int noPersons)
@@ -18,9 +16,9 @@ public class Beneficiary extends User
     public int getNoPersons(){return noPersons;}
 
 
-    public boolean isBeneficiaryPhone(){
-        for (var phone:beneficiaryPhones){
-            if(getPhone().equals(phone)){
+    public boolean isBeneficiaryPhone(Organization org){
+        for (var phone:org.getBeneficiaryList()){
+            if(getPhone().equals(phone.getPhone())){
                 return true;
             }
         }

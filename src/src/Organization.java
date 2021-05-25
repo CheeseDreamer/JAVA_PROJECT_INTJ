@@ -31,8 +31,8 @@ public class Organization
         beneficiaryList.get(1).setName("benef2");
         beneficiaryList.get(2).setName("benef3");
         //Beneficiary Phones
-        beneficiaryList.get(2).setPhone("6915720947");
-        beneficiaryList.get(2).setPhone("6983746329");
+        beneficiaryList.get(0).setPhone("6915720947");
+        beneficiaryList.get(1).setPhone("6983746329");
         beneficiaryList.get(2).setPhone("6984736150");
         //DonatorList initialization
         donatorList.add(new Donator());
@@ -44,8 +44,8 @@ public class Organization
         donatorList.get(2).setName("don3");
         //Donator Phones
         donatorList.get(0).setPhone("6934235609");
-        donatorList.get(0).setPhone("6935239504");
-        donatorList.get(0).setPhone("6983205728");
+        donatorList.get(1).setPhone("6935239504");
+        donatorList.get(2).setPhone("6983205728");
     }
 
     public void setName(String name){this.name=name;}
@@ -56,6 +56,11 @@ public class Organization
     public void setDonatorList(ArrayList<Donator> donatorList){this.donatorList=donatorList;}
     public void setBeneficiaryList(ArrayList<Beneficiary> beneficiaryList){this.beneficiaryList=beneficiaryList;}
     public void setCurrentDonations(ArrayList<RequestDonationList> currentDonations){this.currentDonations=currentDonations;}
+
+    public ArrayList<Donator> getDonatorList(){return donatorList;}
+    public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
+    public ArrayList<String> getAdminListName(){return adminListName;}
+    public ArrayList<String> getAdminListPhone(){return adminListPhone;}
 
     public void addEntity(Entity entity){
         entityList.add(entity);
