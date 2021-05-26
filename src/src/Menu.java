@@ -107,15 +107,15 @@ public class Menu {
                                     don.setName(admin.getName());
                                     don.setPhone(admin.getPhone());
                                     organization.insertDonator(new Donator(don.getName(),don.getPhone()));
-                                    don.isDonatorPhone(organization);
+                                    don.isDonatorPhone(organization);//probably useless
 
                                     doLoop = false;
                                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
                                     System.out.println("Congratulations, you are now a new Beneficiary");
                                     ben.setName(admin.getName());
                                     ben.setPhone(admin.getPhone());
-                                    organization.getBeneficiaryList().add(ben);
-                                    ben.isBeneficiaryPhone(organization);
+                                    organization.insertBeneficiary(new Beneficiary(ben.getName(),ben.getPhone(), ben.getNoPersons()));
+                                    ben.isBeneficiaryPhone(organization);//probably useless
                                     doLoop = false;
                                 }
                             }
@@ -158,13 +158,13 @@ public class Menu {
                             do {
                                 switch (menuChoice) {
                                     case 1:
-                                        String moreDonations; //(y/n)
-                                        String confirmDonation;//(y/n)
                                         int donationQuantity;
                                         logAgain=false;
                                         System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
+                                        String moreDonations; //(y/n)
+                                        String confirmDonation;//(y/n)
                                         do {
                                             switch (subMenuChoice) {
                                                 case 1:
@@ -272,8 +272,53 @@ public class Menu {
                         }
                     } while (!validNumber);
                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
-                    System.out.println("Welcome to Beneficiary Menu, User: " + admin.getName());
+                    System.out.println("Welcome to Beneficiary Menu, User: " + ben.getName());
                     System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
+
+                    do {
+                        validNumber=true;
+                        try {
+                            validSubMenuChoice=false;
+                            menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
+                            do {
+                                switch (menuChoice) {
+                                    case 1:
+                                        menuLoop = false;
+                                        break;
+                                    case 2:
+                                        menuLoop = false;
+                                        break;
+                                    case 3:
+                                        break;
+                                    case 4://Back is the same as Logout
+                                    case 5://Logout
+                                        System.out.print("Are you a registered user?(y/n): ");
+                                        scan.nextLine();//Clear buffer
+                                        logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
+                                        if (logged.equals("y") || logged.equals("Y")) {
+                                            isRegisteredUser = true;
+                                        }
+                                        logAgain = true;
+                                        menuLoop = false;
+                                        break;
+                                    case 6:
+                                        //This one is complete, just as is
+                                        exit = true;
+                                        menuLoop = false;
+                                        break;
+                                    default:
+                                        menuLoop = true;
+                                        System.out.print("Enter Valid Menu Choice (1-6): ");
+                                        menuChoice = scan.nextInt();
+                                        break;
+                                }
+                            }while(menuLoop);
+                        }catch (InputMismatchException ime){
+                            validNumber = false;
+                            System.out.print("Give valid menu choice: ");
+                            scan.nextLine();//We need nextLine to avoid having an exception inside the catch
+                        }
+                    }while (!validNumber);
                 } else if (userType.equals("admin") || userType.equals("Admin")) {
                     System.out.println("Welcome to Admin Menu, User: " + admin.getName());
                     System.out.println("\t[1]View\n\t[2]Monitor Organization\n\t[3]Back\n\t[4]Logout\n\t[5]Exit");
