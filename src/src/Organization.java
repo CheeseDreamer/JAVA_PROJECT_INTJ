@@ -8,6 +8,7 @@ public class Organization
     ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
+    //The total available Donations in the Organization, row(0) is Materials, row(1) is Services
     ArrayList<RequestDonationList> currentDonations = new ArrayList<>();
 
     public Organization(){
@@ -26,7 +27,7 @@ public class Organization
 
     public ArrayList<Donator> getDonatorList(){return donatorList;}
     public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
-
+    public ArrayList<RequestDonationList> getCurrentDonations(){return currentDonations;}
     public void addEntity(Entity entity){
         if(entity.getType().equals("Material")){
             this.entityList.get(0).add(entity);
@@ -95,6 +96,9 @@ public class Organization
     public void addCurrentDonations(RequestDonationList rdEntity){
         currentDonations.add(rdEntity);
     }
+    //public void addCurrentDonations(RequestDonation Entity){
+    //    currentDonations.add(Entity);
+    //}
     //public void getCurrentDonations(){} //Left this one as reminder on what to do, it's actually useless
 
     /*public Entity get(int entityID) {
