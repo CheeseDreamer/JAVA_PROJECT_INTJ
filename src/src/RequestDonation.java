@@ -1,9 +1,9 @@
 import java.util.Comparator;
 
-public class RequestDonation implements Comparator {
+public class RequestDonation {
     //use interface Comparator, or check id for grouping same kind of entities.
     private Entity entity;
-    private double quantity;
+    private double quantity=0.0;
     public RequestDonation(){}
     public RequestDonation(Entity entity, double quantity)
     {
@@ -16,21 +16,21 @@ public class RequestDonation implements Comparator {
         return entity;
     }
     public double getQuantity(){ return quantity; }
-    public void addQuantity(){ quantity++; }
-    public void subQuantity(){ quantity--; }
+    public void addQuantity(double quantity){ this.quantity+=quantity; }
+    public void subQuantity(double quantity){ this.quantity-=quantity; }
 
     public int getId(){ return entity.getId(); }
     public String getEntityType(){return entity.getType();}
-    @Override
-    public int compare(Object o1, Object o2) {
+
+    public static boolean compare(RequestDonation o1, RequestDonation o2) {
         // if they are equal it returns 1, otherwise it returns 0.
 
         //The excercise asks for RequestDonation tata type, but the method compare needs object data type to be overriden,
         // will need to look over again when main is done and we can test it
-        if (o1.equals(o2)){
-            return 1;
+        if (o1.getId()==o2.getId()){
+            return true;
         }else{
-            return 0;
+            return false;
         }
     }
 }

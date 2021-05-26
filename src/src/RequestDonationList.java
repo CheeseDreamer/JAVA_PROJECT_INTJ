@@ -31,35 +31,24 @@ public class RequestDonationList {
         */
     }
 
-    public void init(){
-        //Initialize rdEntities with some Materials and Services
-
-        Entity ent=new Material("Cake","Chocolate Cake",2);
-        RequestDonation rd = new RequestDonation(ent,3);
-        rdEntities.get(0).add(rd);
-
-        ent = new Service("Martial Arts","Taekwondo",1);
-        rd = new RequestDonation(ent,2);
-        rdEntities.get(1).add(rd);
-    }
-
     public ArrayList<ArrayList<RequestDonation>> getRdEntities() {
         return rdEntities;
     }
 
-    public void add(int index, RequestDonation obj){
+    public void add(int index, RequestDonation obj, Organization org){
         for(int i=0;i<entityTypesCount;i++) {
             if (rdEntities.get(i).contains(obj)) {
                 // enhmerwsh posothtas tou obj
                 //idea: obj.search(rdEntities).addQuantity();
-                obj.addQuantity();
+                obj.addQuantity(3);
             } else if (!(rdEntities.contains(obj))) {
                 rdEntities.get(i).add(index, obj);
             }
+            else if(!(org.getCurrentDonations()).contains(obj)){
+                System.out.println("Entity not found in Organization!");
+                //exception
+            }
         }
-        /*else if(!(rdEntities.contains(obj))|| //needs method in organization) {
-            //exception
-        }*/
     }
 
     public void remove(String entityType, int index){
@@ -73,9 +62,9 @@ public class RequestDonationList {
     public void modify(RequestDonation obj, int index) {    //process of quantity
         //index: 1 for subtraction, 2 for addition
         if (index == 2) {
-            obj.addQuantity();
+            //obj.addQuantity();
         } else if (index == 1) {
-            obj.subQuantity();
+            //obj.subQuantity();
         }
         if (index != 1 || index != 2) {
             //Throw exception index out of bounds or smth
