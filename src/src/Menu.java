@@ -157,7 +157,7 @@ public class Menu {
                             menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
                             do {
                                 switch (menuChoice) {
-                                    case 1:
+                                    case 1://[1]Add Offer
                                         int donationQuantity;
                                         logAgain=false;
                                         System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
@@ -229,19 +229,19 @@ public class Menu {
                                         } while (subMenuLoop);
                                         menuLoop = false;
                                         break;
-                                    case 2:
+                                    case 2://[2]Show Offers
                                         //note to self: Offer methods here
                                         //Show what donations the Donator has given (RequestDonationList), prob rdEntities
                                         //Else, show message, you have no offers at this momment
                                         menuLoop = false;
                                         break;
-                                    case 3:
+                                    case 3://[3]Commit
                                         //don.commit(organization.currentDonations.get().getRdEntities());
                                         //don.commit();
                                         menuLoop = false;
                                         break;
-                                    case 4://Back is the same as Logout
-                                    case 5://Logout
+                                    case 4://[4]Back is the same as Logout
+                                    case 5://[5]Logout
                                         //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
                                         //JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
                                         System.out.print("Are you a registered user?(y/n): ");
@@ -253,7 +253,7 @@ public class Menu {
                                         logAgain=true;
                                         menuLoop = false;
                                         break;
-                                    case 6:
+                                    case 6://[6]Exit
                                         //This one is complete, just as is
                                         exit=true;
                                         menuLoop = false;
@@ -283,16 +283,16 @@ public class Menu {
                             menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
                             do {
                                 switch (menuChoice) {
-                                    case 1:
+                                    case 1://[1]Add Request
                                         menuLoop = false;
                                         break;
-                                    case 2:
+                                    case 2://[2]Show Requests
                                         menuLoop = false;
                                         break;
-                                    case 3:
+                                    case 3://[3]Commit
                                         break;
-                                    case 4://Back is the same as Logout
-                                    case 5://Logout
+                                    case 4://[4]Back is the same as Logout
+                                    case 5://[5]Logout
                                         System.out.print("Are you a registered user?(y/n): ");
                                         scan.nextLine();//Clear buffer
                                         logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
@@ -302,7 +302,7 @@ public class Menu {
                                         logAgain = true;
                                         menuLoop = false;
                                         break;
-                                    case 6:
+                                    case 6://[6]Exit
                                         //This one is complete, just as is
                                         exit = true;
                                         menuLoop = false;
@@ -332,14 +332,14 @@ public class Menu {
                             menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
                             do {
                                 switch (menuChoice) {
-                                    case 1:
+                                    case 1://[1]View
                                         menuLoop = false;
                                         break;
-                                    case 2:
+                                    case 2://[2]Monitor
                                         menuLoop = false;
                                         break;
-                                    case 3://Back is the same as Logout
-                                    case 4://Logout
+                                    case 3://[3]Back is the same as Logout
+                                    case 4://[4]Logout
                                         System.out.print("Are you a registered user?(y/n): ");
                                         scan.nextLine();//Clear buffer
                                         logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
@@ -349,7 +349,7 @@ public class Menu {
                                         logAgain = true;
                                         menuLoop = false;
                                         break;
-                                    case 5:
+                                    case 5://[5]Exit
                                         //This one is complete, just as is
                                         exit = true;
                                         menuLoop = false;
