@@ -16,6 +16,16 @@ public class Main {
         Beneficiary benef2 = new Beneficiary("Musk","6745810937",4);
         Donator don = new Donator("Chris","691232762691");
 
+        RequestDonation rdMilk = new RequestDonation(milk,15);
+        RequestDonation rdSugar = new RequestDonation(sugar,100);
+        RequestDonation rdRice = new RequestDonation(rice,500);
+
+        RequestDonation rdMedicalSupport = new RequestDonation(MedicalSupport,4);
+        RequestDonation rdNurserySupport = new RequestDonation(NurserySupport,12);
+        RequestDonation rdBabySitting = new RequestDonation(BabySitting,24);
+
+        RequestDonationList rdList = new RequestDonationList();
+
         org.addEntity(milk);
         org.addEntity(sugar);
         org.addEntity(rice);
@@ -23,6 +33,12 @@ public class Main {
         org.addEntity(MedicalSupport);
         org.addEntity(NurserySupport);
         org.addEntity(BabySitting);
+
+        rdList.add(0,rdMilk, org);
+        rdList.add(0,rdSugar, org);
+        rdList.add(0,rdRice, org);
+        org.addCurrentDonations(rdList);
+        //org.addCurrentDonations(rdMedicalSupport);
 
         org.setAdmin(bruh);
         org.insertBeneficiary(benef1);

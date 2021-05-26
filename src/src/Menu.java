@@ -129,8 +129,8 @@ public class Menu {
                 RequestDonationList rdlMat = new RequestDonationList();
                 RequestDonationList rdlServ = new RequestDonationList();
 
-                rdlMat.add(0, reqDonMat);
-                rdlServ.add(0, reqDonServ);
+                //rdlMat.add(0, reqDonMat, organization);
+                //rdlServ.add(0, reqDonServ, organization);
 
                 boolean menuLoop = true;
                 boolean subMenuLoop = false;
@@ -168,28 +168,52 @@ public class Menu {
                                         do {
                                             switch (subMenuChoice) {
                                                 case 1:
+                                                    //Warning, quantity of materials is being shown in reverse
                                                     System.out.println("[1]Materials:");
-                                                    for(int i = 0;i<organization.getEntityList().get(0).size()-1;i++) {
-                                                        System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo());
+                                                    for(int i = 0;i<organization.getEntityList().get(0).size();i++) {
+                                                        System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo() +" Quantity: " + organization.getCurrentDonations().get(0).getRdEntities().get(0).get(i).getQuantity());
                                                     }
                                                     System.out.println("Insert the id of the Material you want to offer: ");
                                                     System.out.print("id: ");
                                                     entityID = scan.nextInt();
-                                                    System.out.println("Insert how much you want to give");
-                                                    System.out.print("Quantity: ");
-                                                    donationQuantity=scan.nextInt();
-                                                    scan.nextLine();//Clear the buffer
-                                                    System.out.print("Confirm?(y/n): ");
-                                                    confirmDonation = scan.nextLine();
-                                                    if(confirmDonation.equals("y")||confirmDonation.equals("Y")){
-                                                        System.out.println("you gave ID: " + entityID + " Quantity: "+ donationQuantity );
+                                                    reqDonMat = new RequestDonation(new Material(),0);
+                                                    reqDonMat.getEntity().setId(entityID);
+                                                    for(int i=0;i<organization.getCurrentDonations().get(0).getRdEntities().get(0).size();i++) {
+                                                        if (RequestDonation.compare(reqDonMat,organization.getCurrentDonations().get(0).getRdEntities().get(0).get(i))){
+                                                            entityID=organization.getCurrentDonations().get(0).getRdEntities().get(0).get(i).getId();
+                                                            reqDonMat.setEntity(organization.getCurrentDonations().get(0).getRdEntities().get(0).get(i).getEntity());
+                                                            break;
+                                                        }else{ entityID = -1;}
                                                     }
-                                                    System.out.print("Do you want to make another Donation?(y/n): ");
-                                                    moreDonations = scan.nextLine();
-                                                    if(moreDonations.equals("y")||moreDonations.equals("Y")){
-                                                        subMenuLoop=true;
-                                                    }else{
-                                                        subMenuLoop = false;
+                                                    if(entityID!=-1) {//if requestDonation found in organization do below stuff
+                                                        System.out.println("Insert how much you want to give");
+                                                        System.out.print("Quantity: ");
+                                                        donationQuantity = scan.nextInt();
+                                                        scan.nextLine();//Clear the buffer
+                                                        System.out.print("Confirm?(y/n): ");
+                                                        confirmDonation = scan.nextLine();
+                                                        if (confirmDonation.equals("y") || confirmDonation.equals("Y")) {
+                                                            System.out.println("you gave:\n\t" + reqDonMat.getEntity().getEntityInfo() + " Quantity: " + donationQuantity);
+                                                        } else {
+                                                            donationQuantity = 0;
+                                                        }
+                                                        System.out.print("Do you want to make another Donation?(y/n): ");
+                                                        moreDonations = scan.nextLine();
+                                                        if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                            subMenuLoop = true;
+                                                        } else {
+                                                            subMenuLoop = false;
+                                                        }
+                                                    }else{//if requestDonation not found in organization
+                                                        System.out.println("Material ID does not exist within Organization");
+                                                        System.out.print("Do you want to try again?(y/n): ");
+                                                        scan.nextLine();//Clear Buffer
+                                                        moreDonations= scan.nextLine();
+                                                        if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                            subMenuLoop = true;
+                                                        } else {
+                                                            subMenuLoop = false;
+                                                        }
                                                     }
                                                     break;
                                                 case 2:
