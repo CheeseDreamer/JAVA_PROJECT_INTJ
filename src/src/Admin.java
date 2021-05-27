@@ -20,6 +20,9 @@ public class Admin extends User{
         isAdmin = false;
         return false;
     }
+
+    public void setIsAdmin(boolean bool){isAdmin=bool;}
+    public boolean getIsAdmin(){return isAdmin;}
     public void view(){
 
     }

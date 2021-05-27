@@ -1,13 +1,17 @@
 public class Requests extends RequestDonationList{
 
     @Override
-    public void add(int index, RequestDonation obj, Organization org) {
+    public void add(RequestDonation obj, Organization org) {
         for(int i=0;i<getRdEntities().size();i++) {
             if (getRdEntities().get(i).contains(obj)) {
                 // enhmerwsh posothtas tou obj
                 obj.addQuantity(getRdEntities().get(0).get(i).getQuantity());
             } else if (!(getRdEntities().get(i).contains(obj))) {
-                getRdEntities().get(i).add(index, obj);
+                if(obj.getEntityType().equals("Material")) {
+                    getRdEntities().get(0).add(obj);
+                }else if(obj.getEntityType().equals("Service")){
+                    getRdEntities().get(1).add(obj);
+                }
             }
         }
     }

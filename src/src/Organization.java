@@ -9,7 +9,7 @@ public class Organization
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
     //The total available Donations in the Organization, row(0) is Materials, row(1) is Services
-    ArrayList<RequestDonationList> currentDonations = new ArrayList<>();
+    RequestDonationList currentDonations = new RequestDonationList();
 
     public Organization(){
         for(int i = 0;i<entityTypes;i++) {
@@ -23,11 +23,12 @@ public class Organization
 
     public void setDonatorList(ArrayList<Donator> donatorList){this.donatorList=donatorList;}
     public void setBeneficiaryList(ArrayList<Beneficiary> beneficiaryList){this.beneficiaryList=beneficiaryList;}
-    public void setCurrentDonations(ArrayList<RequestDonationList> currentDonations){this.currentDonations=currentDonations;}
+    public void setCurrentDonations(RequestDonationList currentDonations){this.currentDonations=currentDonations;}
 
     public ArrayList<Donator> getDonatorList(){return donatorList;}
     public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
-    public ArrayList<RequestDonationList> getCurrentDonations(){return currentDonations;}
+    public RequestDonationList getCurrentDonations(){return currentDonations;}
+
     public void addEntity(Entity entity){
         if(entity.getType().equals("Material")){
             this.entityList.get(0).add(entity);
@@ -93,9 +94,51 @@ public class Organization
     //"WRAPPER METHODS"(copy-pasting)
     //need to finish add() in RequestDonationList to replace the one bellow.
     //no point in having incomplete code in 2 places
-    public void addCurrentDonations(RequestDonationList rdEntity){
-        currentDonations.add(rdEntity);
+
+    public void addCurrentDonations(RequestDonation rdEntity){
+        boolean found = false;
+        System.out.println("isAdmin: "+admin.getIsAdmin());//can alse return false when set
+        //System.out.println(admin.isAdminPhone(this));//always returns true
+        if(!getAdmin().getIsAdmin()) {//If you are not the admin
+            if(rdEntity.getEntityType().equals("Material")){
+                System.out.println("addCurrentDonations Reached here! Material");
+                for(int i=0;i<getCurrentDonations().getRdEntities().get(0).size();i++) {
+                    System.out.println("Reched loop, Material");
+                    if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(0).get(i).getId()){
+                        System.out.println("addCurrentDonations Reached here! ID Check, Material");
+                        //currentDonations.add(rdEntity,this);
+                        currentDonations.getRdEntities().get(0).get(i).addQuantity(rdEntity.getQuantity());
+                        found=true;
+                        break;//Might be unnecessary
+                    }
+                }
+            }else if(rdEntity.getEntityType().equals("Service")){
+                System.out.println("addCurrentDonations Reached here! Service");
+                for(int i = 0; i<getCurrentDonations().getRdEntities().get(1).size();i++){
+                    System.out.println("Reched loop, Service");
+                    if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(1).get(i).getId()){
+                        System.out.println("addCurrentDonations Reached here! ID Check, Service");
+                        currentDonations.getRdEntities().get(1).get(i).addQuantity(rdEntity.getQuantity());
+                        found=true;
+                        break;//Might be unnecessary
+                    }
+                }
+            }
+            //currentDonations.add(rdlEntity);
+            if (found) {
+                System.out.println("Entity not found in CurrentDonations of Organization");
+            }
+        }else {//If you are admin, also since you start with true isAdmin it initializes
+            System.out.println("Initialize currentDonations");
+            //getCurrentDonations().add(rdEntity, this);
+            if(rdEntity.getEntityType().equals("Material")) {
+                currentDonations.getRdEntities().get(0).add(rdEntity);
+            }else if(rdEntity.getEntityType().equals("Service")){
+                currentDonations.getRdEntities().get(1).add(rdEntity);
+            }
+        }
     }
+}
     //public void addCurrentDonations(RequestDonation Entity){
     //    currentDonations.add(Entity);
     //}
@@ -110,4 +153,3 @@ public class Organization
         }
         return null;
     }*/
-}

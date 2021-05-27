@@ -12,6 +12,8 @@ public class Main {
         Service BabySitting = new Service("Baby Sitting","4 Hours",6);
 
         Admin bruh = new Admin("John Bruh","6942122953",true);
+        org.setAdmin(bruh);
+
         Beneficiary benef1 = new Beneficiary("Elon","6745810936",2);
         Beneficiary benef2 = new Beneficiary("Musk","6745810937",4);
         Donator don = new Donator("Chris","691232762691");
@@ -34,13 +36,12 @@ public class Main {
         org.addEntity(NurserySupport);
         org.addEntity(BabySitting);
 
-        rdList.add(0,rdMilk, org);
-        rdList.add(0,rdSugar, org);
-        rdList.add(0,rdRice, org);
-        org.addCurrentDonations(rdList);
+        org.addCurrentDonations(rdMilk);
+        org.addCurrentDonations(rdSugar);
+        org.addCurrentDonations(rdRice);
+
         //org.addCurrentDonations(rdMedicalSupport);
 
-        org.setAdmin(bruh);
         org.insertBeneficiary(benef1);
         org.insertBeneficiary(benef2);
         org.insertDonator(don);

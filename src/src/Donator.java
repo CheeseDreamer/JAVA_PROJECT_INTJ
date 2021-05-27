@@ -66,9 +66,9 @@ public class Donator extends User
             }
         }else{ System.out.println("You have no offers right now"); }
     }
-    public void commit(Organization currentDonations, RequestDonationList rdEntities){
-        currentDonations.addCurrentDonations(rdEntities);
+    public void commit(Organization org, RequestDonation rdEntities){
+        org.addCurrentDonations(rdEntities);
         //if successful
-        rdEntities.reset();
+        //rdEntities.reset();
     }
 }
