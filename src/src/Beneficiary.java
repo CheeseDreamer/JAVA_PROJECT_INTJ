@@ -15,9 +15,7 @@ public class Beneficiary extends User
 
     public int getNoPersons(){return noPersons;}
 
-
     public boolean isBeneficiaryPhone(Organization org){
-
         for(int i = 0; i<org.getBeneficiaryList().size();i++){
             if(getPhone().equals((org.getBeneficiaryList().get(i).getPhone()))){
                 setName(org.getBeneficiaryList().get(i).getName());

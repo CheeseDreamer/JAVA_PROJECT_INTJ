@@ -2,11 +2,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 public class Menu {
-    Organization organization = new Organization();
+    //Organization organization = new Organization();
     Admin admin = new Admin();
     Beneficiary ben = new Beneficiary();
     Donator don = new Donator();
-    public void initMenu() {
+    public void initMenu(Organization organization) {
         try (Scanner scan = new Scanner(System.in)) {
             //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
             JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
@@ -23,6 +23,7 @@ public class Menu {
                 if(logAgain) {
                     logAgain=false;
                     do {
+                        //Do you need to initialize Name and Phone?
                         if (!isNamePhoneInit) {
                             //If you are a new user
                             if (!(logged.equals("y") || logged.equals("Y"))) {
@@ -36,8 +37,7 @@ public class Menu {
                                 System.out.print("Enter your name: ");
                                 admin.setName(scan.nextLine());
                             }
-                            //System.out.print("Enter your name: ");
-                            //admin.setName(scan.nextLine());
+                            //You enter your phone eitherways
                             System.out.print("Enter your phone: ");
                             admin.setPhone(scan.nextLine());
                             do {
@@ -81,10 +81,20 @@ public class Menu {
                             }
                         } else {//If you are a new user
                             //To go back to Logging in, change the logged = "y" and isRegisteredUser=true
+                            //If the phone you've given belongs to an already registered user
                             if (admin.isAdminPhone(organization) || ben.isBeneficiaryPhone(organization) || don.isDonatorPhone(organization)) {
                                 System.out.println("Warning the credentials you've given belongs to a registered user");
                                 System.out.print("Do you want to log in? (y/n): ");
                                 logged = scan.nextLine();
+                                if(logged.equals("y")||logged.equals("Y")){
+                                    if(admin.isAdminPhone(organization)){
+                                        userType="Admin";
+                                    }else if(ben.isBeneficiaryPhone(organization)){
+                                        userType="Beneficiary";
+                                    }else if(don.isDonatorPhone(organization)){
+                                        userType="Donator";
+                                    }
+                                }
                                 isNamePhoneInit = false;
                                 isRegisteredUser = false;
                                 if (logged.equals("y") || logged.equals("Y")) {
@@ -94,9 +104,18 @@ public class Menu {
                             } else {
                                 if (userType.equals("donator") || userType.equals("Donator")) {
                                     System.out.println("Congratulations, you are now a new Donator");
+                                    don.setName(admin.getName());
+                                    don.setPhone(admin.getPhone());
+                                    organization.insertDonator(new Donator(don.getName(),don.getPhone()));
+                                    don.isDonatorPhone(organization);//probably useless
+
                                     doLoop = false;
                                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
                                     System.out.println("Congratulations, you are now a new Beneficiary");
+                                    ben.setName(admin.getName());
+                                    ben.setPhone(admin.getPhone());
+                                    organization.insertBeneficiary(new Beneficiary(ben.getName(),ben.getPhone(), ben.getNoPersons()));
+                                    ben.isBeneficiaryPhone(organization);//probably useless
                                     doLoop = false;
                                 }
                             }
@@ -107,19 +126,28 @@ public class Menu {
                 Service serv1 = new Service();
                 RequestDonation reqDonMat = new RequestDonation(mat1, 10);
                 RequestDonation reqDonServ = new RequestDonation(serv1, 5);
-                RequestDonationList rdlMat = new RequestDonationList();
-                RequestDonationList rdlServ = new RequestDonationList();
+                RequestDonationList rdlList = new RequestDonationList();
 
-                rdlMat.add(0, reqDonMat);
-                rdlServ.add(0, reqDonServ);
+                //rdlMat.add(0, reqDonMat, organization);
+                //rdlServ.add(0, reqDonServ, organization);
 
                 boolean menuLoop = true;
                 boolean subMenuLoop = false;
                 int menuChoice;
                 int subMenuChoice;
+                int entityID;
                 boolean validSubMenuChoice;
                 if (userType.equals("donator") || userType.equals("Donator")) {
                     System.out.println("Welcome to Donator Menu, User: " + don.getName());
+
+                    organization.getAdmin().setIsAdmin(false);
+                    /*
+                    System.out.println("Donator List");
+                    for(int i=0;i<organization.getDonatorList().size();i++) {
+                        System.out.println(organization.getDonatorList().get(i).getName() + " " + organization.getDonatorList().get(i).getPhone());
+                    }
+                    System.out.println("End of Donator List");*/
+
                     System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
                     do {
@@ -129,23 +157,103 @@ public class Menu {
                             menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
                             do {
                                 switch (menuChoice) {
-                                    case 1:
-                                        logAgain=false;
-                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + (int) rdlMat.getRdEntities().get(0).size() + ")\n\t[2]Service: Quantity(" + (int) rdlMat.getRdEntities().get(1).size() + ")");
+                                    case 1://[1]Add Offer
+                                        int donationQuantity;
+                                        logAgain = false;
+                                        System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
+                                        String moreDonations; //(y/n)
+                                        String confirmDonation;//(y/n)
                                         do {
                                             switch (subMenuChoice) {
                                                 case 1:
+                                                    //Warning, quantity of materials is being shown in reverse
                                                     System.out.println("[1]Materials:");
-                                                    rdlMat.monitor();
-                                                    subMenuLoop = false;
+                                                    //For debugging
+                                                    //System.out.println("organization.getEntityList().get(0).size(): " + organization.getEntityList().get(0).size());
+                                                    //for(int i = 0;i<organization.getEntityList().get(0).size();i++) {
+                                                    for (int i = 0; i<organization.getCurrentDonations().getRdEntities().get(0).size();i++) {
+                                                        System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo() + " Quantity: " + organization.getCurrentDonations().getRdEntities().get(0).get(i).getQuantity());
+                                                    }
+                                                    //For debugging
+                                                    //System.out.println("organization.getCurrentDonations().getRdEntities().get(0).size(): "+organization.getCurrentDonations().getRdEntities().get(0).size());
+
+                                                    System.out.println("Insert the id of the Material you want to offer: ");
+                                                    System.out.print("id: ");
+                                                    entityID = scan.nextInt();
+                                                    reqDonMat = new RequestDonation(new Material(), 0);
+                                                    reqDonMat.getEntity().setId(entityID);
+                                                    for (int i = 0; i < organization.getCurrentDonations().getRdEntities().get(0).size(); i++) {
+                                                        if (RequestDonation.compare(reqDonMat, organization.getCurrentDonations().getRdEntities().get(0).get(i))) {
+                                                            entityID = organization.getCurrentDonations().getRdEntities().get(0).get(i).getId();
+                                                            reqDonMat.setEntity(organization.getCurrentDonations().getRdEntities().get(0).get(i).getEntity());
+                                                            break;
+                                                        } else {
+                                                            entityID = -1;
+                                                        }
+                                                    }
+                                                    if (entityID != -1) {//if requestDonation found in organization do below stuff
+                                                        System.out.println("Insert how much you want to give");
+                                                        System.out.print("Quantity: ");
+                                                        donationQuantity = scan.nextInt();
+                                                        scan.nextLine();//Clear the buffer
+                                                        System.out.print("Confirm?(y/n): ");
+                                                        confirmDonation = scan.nextLine();
+                                                        if (confirmDonation.equals("y") || confirmDonation.equals("Y")) {
+                                                            System.out.println("you gave:\n\t" + reqDonMat.getEntity().getEntityInfo() + " Quantity: " + donationQuantity);
+                                                            rdlList.add(reqDonMat, organization);//In Commit, do a for loop and add everything to currentDonations, also, rdList might need add(new RequestDonation()) like below.
+                                                            //organization.getCurrentDonations().add(new RequestDonation(reqDonMat.getEntity(),reqDonMat.getQuantity()),organization);
+                                                        } else {
+                                                            donationQuantity = 0;
+                                                        }
+                                                        System.out.print("Do you want to make another Donation?(y/n): ");
+                                                        moreDonations = scan.nextLine();
+                                                        if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                            subMenuLoop = true;
+                                                        } else {
+                                                            subMenuLoop = false;
+                                                        }
+                                                    } else {//if requestDonation not found in organization
+                                                        System.out.println("Material ID does not exist within Organization");
+                                                        System.out.print("Do you want to try again?(y/n): ");
+                                                        scan.nextLine();//Clear Buffer
+                                                        moreDonations = scan.nextLine();
+                                                        if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                            subMenuLoop = true;
+                                                        } else {
+                                                            subMenuLoop = false;
+                                                        }
+                                                    }
                                                     break;
                                                 case 2:
                                                     System.out.println("[2]Services:");
-                                                    rdlServ.monitor();
-                                                    subMenuLoop = false;
-                                                    subMenuLoop = false;
+                                                    for (int i = 0; i < organization.getEntityList().get(1).size() - 1; i++) {
+                                                        System.out.println(organization.getEntityList().get(1).get(i).getEntityInfo());
+                                                    }
+                                                    System.out.println("Insert the id of the Service you want to offer: ");
+                                                    System.out.print("id: ");
+                                                    entityID = scan.nextInt();
+                                                    System.out.println("Insert how many hours of Service you want to give");
+                                                    System.out.print("Hours: ");
+                                                    donationQuantity = scan.nextInt();
+                                                    scan.nextLine();//Clear the buffer
+                                                    System.out.print("Confirm?(y/n): ");
+                                                    confirmDonation = scan.nextLine();
+                                                    if (confirmDonation.equals("y") || confirmDonation.equals("Y")) {
+                                                        System.out.println("you gave ID: " + entityID + " Hours: " + donationQuantity);
+
+                                                    }
+                                                    System.out.print("Do you want to make another Donation?(y/n): ");
+                                                    moreDonations = scan.nextLine();
+                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                        subMenuLoop = true;
+                                                    } else {
+                                                        subMenuLoop = false;
+                                                    }
+                                                    break;
+                                                case 3:
+                                                    //[3]Back
                                                     break;
                                                 default:
                                                     subMenuLoop = true;
@@ -156,31 +264,34 @@ public class Menu {
                                         } while (subMenuLoop);
                                         menuLoop = false;
                                         break;
-                                    case 2:
+                                    case 2://[2]Show Offers
+                                        //note to self: Offer methods here
+                                        //Show what donations the Donator has given (RequestDonationList), prob rdEntities
+                                        //Else, show message, you have no offers at this momment
                                         menuLoop = false;
                                         break;
-                                    case 3:
+                                    case 3://[3]Commit
+                                        //don.commit(organization.currentDonations.get().getRdEntities());
+                                        //don.commit();
+                                        organization.addCurrentDonations(reqDonMat);
                                         menuLoop = false;
                                         break;
-                                    case 4:
+                                    case 4://[4]Back is the same as Logout
+                                    case 5://[5]Logout
                                         //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
                                         //JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");
                                         System.out.print("Are you a registered user?(y/n): ");
                                         scan.nextLine();//Clear buffer
                                         logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
-                                        if(logged.equals("y")||logged.equals("Y")){
-                                            isRegisteredUser=true;
+                                        if (logged.equals("y") || logged.equals("Y")) {
+                                            isRegisteredUser = true;
                                         }
-                                        logAgain=true;
+                                        logAgain = true;
                                         menuLoop = false;
                                         break;
-                                    case 5:
-                                        logAgain=true;
-                                        menuLoop = false;
-                                        break;
-                                    case 6:
+                                    case 6://[6]Exit
                                         //This one is complete, just as is
-                                        exit=true;
+                                        exit = true;
                                         menuLoop = false;
                                         break;
                                     default:
@@ -189,7 +300,7 @@ public class Menu {
                                         menuChoice = scan.nextInt();
                                         break;
                                 }
-                            } while (menuLoop);
+                            }while (menuLoop) ;
                         } catch (InputMismatchException ime) {
                             validNumber = false;
                             System.out.print("Give valid menu choice: ");
@@ -197,11 +308,107 @@ public class Menu {
                         }
                     } while (!validNumber);
                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
-                    System.out.println("Welcome to Beneficiary Menu, User: " + admin.getName());
+                    System.out.println("Welcome to Beneficiary Menu, User: " + ben.getName());
                     System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
+                    System.out.print("Choice: ");
+                    organization.getAdmin().setIsAdmin(false);
+
+                    do {
+                        validNumber=true;
+                        try {
+                            validSubMenuChoice=false;
+                            menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
+                            do {
+                                switch (menuChoice) {
+                                    case 1://[1]Add Request
+                                        menuLoop = false;
+                                        break;
+                                    case 2://[2]Show Requests
+                                        menuLoop = false;
+                                        break;
+                                    case 3://[3]Commit
+                                        break;
+                                    case 4://[4]Back is the same as Logout
+                                    case 5://[5]Logout
+                                        System.out.print("Are you a registered user?(y/n): ");
+                                        scan.nextLine();//Clear buffer
+                                        logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
+                                        if (logged.equals("y") || logged.equals("Y")) {
+                                            isRegisteredUser = true;
+                                        }
+                                        logAgain = true;
+                                        menuLoop = false;
+                                        break;
+                                    case 6://[6]Exit
+                                        //This one is complete, just as is
+                                        exit = true;
+                                        menuLoop = false;
+                                        break;
+                                    default:
+                                        menuLoop = true;
+                                        System.out.print("Enter Valid Menu Choice (1-6): ");
+                                        menuChoice = scan.nextInt();
+                                        break;
+                                }
+                            }while(menuLoop);
+                        }catch (InputMismatchException ime){
+                            validNumber = false;
+                            System.out.print("Give valid menu choice: ");
+                            scan.nextLine();//We need nextLine to avoid having an exception inside the catch
+                        }
+                    }while (!validNumber);
                 } else if (userType.equals("admin") || userType.equals("Admin")) {
                     System.out.println("Welcome to Admin Menu, User: " + admin.getName());
                     System.out.println("\t[1]View\n\t[2]Monitor Organization\n\t[3]Back\n\t[4]Logout\n\t[5]Exit");
+                    System.out.print("Choice: ");
+                    organization.getAdmin().setIsAdmin(true);
+                    do {
+                        validNumber=true;
+                        try {
+                            validSubMenuChoice=false;
+                            menuChoice = scan.nextInt();//1fora to dinoume emeis, 2h fora, to dinei h catch
+                            do {
+                                switch (menuChoice) {
+                                    case 1://[1]View
+                                        System.out.println("currentDonations: "+ organization.getCurrentDonations());
+                                        //for(int i = 0; i<1;i++){
+                                        for (int i = 0; i<organization.getCurrentDonations().getRdEntities().get(0).size();i++) {
+                                            System.out.println(organization.getCurrentDonations().getRdEntities().get(0).get(i).getEntity().getEntityInfo());//+" Quantity: ["+organization.getCurrentDonations().getRdEntities().get(0).get(i).getQuantity());
+                                        }
+                                        menuLoop = false;
+                                        break;
+                                    case 2://[2]Monitor
+                                        menuLoop = false;
+                                        break;
+                                    case 3://[3]Back is the same as Logout
+                                    case 4://[4]Logout
+                                        System.out.print("Are you a registered user?(y/n): ");
+                                        scan.nextLine();//Clear buffer
+                                        logged = Character.toString(scan.nextLine().charAt(0));//Get first char and turn it into String
+                                        if (logged.equals("y") || logged.equals("Y")) {
+                                            isRegisteredUser = true;
+                                        }
+                                        logAgain = true;
+                                        menuLoop = false;
+                                        break;
+                                    case 5://[5]Exit
+                                        //This one is complete, just as is
+                                        exit = true;
+                                        menuLoop = false;
+                                        break;
+                                    default:
+                                        menuLoop = true;
+                                        System.out.print("Enter Valid Menu Choice (1-6): ");
+                                        menuChoice = scan.nextInt();
+                                        break;
+                                }
+                            }while(menuLoop);
+                        }catch (InputMismatchException ime){
+                            validNumber = false;
+                            System.out.print("Give valid menu choice: ");
+                            scan.nextLine();//We need nextLine to avoid having an exception inside the catch
+                        }
+                    }while (!validNumber);
                 }
             }while(!exit);
         }

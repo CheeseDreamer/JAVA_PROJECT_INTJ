@@ -13,7 +13,7 @@ public abstract class Entity
     public void setDescription(String description){this.description=description;}
     public void setId(int id){this.id=id;}
     public String getType(){ return "Entity"; } //Exists to be overrided
-    public String getEntityInfo(){return name + " "+ description + " "+id;}
+    public String getEntityInfo(){return "name: [" + name + "] descriprion: ["+ description + "] id: ["+id+"]";}
     public int getId(){ return id; }
     public String getDetails(){return  description;}
     @Override

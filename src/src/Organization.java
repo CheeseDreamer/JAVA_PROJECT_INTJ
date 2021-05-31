@@ -4,73 +4,50 @@ public class Organization
 {
     String name;
     Admin admin;
-    private int cols=2;
-    ArrayList<Entity> entityList = new ArrayList<>();
+    private int entityTypes=2;
+    ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
-    ArrayList<RequestDonationList> currentDonations = new ArrayList<>();
-    ArrayList<String> adminListName = new ArrayList<>();
-    ArrayList<String> adminListPhone = new ArrayList<>();
+    //The total available Donations in the Organization, row(0) is Materials, row(1) is Services
+    RequestDonationList currentDonations = new RequestDonationList();
 
     public Organization(){
-        //Admin Names
-        adminListName.add("Marios");
-        adminListName.add("Vicky");
-        adminListName.add("Rainbow");
-        //Admin Phones
-        adminListPhone.add("6922546678");
-        adminListPhone.add("6972643844");
-        adminListPhone.add("6976432144");
-
-        //BeneficiaryList initialization
-        beneficiaryList.add(new Beneficiary());
-        beneficiaryList.add(new Beneficiary());
-        beneficiaryList.add(new Beneficiary());
-        //Beneficiary Names
-        beneficiaryList.get(0).setName("benef1");
-        beneficiaryList.get(1).setName("benef2");
-        beneficiaryList.get(2).setName("benef3");
-        //Beneficiary Phones
-        beneficiaryList.get(0).setPhone("6915720947");
-        beneficiaryList.get(1).setPhone("6983746329");
-        beneficiaryList.get(2).setPhone("6984736150");
-        //DonatorList initialization
-        donatorList.add(new Donator());
-        donatorList.add(new Donator());
-        donatorList.add(new Donator());
-        //Donator Names
-        donatorList.get(0).setName("don1");
-        donatorList.get(1).setName("don2");
-        donatorList.get(2).setName("don3");
-        //Donator Phones
-        donatorList.get(0).setPhone("6934235609");
-        donatorList.get(1).setPhone("6935239504");
-        donatorList.get(2).setPhone("6983205728");
+        for(int i = 0;i<entityTypes;i++) {
+            entityList.add(new ArrayList<>());
+        }
     }
 
     public void setName(String name){this.name=name;}
-    public void setAdmin(){this.admin = admin;}
+    public void setAdmin(Admin admin){this.admin = admin;}
     public Admin getAdmin(){return this.admin;}
 
-    public void setEntityList(ArrayList<Entity> entityList){this.entityList=entityList;}
     public void setDonatorList(ArrayList<Donator> donatorList){this.donatorList=donatorList;}
     public void setBeneficiaryList(ArrayList<Beneficiary> beneficiaryList){this.beneficiaryList=beneficiaryList;}
-    public void setCurrentDonations(ArrayList<RequestDonationList> currentDonations){this.currentDonations=currentDonations;}
+    public void setCurrentDonations(RequestDonationList currentDonations){this.currentDonations=currentDonations;}
 
     public ArrayList<Donator> getDonatorList(){return donatorList;}
     public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
-    public ArrayList<String> getAdminListName(){return adminListName;}
-    public ArrayList<String> getAdminListPhone(){return adminListPhone;}
+    public RequestDonationList getCurrentDonations(){return currentDonations;}
 
     public void addEntity(Entity entity){
-        entityList.add(entity);
-        //Needs Exceptions if entity already exists     //AddEntityOrgException
+        if(entity.getType().equals("Material")){
+            this.entityList.get(0).add(entity);
+        }else if(entity.getType().equals("Service")){
+            this.entityList.get(1).add(entity);
+        }
+        //Needs Exceptions if entity already exists
     }
     public void removeEntity(Entity entity){
         //if isAdmin=true;
-        entityList.remove(entity);
-        //Exception in case it doesnt exist.          //RemoveEntityOrgException
+        if(entity.getType().equals("Material")){
+            this.entityList.get(0).remove(entity);
+        }else if(entity.getType().equals("Service")){
+            this.entityList.get(1).remove(entity);
+        }
+        //Exception in case it doesnt exist.
     }
+    public ArrayList<ArrayList<Entity>> getEntityList(){return entityList;}
+
     public void insertDonator(Donator donator){
         donatorList.add(donator);
         //Exception needed
@@ -81,15 +58,19 @@ public class Organization
     }
     public void insertBeneficiary(Beneficiary benef){
         beneficiaryList.add(benef);
-        //Exception needed                          //InsertBeneficiaryOrgException
+        //Exception needed
     }
     public void removeBeneficiary(Beneficiary benef){
         beneficiaryList.remove(benef);
         //Exception needed
     }
     public void listEntities(){
-        System.out.println("Material/Services");
-        for(var ent: entityList){
+        System.out.println("Materials");
+        for(var ent: entityList.get(0)){
+            System.out.println("\t"+ent.getDetails());
+        }
+        System.out.println("Services");
+        for(var ent:entityList.get(1)){
             System.out.println("\t"+ent.getDetails());
         }
     }
@@ -113,9 +94,54 @@ public class Organization
     //"WRAPPER METHODS"(copy-pasting)
     //need to finish add() in RequestDonationList to replace the one bellow.
     //no point in having incomplete code in 2 places
-    public void addCurrentDonations(RequestDonationList rdEntity){
-        currentDonations.add(rdEntity);
+
+    public void addCurrentDonations(RequestDonation rdEntity){
+        boolean found = false;
+        System.out.println("isAdmin: "+admin.getIsAdmin());//can alse return false when set
+        //System.out.println(admin.isAdminPhone(this));//always returns true
+        if(!getAdmin().getIsAdmin()) {//If you are not the admin
+            if(rdEntity.getEntityType().equals("Material")){
+                System.out.println("addCurrentDonations Reached here! Material");
+                for(int i=0;i<getCurrentDonations().getRdEntities().get(0).size();i++) {
+                    System.out.println("Reched loop, Material");
+                    if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(0).get(i).getId()){
+                        System.out.println("addCurrentDonations Reached here! ID Check, Material");
+                        //currentDonations.add(rdEntity,this);
+                        currentDonations.getRdEntities().get(0).get(i).addQuantity(rdEntity.getQuantity());
+                        found=true;
+                        break;//Might be unnecessary
+                    }
+                }
+            }else if(rdEntity.getEntityType().equals("Service")){
+                System.out.println("addCurrentDonations Reached here! Service");
+                for(int i = 0; i<getCurrentDonations().getRdEntities().get(1).size();i++){
+                    System.out.println("Reched loop, Service");
+                    if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(1).get(i).getId()){
+                        System.out.println("addCurrentDonations Reached here! ID Check, Service");
+                        currentDonations.getRdEntities().get(1).get(i).addQuantity(rdEntity.getQuantity());
+                        found=true;
+                        break;//Might be unnecessary
+                    }
+                }
+            }
+            //currentDonations.add(rdlEntity);
+            if (found) {
+                System.out.println("Entity not found in CurrentDonations of Organization");
+            }
+        }else {//If you are admin, also since you start with true isAdmin it initializes
+            System.out.println("Initialize currentDonations");
+            //getCurrentDonations().add(rdEntity, this);
+            if(rdEntity.getEntityType().equals("Material")) {
+                currentDonations.getRdEntities().get(0).add(rdEntity);
+            }else if(rdEntity.getEntityType().equals("Service")){
+                currentDonations.getRdEntities().get(1).add(rdEntity);
+            }
+        }
     }
+}
+    //public void addCurrentDonations(RequestDonation Entity){
+    //    currentDonations.add(Entity);
+    //}
     //public void getCurrentDonations(){} //Left this one as reminder on what to do, it's actually useless
 
     /*public Entity get(int entityID) {
@@ -127,4 +153,3 @@ public class Organization
         }
         return null;
     }*/
-}

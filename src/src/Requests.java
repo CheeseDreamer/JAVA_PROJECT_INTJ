@@ -1,12 +1,17 @@
 public class Requests extends RequestDonationList{
 
     @Override
-    public void add(int index, RequestDonation obj) {
+    public void add(RequestDonation obj, Organization org) {
         for(int i=0;i<getRdEntities().size();i++) {
             if (getRdEntities().get(i).contains(obj)) {
-                obj.addQuantity();      // quantity=quantity+1
+                // enhmerwsh posothtas tou obj
+                obj.addQuantity(getRdEntities().get(0).get(i).getQuantity());
             } else if (!(getRdEntities().get(i).contains(obj))) {
-                getRdEntities().get(i).add(index, obj);
+                if(obj.getEntityType().equals("Material")) {
+                    getRdEntities().get(0).add(obj);
+                }else if(obj.getEntityType().equals("Service")){
+                    getRdEntities().get(1).add(obj);
+                }
             }
         }
     }
@@ -15,26 +20,18 @@ public class Requests extends RequestDonationList{
     public void modify(RequestDonation obj, int index) {    //process of quantity
         //index: 1 for subtraction, 2 for addition
         if (index == 2) {
-            obj.addQuantity();
+            //obj.addQuantity();
         } else if (index == 1) {
-            obj.subQuantity();
+            //obj.subQuantity();
         }else{//(index!=1||index!=2)
-            try {
-                throw new RequestsException();
-            } catch (RequestsException e) {
-                e.printStackTrace();
-            }
+            //Throws Exception
         }
         if (obj.getQuantity() < 0 && index == 1) {       //can't reduce the quantity, already 0.
-            //Throws Exception (RequestsBeneficiaryException)
-
+            //Throws Exception
         }
-
     }
 
-    public void validRequestDonation(){
-        getRdEntities();
-    }
+    public void validRequestDonation(){ }
     public void commit(){ }
     public void addOffer(){
         System.out.println("Choose 1 for Material, 2 for Services:");
