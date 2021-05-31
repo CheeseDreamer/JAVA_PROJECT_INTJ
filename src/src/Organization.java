@@ -64,12 +64,12 @@ public class Organization
 
     public void addEntity(Entity entity){
         entityList.add(entity);
-        //Needs Exceptions if entity already exists
+        //Needs Exceptions if entity already exists     //AddEntityOrgException
     }
     public void removeEntity(Entity entity){
         //if isAdmin=true;
         entityList.remove(entity);
-        //Exception in case it doesnt exist.
+        //Exception in case it doesnt exist.          //RemoveEntityOrgException
     }
     public void insertDonator(Donator donator){
         donatorList.add(donator);
@@ -81,7 +81,7 @@ public class Organization
     }
     public void insertBeneficiary(Beneficiary benef){
         beneficiaryList.add(benef);
-        //Exception needed
+        //Exception needed                          //InsertBeneficiaryOrgException
     }
     public void removeBeneficiary(Beneficiary benef){
         beneficiaryList.remove(benef);

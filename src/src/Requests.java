@@ -4,8 +4,7 @@ public class Requests extends RequestDonationList{
     public void add(int index, RequestDonation obj) {
         for(int i=0;i<getRdEntities().size();i++) {
             if (getRdEntities().get(i).contains(obj)) {
-                // enhmerwsh posothtas tou obj
-                obj.addQuantity();
+                obj.addQuantity();      // quantity=quantity+1
             } else if (!(getRdEntities().get(i).contains(obj))) {
                 getRdEntities().get(i).add(index, obj);
             }
@@ -20,15 +19,22 @@ public class Requests extends RequestDonationList{
         } else if (index == 1) {
             obj.subQuantity();
         }else{//(index!=1||index!=2)
-            //Throws Exception
+            try {
+                throw new RequestsException();
+            } catch (RequestsException e) {
+                e.printStackTrace();
+            }
         }
         if (obj.getQuantity() < 0 && index == 1) {       //can't reduce the quantity, already 0.
-            //Throws Exception
+            //Throws Exception (RequestsBeneficiaryException)
+
         }
 
     }
 
-    public void validRequestDonation(){ }
+    public void validRequestDonation(){
+        getRdEntities();
+    }
     public void commit(){ }
     public void addOffer(){
         System.out.println("Choose 1 for Material, 2 for Services:");
