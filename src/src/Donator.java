@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Donator extends User
 {
     private Offers offersList=new Offers(); //Maybe do it 2D ArrayList
-    private int pos;
+    private static int pos;
     public Donator(){}
     public Donator(String name, String phone)
     {
@@ -22,7 +22,7 @@ public class Donator extends User
         }
         return false;
     }
-    public int getPos(){return pos;}
+    public static int getPos(){return pos;}
     //ADD METHOD WRAPPER
     public void addOffer(int choice, Organization org, Scanner sc){
 

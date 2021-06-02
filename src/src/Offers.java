@@ -4,53 +4,31 @@ public class Offers extends RequestDonationList
     {
     }
     //Commit is unfinished...
-    public void commit(RequestDonation rdEntity, Organization org){
+    public void commit(Organization org){
         boolean found = false;
-        System.out.println("isAdmin: "+org.getAdmin().getIsAdmin());//can alse return false when set
-        //System.out.println(admin.isAdminPhone(this));//always returns true
-        //if(!org.getAdmin().getIsAdmin()) {//If you are not the admin
-            if(rdEntity.getEntity().getType().equals("Material")){
-                System.out.println("addCurrentDonations Reached here! Material");
-                for(int i=0;i<org.getCurrentDonations().getRdEntities().get(0).size();i++) {
-                    System.out.println("Reched loop, Material");
-                    //if(RequestDonation.compare(rdEntity,org.getCurrentDonations().getRdEntities().get(0).get(i))){
-                    if (rdEntity.getId() == org.getCurrentDonations().getRdEntities().get(0).get(i).getId()){
-                        //Never reaches here, if it goes here, all is good!
-                        System.out.println("addCurrentDonations Reached here! ID Check, Material");
-                        //currentDonations.add(rdEntity,this);
-                        org.getCurrentDonations().getRdEntities().get(0).get(i).addQuantity(rdEntity.getQuantity());
-                        found=true;
-                        break;//Might be unnecessary
-                    }
-                }
-            }else if(rdEntity.getEntityType().equals("Service")){
-                System.out.println("addCurrentDonations Reached here! Service");
-                for(int i = 0; i<org.getCurrentDonations().getRdEntities().get(1).size();i++){
-                    System.out.println("Reched loop, Service");
-                    if (rdEntity.getId() == org.getCurrentDonations().getRdEntities().get(1).get(i).getId()){
-                        System.out.println("addCurrentDonations Reached here! ID Check, Service");
-                        org.getCurrentDonations().getRdEntities().get(1).get(i).addQuantity(rdEntity.getQuantity());
-                        found=true;
-                        break;//Might be unnecessary
+        for(int i = 0; i<org.getCurrentDonations().getRdEntities().size();i++) {//0 for Materials/ 1 Services
+            System.out.println("1...org.getCurrentDonations().getRdEntities().size(): " + org.getCurrentDonations().getRdEntities().size());
+            for (int j = 0; j < org.getCurrentDonations().getRdEntities().get(i).size(); j++) {
+                //System.out.println("offerList.getRdEntities().get(i).size(): "+offerList.getRdEntities().get(i).size());
+                System.out.println("2...org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
+                for (int k = 0; k < org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).size(); k++) {
+                    //System.out.println("org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
+                    System.out.println("3...offerList.getRdEntities().get(i).size(): "+org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).size());
+                    if (RequestDonation.compare(org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(k), org.getCurrentDonations().getRdEntities().get(i).get(j))) {
+                        found = true;
+                        org.getCurrentDonations().getRdEntities().get(i).get(j).addQuantity(org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(k).getQuantity());
+                        System.out.println("Added Quantity to CurrentDonations Successfully");
+                        break;
                     }
                 }
             }
-            //currentDonations.add(rdlEntity);
-            if (found) {
-                System.out.println("Entity not found in CurrentDonations of Organization");
+        }
+        if(!found){System.out.println("You have no Offers to Commit");}
+        else {
+            for (int i = 0; i < org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().size(); i++) {
+                org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).clear();
+                System.out.println("Commited Successfully, OfferList Cleared");
             }
-        //}else {//If you are admin, also since you start with true isAdmin it initializes
-        /*    System.out.println("Initialize currentDonations");
-            //getCurrentDonations().add(rdEntity, this);
-            if(rdEntity.getEntityType().equals("Material")) {
-                org.getCurrentDonations().getRdEntities().get(0).add(rdEntity);
-            }else if(rdEntity.getEntityType().equals("Service")){
-                org.getCurrentDonations().getRdEntities().get(1).add(rdEntity);
-            }
-         */
-        //}
+        }
     }
-        //org.addCurrentDonations(rdEntities);
-        //if successful, prob done with search function
-        //rdEntities.reset();
 }

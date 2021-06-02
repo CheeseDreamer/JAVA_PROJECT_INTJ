@@ -6,9 +6,9 @@ public class Organization
     Admin admin;
     private int entityTypes=2;
     //Temporary saves what the donator will donate
-    ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
-    ArrayList<Donator> donatorList = new ArrayList<>();
-    ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
+    private ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
+    private ArrayList<Donator> donatorList = new ArrayList<>();
+    private ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
     //The total available Donations in the Organization,currentDonations.getRdEntities() = row(0) is Materials, row(1) is Services
     private RequestDonationList currentDonations = new RequestDonationList();
 
