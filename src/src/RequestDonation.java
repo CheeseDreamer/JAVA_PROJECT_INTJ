@@ -5,8 +5,7 @@ public class RequestDonation {
     private Entity entity;
     private double quantity=0.0;
     public RequestDonation(){}
-    public RequestDonation(Entity entity, double quantity)
-    {
+    public RequestDonation(Entity entity, double quantity) {
         this.entity = entity;
         this.quantity = quantity;
     }
@@ -23,14 +22,9 @@ public class RequestDonation {
     public String getEntityType(){return entity.getType();}
 
     public static boolean compare(RequestDonation o1, RequestDonation o2) {
-        // if they are equal it returns 1, otherwise it returns 0.
-
-        //The excercise asks for RequestDonation tata type, but the method compare needs object data type to be overriden,
-        // will need to look over again when main is done and we can test it
         if (o1.getId()==o2.getId()){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 }

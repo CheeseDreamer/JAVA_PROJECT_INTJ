@@ -5,11 +5,12 @@ public class Organization
     String name;
     Admin admin;
     private int entityTypes=2;
+    //Temporary saves what the donator will donate
     ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
     ArrayList<Donator> donatorList = new ArrayList<>();
     ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
-    //The total available Donations in the Organization, row(0) is Materials, row(1) is Services
-    RequestDonationList currentDonations = new RequestDonationList();
+    //The total available Donations in the Organization,currentDonations.getRdEntities() = row(0) is Materials, row(1) is Services
+    private RequestDonationList currentDonations = new RequestDonationList();
 
     public Organization(){
         for(int i = 0;i<entityTypes;i++) {
@@ -99,12 +100,13 @@ public class Organization
         boolean found = false;
         System.out.println("isAdmin: "+admin.getIsAdmin());//can alse return false when set
         //System.out.println(admin.isAdminPhone(this));//always returns true
-        if(!getAdmin().getIsAdmin()) {//If you are not the admin
+        /*if(!getAdmin().getIsAdmin()) {//If you are not the admin
             if(rdEntity.getEntityType().equals("Material")){
                 System.out.println("addCurrentDonations Reached here! Material");
                 for(int i=0;i<getCurrentDonations().getRdEntities().get(0).size();i++) {
                     System.out.println("Reched loop, Material");
-                    if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(0).get(i).getId()){
+                    if(RequestDonation.compare(rdEntity, getCurrentDonations().getRdEntities().get(0).get(i))){
+                    //if (rdEntity.getId() == getCurrentDonations().getRdEntities().get(0).get(i).getId()){
                         System.out.println("addCurrentDonations Reached here! ID Check, Material");
                         //currentDonations.add(rdEntity,this);
                         currentDonations.getRdEntities().get(0).get(i).addQuantity(rdEntity.getQuantity());
@@ -129,6 +131,8 @@ public class Organization
                 System.out.println("Entity not found in CurrentDonations of Organization");
             }
         }else {//If you are admin, also since you start with true isAdmin it initializes
+
+         */
             System.out.println("Initialize currentDonations");
             //getCurrentDonations().add(rdEntity, this);
             if(rdEntity.getEntityType().equals("Material")) {
@@ -136,20 +140,11 @@ public class Organization
             }else if(rdEntity.getEntityType().equals("Service")){
                 currentDonations.getRdEntities().get(1).add(rdEntity);
             }
-        }
+        //}
+
+        //currentDonations.getRdEntities().get(0).add(rdEntity);
     }
 }
     //public void addCurrentDonations(RequestDonation Entity){
     //    currentDonations.add(Entity);
     //}
-    //public void getCurrentDonations(){} //Left this one as reminder on what to do, it's actually useless
-
-    /*public Entity get(int entityID) {
-        for (var rd : currentDonations) {
-            //Might need to override getId() in RequestDonationList;
-            if (rd.getId() == entityID) {
-                return rd.getEntity();
-            }
-        }
-        return null;
-    }*/
