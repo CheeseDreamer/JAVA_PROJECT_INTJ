@@ -306,14 +306,19 @@ public class Menu {
                                                                             modQuantity = scan.nextInt();
                                                                             organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).addQuantity(modQuantity);
                                                                             System.out.println("Added "+ modQuantity +" quantity");
-                                                                            System.out.println("Current [id]: "+ offerID +" Quantity: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                                                                            System.out.println("[id]: "+ offerID +" [Current Quantity]: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
                                                                             break;
                                                                         case 2:
                                                                             System.out.print("Sub Quantity: ");
                                                                             modQuantity = scan.nextInt();
-                                                                            organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(modQuantity);
+                                                                            if(organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity()-modQuantity>=0) {
+                                                                                organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(modQuantity);
+                                                                            }else{
+                                                                                organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                                                                                System.out.println("[Request Donation Quantity is set to 0]");
+                                                                            }
                                                                             System.out.println("Subtracted "+ modQuantity +" quantity");
-                                                                            System.out.println("Current [id]: "+ offerID +" Quantity: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                                                                            System.out.println("[id]: "+ offerID +" [Current Quantity]: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
                                                                             break;
                                                                         case 3://Back
                                                                             break;
@@ -325,7 +330,7 @@ public class Menu {
                                                                     subSubMenuLoop=false;
                                                                     break;
                                                                 default:
-                                                                    System.out.println("Enter Valid Sub Sub Menu Choice [1,2,3]: ");
+                                                                    System.out.println("Enter Valid Menu Choice: ");
                                                                     subSubMenuLoop=true;
                                                                     break;
                                                             }

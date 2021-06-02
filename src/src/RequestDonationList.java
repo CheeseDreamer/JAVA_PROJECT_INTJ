@@ -11,7 +11,7 @@ public class RequestDonationList {
     }
 
     //Needs to return RequestDonation
-    public RequestDonation getWithID(int entityID) {//It could use a throws NullPointerException which we can catch later
+    public RequestDonation getWithID(int entityID) {//Whatever calls this, will need to check for NullPointerException
         for(int i=0; i<entityTypesCount;i++){
             int entitiesCount = rdEntities.get(i).size();
             for(int j=0;j<entitiesCount;j++){
