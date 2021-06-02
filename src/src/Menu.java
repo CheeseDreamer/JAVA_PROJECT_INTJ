@@ -299,26 +299,12 @@ public class Menu {
                                                                     System.out.println("\t[1]Add Quantity\n\t[2]Subtract Quantity\n\t[3]Back");
                                                                     System.out.print("Choice: ");
                                                                     int modifyChoice = scan.nextInt();
-                                                                    int modQuantity;
                                                                     switch (modifyChoice) {
                                                                         case 1:
-                                                                            System.out.print("Add Quantity: ");
-                                                                            modQuantity = scan.nextInt();
-                                                                            organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).addQuantity(modQuantity);
-                                                                            System.out.println("Added "+ modQuantity +" quantity");
-                                                                            System.out.println("[id]: "+ offerID +" [Current Quantity]: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                                                                            organization.getDonatorList().get(Donator.getPos()).getOffersList().modify(modifyChoice,offerID,organization,scan);
                                                                             break;
                                                                         case 2:
-                                                                            System.out.print("Sub Quantity: ");
-                                                                            modQuantity = scan.nextInt();
-                                                                            if(organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity()-modQuantity>=0) {
-                                                                                organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(modQuantity);
-                                                                            }else{
-                                                                                organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
-                                                                                System.out.println("[Request Donation Quantity is set to 0]");
-                                                                            }
-                                                                            System.out.println("Subtracted "+ modQuantity +" quantity");
-                                                                            System.out.println("[id]: "+ offerID +" [Current Quantity]: " + organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                                                                            organization.getDonatorList().get(Donator.getPos()).getOffersList().modify(modifyChoice,offerID,organization,scan);
                                                                             break;
                                                                         case 3://Back
                                                                             break;

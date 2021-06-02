@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RequestDonationList {
     private int entityTypesCount = 2;//0 for Material, 1 for Services
@@ -30,9 +31,9 @@ public class RequestDonationList {
 
     public void add(RequestDonation rd, Organization org) {//is being run by offersList,...
         boolean found = false;
-        System.out.println("add function RequestDonationList Works");
+        //System.out.println("add function RequestDonationList Works");
         if (org.admin.getIsAdmin() || org.getEntityList().get(0).contains(rd.getEntity()) || org.getEntityList().get(1).contains(rd.getEntity())) {//org.getCurrentDonations().getRdEntities().get(1).contains(rd)) {
-            System.out.println("if statement Works");
+            //System.out.println("if statement Works");
             //if you are the admin, or the Request Donation exists within the Organization
             for (int i = 0; i < entityTypesCount; i++) {//Materials or Services
                 for (int j = 0; j < getRdEntities().get(i).size(); j++) {
@@ -74,19 +75,33 @@ public class RequestDonationList {
         }
     }
 
-    public void modify(RequestDonation obj, int index) {    //process of quantity
-        //index: 1 for subtraction, 2 for addition
-        if (index == 2) {
-            //obj.addQuantity();
-        } else if (index == 1) {
-            //obj.subQuantity();
-        }
-        if (index != 1 || index != 2) {
-            //Throw exception index out of bounds or smth
-        }
-        if (obj.getQuantity() < 0 && index == 1) {       //can't reduce the quantity, already 0.
-            System.out.println("Cant reduce quantity anymore");
-            //Throws Exception
+    public void modify(int modifyChoice, int offerID, Organization org, Scanner scan) {    //process of quantity
+        //modifyChoice: 1 for subtraction, 2 for addition
+        int modQuantity;
+        switch (modifyChoice) {
+            case 1:
+                System.out.print("Add Quantity: ");
+                modQuantity = scan.nextInt();
+                org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).addQuantity(modQuantity);
+                System.out.println("Added "+ modQuantity +" quantity");
+                System.out.println("[id]: "+ offerID +" [Current Quantity]: " + org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                break;
+            case 2:
+                System.out.print("Sub Quantity: ");
+                modQuantity = scan.nextInt();
+                if(org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity()-modQuantity>=0) {
+                    org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(modQuantity);
+                }else{
+                    org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                    System.out.println("[Request Donation Quantity is set to 0]");
+                }
+                System.out.println("Subtracted "+ modQuantity +" quantity");
+                System.out.println("[id]: "+ offerID +" [Current Quantity]: " + org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
+                break;
+            case 3://Back
+                break;
+            default:
+                break;
         }
     }
 
