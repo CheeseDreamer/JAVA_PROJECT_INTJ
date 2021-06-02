@@ -22,36 +22,38 @@ public class RequestDonationList {
         }
         System.out.println("Entity Not Found!");
         return null;
-        /* //Old code
-        for (var rd : rdEntities) {
-            if (rd.getId() == entityID) {
-                return rd.getEntity();
-            }
-        }
-        return null;
-        */
     }
 
     public ArrayList<ArrayList<RequestDonation>> getRdEntities() {
         return rdEntities;
     }
 
-    public void add(RequestDonation rd, Organization org){
-        if(org.admin.getIsAdmin()||org.getCurrentDonations().getRdEntities().contains(rd)) {
+    public void add(RequestDonation rd, Organization org) {//is being run by offersList,...
+        boolean found = false;
+        System.out.println("add function RequestDonationList Works");
+        if (org.admin.getIsAdmin() || org.getEntityList().get(0).contains(rd.getEntity()) || org.getEntityList().get(1).contains(rd.getEntity())) {//org.getCurrentDonations().getRdEntities().get(1).contains(rd)) {
+            System.out.println("if statement Works");
             //if you are the admin, or the Request Donation exists within the Organization
-            for (int i = 0; i < entityTypesCount; i++) {
-                if (rdEntities.get(i).contains(rd)) {//if you've already given the same stuff
-                    // enhmerwsh posothtas tou obj
-                    //idea: rd.search(rdEntities).addQuantity();
-                    rd.addQuantity(rd.getQuantity());
-                } else if (!(rdEntities.get(i).contains(rd))) {//if you are giving it for the first time
-                    for(int j=0;j<rdEntities.get(i).size();j++) {
-                        if (rdEntities.get(0).get(j).getEntityType().equals("Material")) {
-                            rdEntities.get(0).add(rd);
-                        } else if (rdEntities.get(1).get(i).getEntityType().equals("Service")) {
-                            rdEntities.get(1).add(rd);
-                        }
+            for (int i = 0; i < entityTypesCount; i++) {//Materials or Services
+                for (int j = 0; j < getRdEntities().get(i).size(); j++) {
+                    if (RequestDonation.compare(rd, getRdEntities().get(i).get(j))) {//if you've already given the same stuff
+                        // enhmerwsh posothtas tou rd
+                        //idea: rd.search(rdEntities).addQuantity();
+                        getRdEntities().get(i).get(j).addQuantity(rd.getQuantity());
+                        System.out.println("Added Quantity");
+                        found = true;
+                        break;
                     }
+                }
+            }
+            if(!found) {//if you are giving it for the first time
+                System.out.println("Giving it for the first time");
+                if (rd.getEntityType().equals("Material")) {
+                    getRdEntities().get(0).add(new RequestDonation(rd.getEntity(), rd.getQuantity()));
+                    System.out.println("Added Material");
+                } else if (rd.getEntityType().equals("Service")) {
+                    getRdEntities().get(1).add(new RequestDonation(rd.getEntity(), rd.getQuantity()));
+                    System.out.println("Added Service");
                 }
             }
         }else{//If you are not the admin and the request Donation is not found within the Organization
@@ -79,6 +81,7 @@ public class RequestDonationList {
             //Throw exception index out of bounds or smth
         }
         if (obj.getQuantity() < 0 && index == 1) {       //can't reduce the quantity, already 0.
+            System.out.println("Cant reduce quantity anymore");
             //Throws Exception
         }
     }

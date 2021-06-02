@@ -10,7 +10,9 @@ public abstract class Entity
         this.id = id;
     }
     public void setName(String name){this.name=name;}
+    public String getName(){return name;}
     public void setDescription(String description){this.description=description;}
+    public String getDescription(){return description;}
     public void setId(int id){this.id=id;}
     public String getType(){ return "Entity"; } //Exists to be overrided
     public String getEntityInfo(){return "name: [" + name + "] descriprion: ["+ description + "] id: ["+id+"]";}
