@@ -26,8 +26,6 @@ public class Main {
         RequestDonation rdNurserySupport = new RequestDonation(NurserySupport,12);
         RequestDonation rdBabySitting = new RequestDonation(BabySitting,24);
 
-        RequestDonationList rdList = new RequestDonationList();
-
         org.addEntity(milk);
         org.addEntity(sugar);
         org.addEntity(rice);

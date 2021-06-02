@@ -11,7 +11,7 @@ public class RequestDonationList {
     }
 
     //Needs to return RequestDonation
-    public RequestDonation getWithID(int entityID) {
+    public RequestDonation getWithID(int entityID) {//It could use a throws NullPointerException which we can catch later
         for(int i=0; i<entityTypesCount;i++){
             int entitiesCount = rdEntities.get(i).size();
             for(int j=0;j<entitiesCount;j++){
@@ -62,12 +62,16 @@ public class RequestDonationList {
         }
     }
 
-    public void remove(String entityType, int index){
-        if(rdEntities.get(0).get(index).getEntityType()=="Material"){
-            rdEntities.get(0).remove(index);
-        }else if(rdEntities.get(1).get(index).getEntityType()=="Service") {
-            rdEntities.get(1).remove(index);
-        }else System.out.println("Entity was not found in list");
+    public void remove(RequestDonation rd){
+        for(int i =0;i<getRdEntities().size();i++) {
+            if (rd.getEntityType().equals("Material")) {
+                getRdEntities().get(0).remove(rd);
+            } else if (rd.getEntityType().equals("Service")) {
+                getRdEntities().get(1).remove(rd);
+
+            } else System.out.println("Entity was not found in list");
+            System.out.println("Successfully Deleted Offer List Request Donation Element");
+        }
     }
 
     public void modify(RequestDonation obj, int index) {    //process of quantity
