@@ -178,7 +178,7 @@ public class Menu {
                                                         System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo() + " quantity: " + organization.getCurrentDonations().getRdEntities().get(0).get(i).getQuantity());
                                                     }
                                                     organization.getDonatorList().get(don.getPos()).addOffer(subMenuChoice,organization, scan);
-                            //----------------------------------------------------------------------------------------------------------------------------------
+                                                    //----------------------------------------------------------------------------------------------------------------------------------
                                                     /*System.out.println("Insert the id of the Material you want to offer: ");
                                                     System.out.print("id: ");
                                                     entityID = scan.nextInt();
@@ -217,15 +217,15 @@ public class Menu {
                                                             donationQuantity = 0;
                                                         }
                                                         */
-                            //----------------------------------------------------------------------------------------------------------------------------------
-                                                        System.out.print("Do you want to make another Donation?(y/n): ");
-                                                        moreDonations = scan.nextLine();
+                                                    //----------------------------------------------------------------------------------------------------------------------------------
+                                                    System.out.print("Do you want to make another Donation?(y/n): ");
+                                                    moreDonations = scan.nextLine();
 
-                                                        if (moreDonations.equals("y") || moreDonations.equals("Y")) {
-                                                            subMenuLoop = true;
-                                                        } else {
-                                                            subMenuLoop = false;
-                                                        }
+                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                        subMenuLoop = true;
+                                                    } else {
+                                                        subMenuLoop = false;
+                                                    }
                                                     break;
                                                 case 2://[2]Services
                                                     System.out.println("[2]Services:");
@@ -259,11 +259,19 @@ public class Menu {
                                         //Show what donations the Donator has given (RequestDonationList), prob rdEntities
                                         boolean hasMadeOffers = false;
                                         System.out.println("\toffersList:");
+                                        System.out.println("Materials:");
                                         for(int i = 0; i<organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(0).size();i++){
                                             //offersList.getRdEntities().get(0).size();i++) {
                                             System.out.println("\t\t"+(i+1)+". " + organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(0).get(i).getEntity().getEntityInfo()+" quantity "+organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(0).get(i).getQuantity());
                                             hasMadeOffers = true; // If the list is not empty, it will be run, no need for ifs
                                         }
+                                        System.out.println("Services:");
+                                        for(int i = 0; i<organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(1).size();i++){
+                                            //offersList.getRdEntities().get(0).size();i++) {
+                                            System.out.println("\t\t"+(i+1)+". " + organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(1).get(i).getEntity().getEntityInfo()+" quantity "+organization.getDonatorList().get(don.getPos()).getOffersList().getRdEntities().get(1).get(i).getQuantity());
+                                            hasMadeOffers = true; // If the list is not empty, it will be run, no need for ifs
+                                        }
+
                                         if(!hasMadeOffers){//Else, show message, you have no offers at this momment
                                             System.out.println("You have no offers at this momment");
                                         }else {

@@ -40,7 +40,9 @@ public class Main {
         org.addCurrentDonations(rdSugar);
         org.addCurrentDonations(rdRice);
 
-        //org.addCurrentDonations(rdMedicalSupport);
+        org.addCurrentDonations(rdMedicalSupport);
+        org.addCurrentDonations(rdNurserySupport);
+        org.addCurrentDonations(rdBabySitting);
 
         org.insertBeneficiary(benef1);
         org.insertBeneficiary(benef2);
