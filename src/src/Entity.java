@@ -16,7 +16,7 @@ public abstract class Entity
     public void setId(int id){this.id=id;}
     public String getType(){ return "Entity"; } //Exists to be overrided
     public abstract double getLevel(Beneficiary ben);//{return 0;}//Exists so we can access the getLevel of materials from getRdEntities()
-    public String getEntityInfo(){return "name: [" + name + "] descriprion: ["+ description + "] id: ["+id+"]";}
+    public String getEntityInfo(){return "name: [" + name + "] description: ["+ description + "] id: ["+id+"]";}
     public int getId(){ return id; }
     public String getDetails(){return  description;}
     @Override
