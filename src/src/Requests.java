@@ -55,17 +55,22 @@ public class Requests extends RequestDonationList{
 
 
     @Override
-    public void modify(int modifyChoice, int offerID, Organization org, Scanner scan) {    //process of quantity
+    public void modify(int modifyChoice, int entityID, Organization org, Scanner scan) {    //process of quantity
         int modQuantity;
         switch (modifyChoice) {
             case 1:
                 System.out.print("Add Quantity: ");
                 modQuantity = scan.nextInt();
                 found = true;//Needs to be set to true
-                if(validRequestDonation(modQuantity,org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID),org)) {
-                    org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).addQuantity(modQuantity);
-                    System.out.println("Requested " + modQuantity + " quantity");
-                    System.out.println("[id]: " + offerID + " [Current Request Quantity]: " + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity());
+                if(validRequestDonation(modQuantity,org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID),org)) {
+                    if(modQuantity + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity() <= org.getCurrentDonations().getWithID(entityID).getQuantity()) {
+                        org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).addQuantity(modQuantity);
+                        System.out.println("Requested " + modQuantity + " quantity");
+                        System.out.println("[id]: " + entityID + " [Current Request Quantity]: " + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity());
+                    }else{
+                        System.out.println("Requested Quantity does not exist within organization");
+                        //throw exception
+                    }
                 }else{
                     System.out.println("You've exceeded your maximum request quantity allowance!");
                 }
@@ -74,19 +79,19 @@ public class Requests extends RequestDonationList{
                 System.out.print("Sub Requested Quantity: ");
                 modQuantity = scan.nextInt();
                 double subtractedQuantityNum;
-                if(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity()-modQuantity>=0) {
+                if(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity()-modQuantity>=0) {
                     subtractedQuantityNum = modQuantity;
-                    org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).subQuantity(modQuantity);
+                    org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).subQuantity(modQuantity);
                     setMaxAllowed(getMaxAllowed()+modQuantity);
                 }else{
-                    subtractedQuantityNum = org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity();
-                    org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).subQuantity(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity());
-                    double level =org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getEntity().getLevel(org.getBeneficiaryList().get(Beneficiary.getPos()));
+                    subtractedQuantityNum = org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity();
+                    org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).subQuantity(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity());
+                    double level =org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getEntity().getLevel(org.getBeneficiaryList().get(Beneficiary.getPos()));
                     setMaxAllowed(10 * level);//Set to default
                     System.out.println("[Requested Quantity is set to 0]");
                 }
                 System.out.println("Subtracted "+ subtractedQuantityNum +" quantity");
-                System.out.println("[id]: "+ offerID +" [Current Request Quantity]: " + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity());
+                System.out.println("[id]: "+ entityID +" [Current Request Quantity]: " + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity());
                 break;
             case 3://Back
                 break;
@@ -119,9 +124,32 @@ public class Requests extends RequestDonationList{
         }
     }
 
-    public void commit(Organization org){ }
-    public void addOffer(){
-        System.out.println("Choose 1 for Material, 2 for Services:");
+    public void commit(Organization org){
+        boolean found = false;
+        for(int i = 0; i<org.getCurrentDonations().getRdEntities().size();i++) {//0 for Materials/ 1 Services
+            System.out.println("1...org.getCurrentDonations().getRdEntities().size(): " + org.getCurrentDonations().getRdEntities().size());
+            for (int j = 0; j < org.getCurrentDonations().getRdEntities().get(i).size(); j++) {
+                //System.out.println("offerList.getRdEntities().get(i).size(): "+offerList.getRdEntities().get(i).size());
+                System.out.println("2...org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
+                for (int k = 0; k < org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).size(); k++) {
+                    //System.out.println("org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
+                    System.out.println("3...requestsList.getRdEntities().get(i).size(): "+org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).size());
+                    if (RequestDonation.compare(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).get(k), org.getCurrentDonations().getRdEntities().get(i).get(j))) {
+                        found = true;
+                        org.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().add(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).get(k),org);
+                        org.getCurrentDonations().getRdEntities().get(i).get(j).subQuantity(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).get(k).getQuantity());
+                        System.out.println("Added Quantity to Received List Successfully");
+                        break;
+                    }
+                }
+            }
+        }
+        if(!found){System.out.println("You have no Offers to Commit");}
+        else {
+            for (int i = 0; i < org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().size(); i++) {
+                org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).clear();
+                System.out.println("Commited Successfully, Request List Cleared");
+            }
+        }
     }
-
 }

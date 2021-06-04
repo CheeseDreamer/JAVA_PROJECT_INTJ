@@ -542,6 +542,7 @@ public class Menu {
                                         break;
                                     case 3://[3]Commit
                                         organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().commit(organization);
+                                        menuLoop=false;
                                         break;
                                     case 4://[4]Back is the same as Logout
                                     case 5://[5]Logout

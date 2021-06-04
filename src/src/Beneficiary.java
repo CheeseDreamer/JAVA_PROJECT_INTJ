@@ -44,7 +44,7 @@ public class Beneficiary extends User
         boolean subMenuLoop=false;
         RequestDonation reqDon;
         int entityID;
-        int requestQuantity;
+        int requestQuantity=0;
         String confirmRequest;
         switch (choice){
             case 1://[1]Materials
@@ -67,6 +67,8 @@ public class Beneficiary extends User
 
                 System.out.println("ENTITY ID: "+ entityID);
                 if(entityID != -1) {//if requestDonation found in organization do below stuff
+                    getRequestsList().add(new RequestDonation(reqDon.getEntity(), 0), org);//initialize it with quantity 0;
+
                     System.out.println("Insert how much you want to take");
                     System.out.print("Quantity: ");
                     requestQuantity = sc.nextInt();
@@ -74,9 +76,17 @@ public class Beneficiary extends User
                     System.out.print("Confirm?(y/n): ");
                     confirmRequest = sc.nextLine();
                     if (confirmRequest.equals("y") || confirmRequest.equals("Y")) {
-                        System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + " quantity: " + requestQuantity);
-                        //the add has all the necessary logic, for adding either quantity or new Entities, and validRequestDonation
-                        getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
+                        //if your requested quantity along with your previous orders quantities is less than the quantity of the organization
+                        if(requestQuantity + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity()<= org.getCurrentDonations().getWithID(entityID).getQuantity()) {
+                            System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + " quantity: " + requestQuantity);
+                            //the add has all the necessary logic, for adding either quantity or new Entities, and validRequestDonation
+                            //Also, Both Ways Work, but the other has an extra debug message I'm too tired to delete
+                            getRequestsList().getWithID(entityID).addQuantity(requestQuantity);
+                            //getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
+                        }else{
+                            System.out.println("Requested Material Quantity does not exist within organization");
+                            //throw exception
+                        }
                     }
                 }else{//if requestDonation not found in organization
                     System.out.println("Material ID does not exist within Organization");
@@ -84,7 +94,7 @@ public class Beneficiary extends User
                 }
                 break;
             case 2://[2]Services
-                System.out.println("Insert the id of the Service you want to offer: ");
+                System.out.println("Insert the id of the Service you want to take: ");
                 System.out.print("id: ");
                 entityID = sc.nextInt();
                 reqDon = new RequestDonation(new Service(), 0);
@@ -102,6 +112,8 @@ public class Beneficiary extends User
 
                 System.out.println("ENTITY ID: "+ entityID);
                 if(entityID != -1){//if requestDonation found in organization do below stuff
+                    getRequestsList().add(new RequestDonation(reqDon.getEntity(), 0), org);//initialize it with quantity 0;
+
                     System.out.println("Insert how much you want to take");
                     System.out.print("Quantity: ");
                     requestQuantity = sc.nextInt();
@@ -109,8 +121,16 @@ public class Beneficiary extends User
                     System.out.print("Confirm?(y/n): ");
                     confirmRequest = sc.nextLine();
                     if (confirmRequest.equals("y") || confirmRequest.equals("Y")) {
-                        System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + ", " + requestQuantity + " Hours");
-                        getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
+                        if(requestQuantity + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(entityID).getQuantity() <= org.getCurrentDonations().getWithID(entityID).getQuantity()) {
+                            System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + ", " + requestQuantity + " Hours");
+                            //the add has all the necessary logic, for adding either quantity or new Entities, and validRequestDonation
+                            //Both Work, but the other has an extra debug message I'm too tired to delete
+                            getRequestsList().getWithID(entityID).addQuantity(requestQuantity);
+                            //getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
+                        }else{
+                            System.out.println("Requested Service Quantity does not exist within organization");
+                            //throw exception
+                        }
                     }
                 }else {//if requestDonation not found in organization
                     System.out.println("Service ID does not exist within Organization");
