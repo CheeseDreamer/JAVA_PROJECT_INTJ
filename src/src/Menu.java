@@ -52,6 +52,11 @@ public class Menu {
                                     admin.setPhone(scan.nextLine());
                                 }
                             } while (!validNumber);
+                            if(userType.equals("Beneficiary")||userType.equals("beneficiary")) {
+                                System.out.print("Enter number of people in your family: ");
+                                ben.setNoPersons(scan.nextInt());
+                                scan.nextLine();//Clear Buffer
+                            }
                             ben.setPhone(admin.getPhone());
                             don.setPhone(admin.getPhone());
                         }
@@ -400,7 +405,7 @@ public class Menu {
                                         System.out.println("Request Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size()+ ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() +")"+ "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
-                                        String moreDonations; //(y/n)
+                                        String moreRequests; //(y/n)
                                         String confirmDonation;//(y/n)
                                         subMenuLoop=false;
                                         do {//Loop for Material Beneficiary Sub Menu
@@ -413,9 +418,9 @@ public class Menu {
                                                     }
                                                     organization.getBeneficiaryList().get(Beneficiary.getPos()).addRequest(subMenuChoice,organization, scan);
 
-                                                    System.out.print("Do you want to make another Donation?(y/n): ");
-                                                    moreDonations = scan.nextLine();
-                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                    System.out.print("Do you want to make another Request?(y/n): ");
+                                                    moreRequests = scan.nextLine();
+                                                    if (moreRequests.equals("y") || moreRequests.equals("Y")) {
                                                         subMenuLoop = true;
                                                     } else {
                                                         subMenuLoop = false;
@@ -428,9 +433,9 @@ public class Menu {
                                                     }
                                                     organization.getBeneficiaryList().get(Beneficiary.getPos()).addRequest(subMenuChoice,organization, scan);
 
-                                                    System.out.print("Do you want to make another Donation?(y/n): ");
-                                                    moreDonations = scan.nextLine();
-                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                    System.out.print("Do you want to make another Request?(y/n): ");
+                                                    moreRequests = scan.nextLine();
+                                                    if (moreRequests.equals("y") || moreRequests.equals("Y")) {
                                                         subMenuLoop = true;
                                                     } else {
                                                         subMenuLoop = false;
@@ -478,7 +483,7 @@ public class Menu {
                                                                     offerID = scan.nextInt();
                                                                     if (offerID>=0) {//if int is inputed, delete RequestDonation
                                                                         System.out.println("Deleting....");
-                                                                        organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().remove(organization.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID));
+                                                                        organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().remove(organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID));
 
                                                                     } else { subSubMenuLoop = true; }
                                                                     break;
@@ -490,10 +495,10 @@ public class Menu {
                                                                     System.out.print("Choice: ");
                                                                     int modifyChoice = scan.nextInt();
                                                                     switch (modifyChoice) {
-                                                                        case 1:
+                                                                        case 1://[1]Add Quantity
                                                                             organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().modify(modifyChoice,offerID,organization,scan);
                                                                             break;
-                                                                        case 2:
+                                                                        case 2://[1]Subtract Quantity
                                                                             organization.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().modify(modifyChoice,offerID,organization,scan);
                                                                             break;
                                                                         case 3://Back

@@ -11,32 +11,16 @@ public class Material extends Entity
 
     //A getter for the levels, it might be needed
     //Depending on what index you choose, it will set the corresponding level value
-    public void setLevel(int index, double value){
-        //The index values should be from 1-3.
-        switch (index) {
-            case 1:
-                level1 = value;
-                break;
-            case 2:
-                level2 = value;
-                break;
-            case 3:
-                level3 = value;
-                break;
-            default:
-                System.out.println("Error, invalid index given");
-                break;
-            }
+
+    public double getLevel(Beneficiary ben){
+        if(ben.getNoPersons()==1) {
+            return level1 = 1;
+        }else if(ben.getNoPersons()>2 && ben.getNoPersons()<=4){
+            return level2 = ben.getNoPersons();
+        }else{
+            return level3 = ben.getNoPersons();
         }
-        public void getLevel(Beneficiary ben){
-            if(ben.getNoPersons()==1) {
-                level1 = 1;
-            }else if(ben.getNoPersons()>2||ben.getNoPersons()<=4){
-                level2 = 2;
-            }else{
-                level3 = 3;
-            }
-        }
+    }
 
     public String getType(){
         return "Material";
