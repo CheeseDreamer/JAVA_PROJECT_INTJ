@@ -183,46 +183,7 @@ public class Menu {
                                                         System.out.println(organization.getEntityList().get(0).get(i).getEntityInfo() + " quantity: " + organization.getCurrentDonations().getRdEntities().get(0).get(i).getQuantity());
                                                     }
                                                     organization.getDonatorList().get(Donator.getPos()).addOffer(subMenuChoice,organization, scan);
-                                                    //----------------------------------------------------------------------------------------------------------------------------------
-                                                    /*System.out.println("Insert the id of the Material you want to offer: ");
-                                                    System.out.print("id: ");
-                                                    entityID = scan.nextInt();
 
-                                                    reqDonMat = new RequestDonation(new Material(), 0);
-                                                    reqDonMat.getEntity().setId(entityID);
-                                                    for (int i = 0; i < organization.getCurrentDonations().getRdEntities().get(0).size(); i++) {
-                                                        if (RequestDonation.compare(reqDonMat, organization.getCurrentDonations().getRdEntities().get(0).get(i))) {
-                                                            entityID = organization.getCurrentDonations().getRdEntities().get(0).get(i).getId();
-                                                            reqDonMat.setEntity(organization.getCurrentDonations().getRdEntities().get(0).get(i).getEntity());
-                                                            break;
-                                                        } else {
-                                                            entityID = -1;
-                                                        }
-                                                    }
-                            //----------------------------------------------------------------------------------------------------------------------------------
-                                                    if (entityID != -1) {//if requestDonation found in organization do below stuff
-                                                        System.out.println("Insert how much you want to give");
-                                                        System.out.print("Quantity: ");
-                                                        donationQuantity = scan.nextInt();
-                                                        scan.nextLine();//Clear the buffer
-                                                        System.out.print("Confirm?(y/n): ");
-                                                        confirmDonation = scan.nextLine();
-                                                        if (confirmDonation.equals("y") || confirmDonation.equals("Y")) {
-                                                            System.out.println("you gave:\n\t" + reqDonMat.getEntity().getEntityInfo() + " quantity: " + donationQuantity);
-                                                            //offersList.getRdEntities().get(0).add(new RequestDonation(reqDonMat.getEntity(),donationQuantity));
-                                                            offersList.add(reqDonMat,organization);
-                                                            //offersList.add(new RequestDonation(reqDonMat.getEntity(),reqDonMat.getQuantity()),organization);
-                                                            //For Debug
-
-                                                            //rdlList.add(reqDonMat, organization);//In Commit, do a for loop and add everything to currentDonations, also, rdList might need add(new RequestDonation()) like below.
-                                                            //Calls addCurrentDonation
-
-                                                            //organization.getCurrentDonations().add(new RequestDonation(reqDonMat.getEntity(),reqDonMat.getQuantity()),organization);
-                                                        } else {
-                                                            donationQuantity = 0;
-                                                        }
-                                                        */
-                                                    //----------------------------------------------------------------------------------------------------------------------------------
                                                     System.out.print("Do you want to make another Donation?(y/n): ");
                                                     moreDonations = scan.nextLine();
 
