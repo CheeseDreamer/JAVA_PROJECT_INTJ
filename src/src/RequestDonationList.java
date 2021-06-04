@@ -89,13 +89,16 @@ public class RequestDonationList {
             case 2:
                 System.out.print("Sub Quantity: ");
                 modQuantity = scan.nextInt();
+                double subtractedQuantityNum;
                 if(org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity()-modQuantity>=0) {
+                    subtractedQuantityNum=modQuantity;
                     org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(modQuantity);
                 }else{
+                    subtractedQuantityNum=org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity();
                     org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).subQuantity(org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
                     System.out.println("[Request Donation Quantity is set to 0]");
                 }
-                System.out.println("Subtracted "+ modQuantity +" quantity");
+                System.out.println("Subtracted "+ subtractedQuantityNum +" quantity");
                 System.out.println("[id]: "+ offerID +" [Current Quantity]: " + org.getDonatorList().get(Donator.getPos()).getOffersList().getWithID(offerID).getQuantity());
                 break;
             case 3://Back

@@ -74,13 +74,9 @@ public class Beneficiary extends User
                     System.out.print("Confirm?(y/n): ");
                     confirmRequest = sc.nextLine();
                     if (confirmRequest.equals("y") || confirmRequest.equals("Y")) {
-                        //if(getRequestsList().validRequestDonation(requestQuantity, reqDon,org)) {
-                            System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + " quantity: " + requestQuantity);
-                            //the add has all the necessary logic, for adding either quantity or new Entities
-                            getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
-                        //}else{
-                        //    System.out.println("You've exceeded your maximum Request Donation allowance");
-                        //}
+                        System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + " quantity: " + requestQuantity);
+                        //the add has all the necessary logic, for adding either quantity or new Entities, and validRequestDonation
+                        getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
                     }
                 }else{//if requestDonation not found in organization
                     System.out.println("Material ID does not exist within Organization");
@@ -113,14 +109,8 @@ public class Beneficiary extends User
                     System.out.print("Confirm?(y/n): ");
                     confirmRequest = sc.nextLine();
                     if (confirmRequest.equals("y") || confirmRequest.equals("Y")) {
-                        //if (getRequestsList().validRequestDonation(requestQuantity,reqDon,org)) {//Valid check
-                            System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + ", " + requestQuantity + " Hours");
-                            //offersList.add(new RequestDonation(reqDonMat.getEntity(), reqDonMat.getQuantity()),org);
-                            //offersList.getRdEntities().get(1).add(new RequestDonation(reqDon.getEntity(), donationQuantity));
-                            getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
-                        //}else { //valid check ends here
-                        //    System.out.println("You've exceeded your maximum Request Donation allowance");
-                        //}
+                        System.out.println("you took:\n\t" + reqDon.getEntity().getEntityInfo() + ", " + requestQuantity + " Hours");
+                        getRequestsList().add(new RequestDonation(reqDon.getEntity(), requestQuantity), org);
                     }
                 }else {//if requestDonation not found in organization
                     System.out.println("Service ID does not exist within Organization");

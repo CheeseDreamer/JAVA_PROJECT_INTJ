@@ -61,7 +61,7 @@ public class Requests extends RequestDonationList{
             case 1:
                 System.out.print("Add Quantity: ");
                 modQuantity = scan.nextInt();
-                //if validRequest
+                found = true;//Needs to be set to true
                 if(validRequestDonation(modQuantity,org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID),org)) {
                     org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).addQuantity(modQuantity);
                     System.out.println("Requested " + modQuantity + " quantity");
@@ -73,13 +73,19 @@ public class Requests extends RequestDonationList{
             case 2:
                 System.out.print("Sub Requested Quantity: ");
                 modQuantity = scan.nextInt();
+                double subtractedQuantityNum;
                 if(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity()-modQuantity>=0) {
+                    subtractedQuantityNum = modQuantity;
                     org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).subQuantity(modQuantity);
+                    setMaxAllowed(getMaxAllowed()+modQuantity);
                 }else{
+                    subtractedQuantityNum = org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity();
                     org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).subQuantity(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity());
+                    double level =org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getEntity().getLevel(org.getBeneficiaryList().get(Beneficiary.getPos()));
+                    setMaxAllowed(10 * level);//Set to default
                     System.out.println("[Requested Quantity is set to 0]");
                 }
-                System.out.println("Subtracted "+ modQuantity +" quantity");
+                System.out.println("Subtracted "+ subtractedQuantityNum +" quantity");
                 System.out.println("[id]: "+ offerID +" [Current Request Quantity]: " + org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getWithID(offerID).getQuantity());
                 break;
             case 3://Back
