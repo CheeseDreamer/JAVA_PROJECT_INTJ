@@ -116,7 +116,7 @@ public class Requests extends RequestDonationList{
                 setMaxAllowed(getMaxAllowed()-requestedQuantity);
                 return true;
             }else{
-                System.out.println("You've exceeded your maximum Request Donation allowance");
+                System.out.println("You've exceeded your maximum Request allowance");
                 return false;
             }
         }else {
@@ -144,7 +144,7 @@ public class Requests extends RequestDonationList{
                 }
             }
         }
-        if(!found){System.out.println("You have no Offers to Commit");}
+        if(!found){System.out.println("You have no Requests to Commit");}
         else {
             for (int i = 0; i < org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().size(); i++) {
                 org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).clear();
