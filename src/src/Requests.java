@@ -23,15 +23,6 @@ public class Requests extends RequestDonationList{
                             System.out.println("Added Quantity");
                         }//valid check end
                         break;
-                    } else if (!(getRdEntities().get(i).contains(rd))) {//if its the first time added, initialize
-                        //initMaxAllowed=true;
-                        if (validRequestDonation(rd.getQuantity(), rd, org)) {
-                            if (rd.getEntityType().equals("Material")) {
-                                getRdEntities().get(0).add(rd);
-                            } else if (rd.getEntityType().equals("Service")) {
-                                getRdEntities().get(1).add(rd);
-                            }
-                        }//valid check end
                     }
                 }
             }
