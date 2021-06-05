@@ -24,7 +24,7 @@ public class Menu {
                 if(logAgain) {
                     logAgain=false;
                     do {
-                        //Do you need to initialize Name and Phone?
+                        //Do you need to initialize Name and Phone? Or just jump straight into the menus
                         if (!isNamePhoneInit) {
                             //Print Welcome if you are a new user
                             if (!(logged.equals("y") || logged.equals("Y"))) {
@@ -51,7 +51,8 @@ public class Menu {
                                     admin.setPhone(scan.nextLine());
                                 }
                             } while (!validNumber);
-                            if(userType.equals("Beneficiary")||userType.equals("beneficiary")) {
+
+                            if((userType.equals("Beneficiary")||userType.equals("beneficiary"))&& !(logged.equals("y")||logged.equals("Y"))) {
                                 System.out.print("Enter number of people in your family: ");
                                 ben.setNoPersons(scan.nextInt());
                                 scan.nextLine();//Clear Buffer
@@ -334,7 +335,7 @@ public class Menu {
                         }
                     } while (!validNumber);
                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
-                    System.out.println("Welcome to "+organization.getName()+" Beneficiary Menu, User: " + organization.getBeneficiaryList().get(Beneficiary.getPos()).getName() +" ]"+organization.getBeneficiaryList().get(Beneficiary.getPos()).getPhone() +"] Current Admin: "+organization.getName());
+                    System.out.println("Welcome to "+organization.getName()+" Beneficiary Menu, User: " + organization.getBeneficiaryList().get(Beneficiary.getPos()).getName() +" ["+organization.getBeneficiaryList().get(Beneficiary.getPos()).getPhone() +"] Current Admin: "+organization.getName());
                     System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
                     logAgain = false;
@@ -552,7 +553,7 @@ public class Menu {
                                                     System.out.println("[1]Materials:");
                                                     organization.listEntities(0);//0 to print Materials or 1 to print Services
 
-                                                    System.out.println("Choose an id[1] or Add a new Material option[2] in donations?[1,2]: ");
+                                                    System.out.println("Choose an id[1] or Add a new Material option[2] in donations, [3]Back [1,2,3]: ");
                                                     System.out.print("Choose: ");
                                                     subViewChoice=scan.nextInt();
                                                     switch (subViewChoice){
@@ -580,6 +581,8 @@ public class Menu {
                                                             organization.addEntity(material);
                                                             organization.addCurrentDonations(reqDonMat);
                                                             break;
+                                                        case 3://[3]Back
+                                                            break;
                                                         default:
                                                             System.out.println("invalid view menu choice");
                                                             break;
@@ -599,7 +602,7 @@ public class Menu {
                                                     System.out.println("[2]Services:");
                                                     organization.listEntities(1);//0 to print Materials or 1 to print Services
 
-                                                    System.out.println("Choose an id[1] or Add a new Service option[2] in donations?[1,2]: ");
+                                                    System.out.println("Choose an id[1] or Add a new Service option[2] in donations, [3]Back [1,2]: ");
                                                     System.out.print("Choose: ");
                                                     subViewChoice=scan.nextInt();
                                                     switch (subViewChoice){
@@ -626,6 +629,8 @@ public class Menu {
 
                                                             organization.addEntity(service);
                                                             organization.addCurrentDonations(reqDonServ);
+                                                            break;
+                                                        case 3://[3]Back
                                                             break;
                                                         default:
                                                             System.out.println("invalid view menu choice");
@@ -654,6 +659,163 @@ public class Menu {
                                         menuLoop = false;
                                         break;
                                     case 2://[2]Monitor
+                                        boolean monitorLoop = true;
+                                        do {
+                                            System.out.println("Monitor:");
+                                            System.out.println("\t[1]List Beneficiaries\n\t[2]List Donators\n\t[3]Reset Beneficiaries Lists\n\t[4]Back");
+                                            System.out.print("Choose: ");
+                                            int monitorChoice = scan.nextInt();
+                                            boolean phoneLoop;
+                                            switch (monitorChoice) {
+                                                case 1://[1]List Beneficiaries
+                                                    System.out.println("List Beneficiaries:");
+                                                    organization.listBeneficiaries();
+                                                    System.out.print("Enter a phone: ");
+                                                    scan.nextLine();//Clear Buffer
+                                                    ben.setPhone(scan.nextLine());
+
+                                                    do {
+                                                        validNumber = true;
+                                                        try {
+                                                            Long.parseLong(ben.getPhone());
+                                                        } catch (NumberFormatException nfe) {
+                                                            validNumber = false;
+                                                            System.out.print("Give valid phone number: ");
+                                                            ben.setPhone(scan.nextLine());
+                                                        }
+                                                    } while (!validNumber);
+
+                                                    //phoneLoop = false;
+                                                    do {
+                                                        phoneLoop=false;//For some reason, Beneficiary needs a constant reminder phoneLoop is false
+                                                        if (ben.isBeneficiaryPhone(organization)) {
+                                                            System.out.println("Beneficiary: ["+ organization.getBeneficiaryList().get(Beneficiary.getPos()).getName()+"] ["+organization.getBeneficiaryList().get(Beneficiary.getPos()).getPhone()+"]");
+                                                            System.out.println("ReceivedList:");
+                                                            for(int i=0;i<organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().size();i++) {//For the 2 Entity types(Materials,Services)
+                                                                for (int j=0;j<organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().get(i).size();j++) {//For each entity
+                                                                    System.out.println("\t"+organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().get(i).get(j).getEntity().getEntityInfo()+" quantity: ["+organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().get(i).get(j).getQuantity()+"]");
+                                                                }
+                                                            }
+
+                                                            boolean monitorBenLoop=false;
+                                                            do {
+                                                                System.out.println("[1]Clear Received List\n[2]Delete Beneficiary\n[3]Back");
+                                                                System.out.print("Choice: ");
+                                                                int monitorBenChoice = scan.nextInt();
+                                                                switch (monitorBenChoice) {
+                                                                    case 1://[1]Clear Received List
+                                                                        for(int i=0;i<organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().size();i++) {//For the 2 Entity types(Materials,Services)
+                                                                            organization.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().getRdEntities().get(i).clear();
+                                                                        }
+                                                                        System.out.println("Beneficiary: "+ organization.getBeneficiaryList().get(Beneficiary.getPos()).getName() +" Received List Cleared");
+                                                                        break;
+                                                                    case 2://[2]Delete Beneficiary
+                                                                        organization.getBeneficiaryList().remove(Beneficiary.getPos());
+                                                                        System.out.println("Deleted Beneficiary "+ ben.getName() +" from the organization");
+                                                                        break;
+                                                                    case 3://[3]Back
+                                                                        break;
+                                                                    default:
+                                                                        System.out.print("invalid choice, do you want to try again?(y/n): ");
+                                                                        scan.nextLine();//Clear Buffer
+                                                                        String tryAgain = scan.nextLine();
+                                                                        monitorBenLoop = tryAgain.equals("y") || tryAgain.equals("Y");
+                                                                        break;
+                                                                }
+                                                            }while(monitorBenLoop);
+                                                        } else {
+                                                            System.out.println("Phone number not found in database!");
+                                                            System.out.print("Try again?(y/n): ");
+                                                            String tryAgain = scan.nextLine();
+                                                            phoneLoop= tryAgain.equals("y") || tryAgain.equals("Y");
+                                                            if(phoneLoop){
+                                                                System.out.print("Enter a phone: ");
+                                                                ben.setPhone(scan.nextLine());
+                                                            }
+                                                        }
+                                                    }while(phoneLoop);
+                                                    break;
+
+                                                case 2://[2]List Donators
+                                                    System.out.println("List Donators:");
+                                                    organization.listDonators();
+                                                    System.out.print("Enter a phone: ");
+                                                    scan.nextLine();//Clear Buffer
+                                                    don.setPhone(scan.nextLine());
+
+                                                    do {
+                                                        validNumber = true;
+                                                        try {
+                                                            Long.parseLong(don.getPhone());
+                                                        } catch (NumberFormatException nfe) {
+                                                            validNumber = false;
+                                                            System.out.print("Give valid phone number: ");
+                                                            don.setPhone(scan.nextLine());
+                                                        }
+                                                    } while (!validNumber);
+
+                                                    phoneLoop = false;
+                                                    do {
+                                                        if (don.isDonatorPhone(organization)) {
+                                                            System.out.println("Donator: ["+ organization.getDonatorList().get(Donator.getPos()).getName()+"] ["+organization.getDonatorList().get(Donator.getPos()).getPhone()+"]");
+                                                            System.out.println("Offers List:");
+                                                            for(int i=0;i<organization.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().size();i++) {//For the 2 Entity types(Materials,Services)
+                                                                for (int j=0;j<organization.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).size();j++) {//For each entity
+                                                                    System.out.println("\t"+organization.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(j).getEntity().getEntityInfo()+" quantity: ["+organization.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(j).getQuantity()+"]");
+                                                                }
+                                                            }
+
+                                                            boolean monitorDonLoop=false;
+                                                            do {
+                                                                System.out.println("[1]Delete Donator\n[2]Back");
+                                                                System.out.print("Choice: ");
+                                                                int monitorDonChoice = scan.nextInt();
+                                                                switch (monitorDonChoice) {
+                                                                    case 1://[1]Delete Beneficiary
+                                                                        organization.getDonatorList().remove(Donator.getPos());
+                                                                        System.out.println("Deleted Donator "+ don.getName() +" from the organization");
+                                                                        break;
+                                                                    case 2://[2]Back
+                                                                        break;
+                                                                    default:
+                                                                        System.out.print("invalid choice, do you want to try again?(y/n): ");
+                                                                        scan.nextLine();//Clear Buffer
+                                                                        String tryAgain = scan.nextLine();
+                                                                        monitorDonLoop = tryAgain.equals("y") || tryAgain.equals("Y");
+                                                                        break;
+                                                                }
+                                                            }while(monitorDonLoop);
+                                                        } else {
+                                                            System.out.println("Phone number not found in database!");
+                                                            System.out.print("Try again?(y/n): ");
+                                                            String tryAgain = scan.nextLine();
+                                                            phoneLoop= tryAgain.equals("y") || tryAgain.equals("Y");
+                                                            if(phoneLoop){
+                                                                System.out.print("Enter a phone: ");
+                                                                don.setPhone(scan.nextLine());
+                                                            }
+                                                        }
+                                                    }while(phoneLoop);
+                                                    break;
+                                                case 3://[3]Reset Beneficiaries Lists
+                                                    for (int i = 0; i < organization.getBeneficiaryList().size(); i++) {//Number of beneficiaries
+                                                        for (int j = 0; j < organization.getBeneficiaryList().get(i).getReceivedList().getRdEntities().size(); j++) {//Types of Entities(Materials, Services)
+                                                            for (int k = 0; k < organization.getBeneficiaryList().get(i).getReceivedList().getRdEntities().get(j).size(); k++) {//Number of Entities
+                                                                organization.getBeneficiaryList().get(i).getReceivedList().getRdEntities().get(j).remove(0);//Delete starting from 0, could also use clear...
+                                                            }
+                                                        }
+                                                    }
+                                                    System.out.println("All Beneficiaries Received List have been cleared");
+                                                    break;
+                                                case 4://[4]Back
+                                                    monitorLoop=false;
+                                                    break;
+                                                default:
+                                                    System.out.println("Invalid option, try again!");
+                                                    break;
+                                            }
+                                        }while(monitorLoop);
+
                                         menuLoop = false;
                                         break;
                                     case 3://[3]Back is the same as Logout

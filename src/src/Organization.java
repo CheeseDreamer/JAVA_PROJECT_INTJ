@@ -100,25 +100,19 @@ public class Organization
         }
     }
     public void listBeneficiaries(){
-        System.out.println("Beneficiaries Names:");
+        System.out.println("Beneficiaries:");
         for(var ben: beneficiaryList){
             System.out.println("\t"+ben.getName() + " " + ben.getPhone());
         }
     }
     public void listDonators(){
-        System.out.println("Donators Names:");
+        System.out.println("Donators:");
         for(var don:donatorList){
             System.out.print("\t"+don.getName() + " " + don.getPhone());
             don.showOffers();
             System.out.println();
         }
     }
-    //currentDonations setters, getters are different from wrappers, also might need to make them
-    //Setter is being done in Offers, Getter is done by the wrapper method get
-
-    //"WRAPPER METHODS"(copy-pasting)
-    //need to finish add() in RequestDonationList to replace the one bellow.
-    //no point in having incomplete code in 2 places
 
     public void addCurrentDonations(RequestDonation rdEntity){//This will be usable only by Admin
         boolean found = false;
