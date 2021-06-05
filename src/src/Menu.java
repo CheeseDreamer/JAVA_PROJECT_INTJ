@@ -20,7 +20,6 @@ public class Menu {
             String userType="User";
             boolean logAgain= true;//true when back() or logout();
             boolean exit = false;
-            //Offers offersList = new Offers(); //Need to find a place in the ifs were its safe to make a new Offers();
             do {//Back
                 if(logAgain) {
                     logAgain=false;
@@ -128,14 +127,7 @@ public class Menu {
                             }
                         }
                     } while (doLoop);
-                    //offersList = new Offers();//Make a new OffersList everytime you log again
                 }
-                RequestDonation reqDonMat = new RequestDonation(new Material(), 10);
-                RequestDonation reqDonServ = new RequestDonation(new Service(), 5);
-                RequestDonationList rdlList = new RequestDonationList();
-
-                //rdlMat.add(0, reqDonMat, organization);
-                //rdlServ.add(0, reqDonServ, organization);
 
                 boolean menuLoop = true;
                 boolean subMenuLoop = false;
@@ -145,19 +137,14 @@ public class Menu {
                 boolean validSubMenuChoice;
 
                 if (userType.equals("donator") || userType.equals("Donator")) {
-                    System.out.println("Welcome to Donator Menu, User: " + organization.getDonatorList().get(Donator.getPos()).getName());
+                    System.out.println("Welcome to "+organization.getName()+" Donator Menu, User: " + organization.getDonatorList().get(Donator.getPos()).getName() +" ["+ organization.getDonatorList().get(Donator.getPos()).getPhone() +"] Current Admin: "+organization.getName());
 
                     organization.getAdmin().setIsAdmin(false);
 
-                    /*
-                    System.out.println("Donator List");
-                    for(int i=0;i<organization.getDonatorList().size();i++) {
-                        System.out.println(organization.getDonatorList().get(i).getName() + " " + organization.getDonatorList().get(i).getPhone());
-                    }
-                    System.out.println("End of Donator List");*/
-
                     System.out.println("\t[1]Add Offer\n\t[2]Show Offers\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
+                    logAgain = false;
+
                     do {
                         validNumber = true;
                         try {
@@ -167,7 +154,7 @@ public class Menu {
                                 switch (menuChoice) {
                                     case 1://[1]Add Offer
                                         int donationQuantity;
-                                        logAgain = false;
+                                        //logAgain = false;
                                         System.out.println("Add Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
@@ -347,9 +334,10 @@ public class Menu {
                         }
                     } while (!validNumber);
                 } else if (userType.equals("beneficiary") || userType.equals("Beneficiary")) {
-                    System.out.println("Welcome to Beneficiary Menu, User: " + organization.getBeneficiaryList().get(Beneficiary.getPos()).getName());
+                    System.out.println("Welcome to "+organization.getName()+" Beneficiary Menu, User: " + organization.getBeneficiaryList().get(Beneficiary.getPos()).getName() +" ]"+organization.getBeneficiaryList().get(Beneficiary.getPos()).getPhone() +"] Current Admin: "+organization.getName());
                     System.out.println("\t[1]Add Request\n\t[2]Show Requests\n\t[3]Commit\n\t[4]Back\n\t[5]Logout\n\t[6]Exit");
                     System.out.print("Choice: ");
+                    logAgain = false;
                     subMenuLoop=false;
                     organization.getAdmin().setIsAdmin(false);
 
@@ -362,7 +350,7 @@ public class Menu {
                                 switch (menuChoice) {
                                     case 1://[1]Add Request
                                         int requestQuantity;
-                                        logAgain=false;
+                                        //logAgain=false;
                                         System.out.println("Request Offer:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size()+ ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() +")"+ "\n\t[3]Back");
                                         System.out.print("Choice: ");
                                         subMenuChoice = scan.nextInt();
@@ -535,9 +523,11 @@ public class Menu {
                         }
                     }while (!validNumber);
                 } else if (userType.equals("admin") || userType.equals("Admin")) {
-                    System.out.println("Welcome to Admin Menu, User: " + organization.getAdmin().getName());
+                    System.out.println("Welcome to Admin Menu, User: " + organization.getAdmin().getName() +" ["+ organization.getAdmin().getPhone() +"]");
                     System.out.println("\t[1]View\n\t[2]Monitor Organization\n\t[3]Back\n\t[4]Logout\n\t[5]Exit");
                     System.out.print("Choice: ");
+
+                    logAgain = false;
                     organization.getAdmin().setIsAdmin(true);
                     do {
                         validNumber=true;
@@ -547,11 +537,120 @@ public class Menu {
                             do {
                                 switch (menuChoice) {
                                     case 1://[1]View
-                                        System.out.println("currentDonations: "+ organization.getCurrentDonations());
-                                        //for(int i = 0; i<1;i++){
-                                        for (int i = 0; i<organization.getCurrentDonations().getRdEntities().get(0).size();i++) {
-                                            System.out.println(organization.getCurrentDonations().getRdEntities().get(0).get(i).getEntity().getEntityInfo());//+" Quantity: ["+organization.getCurrentDonations().getRdEntities().get(0).get(i).getQuantity());
-                                        }
+                                        System.out.println("View:\n\t[1]Material: Quantity(" + organization.getEntityList().get(0).size() + ")\n\t[2]Service: Quantity(" + organization.getEntityList().get(1).size() + ")" + "\n\t[3]Back");
+                                        System.out.print("Choice: ");
+                                        subMenuChoice = scan.nextInt();
+                                        int subViewChoice;
+                                        int subSubViewChoice;
+                                        String moreDonations; //(y/n)
+                                        String confirmDonation;//(y/n)
+                                        subMenuLoop=false;
+                                        do{//Loop for Admin's View Sub Menu
+                                            switch (subMenuChoice) {
+                                                case 1:
+                                                    //do{//
+                                                    System.out.println("[1]Materials:");
+                                                    organization.listEntities(0);//0 to print Materials or 1 to print Services
+
+                                                    System.out.println("Choose an id[1] or Add a new Material option[2] in donations?[1,2]: ");
+                                                    System.out.print("Choose: ");
+                                                    subViewChoice=scan.nextInt();
+                                                    switch (subViewChoice){
+                                                        case 1://[1]Choose an id
+                                                            System.out.print("id: ");
+                                                            entityID = scan.nextInt();
+                                                            System.out.print(organization.getCurrentDonations().getWithID(entityID).getEntity().getDetails() +" quantity: "+ organization.getCurrentDonations().getWithID(entityID).getQuantity()+"\n");
+                                                            break;
+                                                        case 2://[2]Add a new Material option in donations
+                                                            //do{//subSubView menu
+                                                            System.out.print("Enter material name:");
+                                                            scan.nextLine();//Clear Buffer
+                                                            String matName = scan.nextLine();
+                                                            System.out.print("Enter material description: ");
+                                                            String matDescription= scan.nextLine();
+                                                            System.out.print("Enter material id: ");
+                                                            entityID = scan.nextInt();
+
+                                                            Material material = new Material(matName,matDescription,entityID);
+
+                                                            System.out.print("Enter material quantity: ");
+                                                            double matQuantity= scan.nextDouble();
+                                                            RequestDonation reqDonMat = new RequestDonation(material,matQuantity);
+
+                                                            organization.addEntity(material);
+                                                            organization.addCurrentDonations(reqDonMat);
+                                                            break;
+                                                        default:
+                                                            System.out.println("invalid view menu choice");
+                                                            break;
+                                                    }
+
+                                                    System.out.print("Do you want to view again?(y/n): ");
+                                                    scan.nextLine();//Clear the buffer
+                                                    moreDonations = scan.nextLine();
+
+                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                        subMenuLoop = true;
+                                                    } else {
+                                                        subMenuLoop = false;
+                                                    }
+                                                    break;
+                                                case 2://[2]Services
+                                                    System.out.println("[2]Services:");
+                                                    organization.listEntities(1);//0 to print Materials or 1 to print Services
+
+                                                    System.out.println("Choose an id[1] or Add a new Service option[2] in donations?[1,2]: ");
+                                                    System.out.print("Choose: ");
+                                                    subViewChoice=scan.nextInt();
+                                                    switch (subViewChoice){
+                                                        case 1://[1]Choose an id
+                                                            System.out.print("id: ");
+                                                            entityID = scan.nextInt();
+                                                            System.out.print(organization.getCurrentDonations().getWithID(entityID).getEntity().getDetails() +" quantity: "+ organization.getCurrentDonations().getWithID(entityID).getQuantity()+"\n");
+                                                            break;
+                                                        case 2://[2]Add a new Service option in donations
+                                                            //do{//subSubView menu
+                                                            System.out.print("Enter service name:");
+                                                            scan.nextLine();//Clear Buffer
+                                                            String servName = scan.nextLine();
+                                                            System.out.print("Enter service description: ");
+                                                            String servDescription= scan.nextLine();
+                                                            System.out.print("Enter service id: ");
+                                                            entityID = scan.nextInt();
+
+                                                            Service service = new Service(servName,servDescription,entityID);
+
+                                                            System.out.print("Enter service quantity: ");
+                                                            double matQuantity= scan.nextDouble();
+                                                            RequestDonation reqDonServ = new RequestDonation(service,matQuantity);
+
+                                                            organization.addEntity(service);
+                                                            organization.addCurrentDonations(reqDonServ);
+                                                            break;
+                                                        default:
+                                                            System.out.println("invalid view menu choice");
+                                                            break;
+                                                    }
+
+                                                    System.out.print("Do you want to view again?(y/n): ");
+                                                    scan.nextLine();//Clear the buffer
+                                                    moreDonations = scan.nextLine();
+                                                    if (moreDonations.equals("y") || moreDonations.equals("Y")) {
+                                                        subMenuLoop = true;
+                                                    } else {
+                                                        subMenuLoop = false;
+                                                    }
+                                                    break;
+                                                case 3://[3]Back
+                                                    break;
+                                                default:
+                                                    subMenuLoop = true;
+                                                    System.out.print("Enter Valid Sub Menu Choice [1/2]: ");
+                                                    subMenuChoice = scan.nextInt();
+                                                    break;
+                                            }
+                                        }while(subMenuLoop);
+
                                         menuLoop = false;
                                         break;
                                     case 2://[2]Monitor

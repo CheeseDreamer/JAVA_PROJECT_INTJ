@@ -3,6 +3,7 @@ public class Main {
     public static void main(String[] args) {
 
         Organization org = new Organization();
+        org.setName("Rainbow Factory");
         Material milk = new Material("Milk","Cow Milk",1);
         Material sugar = new Material("Sugar","Cane Sugar",2);
         Material rice = new Material("Rice","Canned Rice", 3);

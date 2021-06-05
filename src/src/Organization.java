@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Organization
 {
-    String name;
-    Admin admin;
+    private String name;
+    private Admin admin;
     private int entityTypes=2;
     //Temporary saves what the donator will donate
     private ArrayList<ArrayList<Entity>> entityList = new ArrayList<>(entityTypes);
@@ -19,6 +19,7 @@ public class Organization
     }
 
     public void setName(String name){this.name=name;}
+    public String getName(){return name;}
     public void setAdmin(Admin admin){this.admin = admin;}
     public Admin getAdmin(){return this.admin;}
 
@@ -31,12 +32,26 @@ public class Organization
     public RequestDonationList getCurrentDonations(){return currentDonations;}
 
     public void addEntity(Entity entity){
-        if(entity.getType().equals("Material")){
-            this.entityList.get(0).add(entity);
-        }else if(entity.getType().equals("Service")){
-            this.entityList.get(1).add(entity);
+        boolean found = false;
+        for(int i=0; i<this.getCurrentDonations().getRdEntities().size();i++){
+            for(int j=0; j<this.getCurrentDonations().getRdEntities().get(i).size();j++){
+                if(Entity.compare(entity,this.getCurrentDonations().getRdEntities().get(i).get(j).getEntity())){
+                    found = true;
+                    break;
+                }
+            }
         }
-        //Needs Exceptions if entity already exists
+        if(found){//if the admin inserts a new donation option that exists
+            System.out.println("Donation option already exists!");
+            //throw exception
+        }else {
+            if (entity.getType().equals("Material")) {
+                this.entityList.get(0).add(entity);
+            } else if (entity.getType().equals("Service")) {
+                this.entityList.get(1).add(entity);
+            }
+            //Needs Exceptions if entity already exists
+        }
     }
     public void removeEntity(Entity entity){
         //if isAdmin=true;
@@ -65,26 +80,35 @@ public class Organization
         beneficiaryList.remove(benef);
         //Exception needed
     }
-    public void listEntities(){
-        System.out.println("Materials");
-        for(var ent: entityList.get(0)){
-            System.out.println("\t"+ent.getDetails());
-        }
-        System.out.println("Services");
-        for(var ent:entityList.get(1)){
-            System.out.println("\t"+ent.getDetails());
+    public void listEntities(int entityType){
+        switch (entityType){
+            case 0:
+                System.out.println("Materials");
+                for(var ent: entityList.get(entityType)){
+                    System.out.println("\t"+ent.getEntityInfo() +" quantity: ["+ getCurrentDonations().getWithID(ent.getId()).getQuantity() +"]");
+                }
+                break;
+            case 1:
+                System.out.println("Services");
+                for(var ent:entityList.get(entityType)){
+                    System.out.println("\t"+ent.getEntityInfo() +" quantity: ["+ getCurrentDonations().getWithID(ent.getId()).getQuantity() +"]");
+                }
+                break;
+            default:
+                System.out.println("Please enter either 1 or 2");
+                break;
         }
     }
     public void listBeneficiaries(){
         System.out.println("Beneficiaries Names:");
         for(var ben: beneficiaryList){
-            System.out.println("\t"+ben.getName() + " " + ben.getPhone() + " " + ben.getReceivedList());
+            System.out.println("\t"+ben.getName() + " " + ben.getPhone());
         }
     }
     public void listDonators(){
         System.out.println("Donators Names:");
         for(var don:donatorList){
-            System.out.print("\t"+don.getName() + " " + don.getPhone() + " ");
+            System.out.print("\t"+don.getName() + " " + don.getPhone());
             don.showOffers();
             System.out.println();
         }
@@ -96,11 +120,25 @@ public class Organization
     //need to finish add() in RequestDonationList to replace the one bellow.
     //no point in having incomplete code in 2 places
 
-    public void addCurrentDonations(RequestDonation rdEntity){
-        if(rdEntity.getEntityType().equals("Material")) {
-            currentDonations.getRdEntities().get(0).add(rdEntity);
-        }else if(rdEntity.getEntityType().equals("Service")){
-            currentDonations.getRdEntities().get(1).add(rdEntity);
+    public void addCurrentDonations(RequestDonation rdEntity){//This will be usable only by Admin
+        boolean found = false;
+        for(int i=0; i<this.getCurrentDonations().getRdEntities().size();i++){
+            for(int j=0; j<this.getCurrentDonations().getRdEntities().get(i).size();j++){
+                if(RequestDonation.compare(rdEntity,this.getCurrentDonations().getRdEntities().get(i).get(j))){
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if(found){//if the admin inserts a new donation option that exists
+            System.out.println("Donation option already exists!");
+            //throw exception
+        }else {
+            if (rdEntity.getEntityType().equals("Material")) {
+                currentDonations.getRdEntities().get(0).add(rdEntity);
+            } else if (rdEntity.getEntityType().equals("Service")) {
+                currentDonations.getRdEntities().get(1).add(rdEntity);
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ public class RequestDonationList {
     public void add(RequestDonation rd, Organization org) {//is being run by offersList,...
         boolean found = false;
         //System.out.println("add function RequestDonationList Works");
-        if (org.admin.getIsAdmin() || org.getEntityList().get(0).contains(rd.getEntity()) || org.getEntityList().get(1).contains(rd.getEntity())) {//org.getCurrentDonations().getRdEntities().get(1).contains(rd)) {
+        if (org.getAdmin().getIsAdmin() || org.getEntityList().get(0).contains(rd.getEntity()) || org.getEntityList().get(1).contains(rd.getEntity())) {//org.getCurrentDonations().getRdEntities().get(1).contains(rd)) {
             //System.out.println("if statement Works");
             //if you are the admin, or the Request Donation exists within the Organization
             for (int i = 0; i < entityTypesCount; i++) {//Materials or Services

@@ -123,9 +123,7 @@ public class Donator extends User
         }else{ System.out.println("You have no offers right now"); }
          */
     }
-    public void commit(Organization org, RequestDonation rdEntities){
-        org.addCurrentDonations(rdEntities);
-        //if successful
-        //rdEntities.reset();
+    public void commit(Organization org){//Wrapper method
+        getOffersList().commit(org);
     }
 }
