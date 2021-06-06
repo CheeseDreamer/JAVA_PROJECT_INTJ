@@ -725,6 +725,7 @@ public class Menu {
                                                             }while(monitorBenLoop);
                                                         } else {
                                                             System.out.println("Phone number not found in database!");
+                                                            //Throw exception, for the message I guess?
                                                             System.out.print("Try again?(y/n): ");
                                                             String tryAgain = scan.nextLine();
                                                             phoneLoop= tryAgain.equals("y") || tryAgain.equals("Y");
@@ -787,6 +788,7 @@ public class Menu {
                                                             }while(monitorDonLoop);
                                                         } else {
                                                             System.out.println("Phone number not found in database!");
+                                                            //throw exception, for the message I guess?
                                                             System.out.print("Try again?(y/n): ");
                                                             String tryAgain = scan.nextLine();
                                                             phoneLoop= tryAgain.equals("y") || tryAgain.equals("Y");
