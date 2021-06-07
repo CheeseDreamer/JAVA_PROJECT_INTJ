@@ -23,19 +23,4 @@ public class Admin extends User{
 
     public void setIsAdmin(boolean bool){isAdmin=bool;}
     public boolean getIsAdmin(){return isAdmin;}
-    public void view(){
-
-    }
-    public void monitorOrganization(){
-
-    }
-    public void back(){
-
-    }
-    public void logout() {
-
-    }
-    public void exit(){
-
-    }
 }

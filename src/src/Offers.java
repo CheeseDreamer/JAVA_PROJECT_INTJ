@@ -7,13 +7,8 @@ public class Offers extends RequestDonationList
     public void commit(Organization org){
         boolean found = false;
         for(int i = 0; i<org.getCurrentDonations().getRdEntities().size();i++) {//0 for Materials/ 1 Services
-            System.out.println("1...org.getCurrentDonations().getRdEntities().size(): " + org.getCurrentDonations().getRdEntities().size());
             for (int j = 0; j < org.getCurrentDonations().getRdEntities().get(i).size(); j++) {
-                //System.out.println("offerList.getRdEntities().get(i).size(): "+offerList.getRdEntities().get(i).size());
-                System.out.println("2...org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
                 for (int k = 0; k < org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).size(); k++) {
-                    //System.out.println("org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
-                    System.out.println("3...offerList.getRdEntities().get(i).size(): "+org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).size());
                     if (RequestDonation.compare(org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(k), org.getCurrentDonations().getRdEntities().get(i).get(j))) {
                         found = true;
                         org.getCurrentDonations().getRdEntities().get(i).get(j).addQuantity(org.getDonatorList().get(Donator.getPos()).getOffersList().getRdEntities().get(i).get(k).getQuantity());

@@ -98,9 +98,8 @@ public class Requests extends RequestDonationList{
         double level;
         if(rd.getEntityType().equals("Material")){
             level = rd.getEntity().getLevel(org.getBeneficiaryList().get(Beneficiary.getPos()));
-            //System.out.println("initMaxAllowed = "+ initMaxAllowed);
             if(!found) {//Only set it once, for each requested entity
-                System.out.println("Initializing MaxAllowed");
+                //System.out.println("Initializing MaxAllowed");
                 setMaxAllowed(10 * level);
             }
             if(requestedQuantity<=getMaxAllowed()){
@@ -118,13 +117,8 @@ public class Requests extends RequestDonationList{
     public void commit(Organization org){
         boolean found = false;
         for(int i = 0; i<org.getCurrentDonations().getRdEntities().size();i++) {//0 for Materials/ 1 Services
-            System.out.println("1...org.getCurrentDonations().getRdEntities().size(): " + org.getCurrentDonations().getRdEntities().size());
             for (int j = 0; j < org.getCurrentDonations().getRdEntities().get(i).size(); j++) {
-                //System.out.println("offerList.getRdEntities().get(i).size(): "+offerList.getRdEntities().get(i).size());
-                System.out.println("2...org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
                 for (int k = 0; k < org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).size(); k++) {
-                    //System.out.println("org.getCurrentDonations().getRdEntities().get(i).size(): "+org.getCurrentDonations().getRdEntities().get(i).size());
-                    System.out.println("3...requestsList.getRdEntities().get(i).size(): "+org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).size());
                     if (RequestDonation.compare(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).get(k), org.getCurrentDonations().getRdEntities().get(i).get(j))) {
                         found = true;
                         org.getBeneficiaryList().get(Beneficiary.getPos()).getReceivedList().add(org.getBeneficiaryList().get(Beneficiary.getPos()).getRequestsList().getRdEntities().get(i).get(k),org);
