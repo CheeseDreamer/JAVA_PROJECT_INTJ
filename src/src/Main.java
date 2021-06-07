@@ -1,6 +1,6 @@
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AddEntityOrgException {
 
         Organization org = new Organization();
         org.setName("Rainbow Factory");

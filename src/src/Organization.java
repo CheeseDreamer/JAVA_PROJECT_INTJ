@@ -31,7 +31,7 @@ public class Organization
     public ArrayList<Beneficiary> getBeneficiaryList(){return beneficiaryList;}
     public RequestDonationList getCurrentDonations(){return currentDonations;}
 
-    public void addEntity(Entity entity){
+    public void addEntity(Entity entity) throws AddEntityOrgException {
         boolean found = false;
         for(int i=0; i<this.getCurrentDonations().getRdEntities().size();i++){
             for(int j=0; j<this.getCurrentDonations().getRdEntities().get(i).size();j++){
@@ -41,25 +41,29 @@ public class Organization
                 }
             }
         }
-        if(found){//if the admin inserts a new donation option that exists
-            System.out.println("Donation option already exists!");
-            //throw exception
-        }else {
-            if (entity.getType().equals("Material")) {
-                this.entityList.get(0).add(entity);
-            } else if (entity.getType().equals("Service")) {
-                this.entityList.get(1).add(entity);
-            }
-            //Needs Exceptions if entity already exists
-        }
+       try {
+           if (found) {//if the admin inserts a new donation option that exists
+               //System.out.println("Donation option already exists!");
+               throw new AddEntityOrgException("Donation option already exists!");
+           } else {
+               if (entity.getType().equals("Material")) {
+                   this.entityList.get(0).add(entity);
+               } else if (entity.getType().equals("Service")) {
+                   this.entityList.get(1).add(entity);
+               }
+               //Needs Exceptions if entity already exists
+           }
+       }catch(Exception AddEntityOrgException){System.out.println("Exception occured: ");}
     }
     public void removeEntity(Entity entity){
         //if isAdmin=true;
-        if(entity.getType().equals("Material")){
-            this.entityList.get(0).remove(entity);
-        }else if(entity.getType().equals("Service")){
-            this.entityList.get(1).remove(entity);
-        }
+       try {
+           if (entity.getType().equals("Material")) {
+               this.entityList.get(0).remove(entity);
+           } else if (entity.getType().equals("Service")) {
+               this.entityList.get(1).remove(entity);
+           }
+       }catch(Exception RemoveEntityOrgException){System.out.println("Exception occured: ");}
         //Exception in case it doesnt exist.
     }
     public ArrayList<ArrayList<Entity>> getEntityList(){return entityList;}
@@ -113,6 +117,7 @@ public class Organization
             System.out.println();
         }
     }
+
 
     public void addCurrentDonations(RequestDonation rdEntity){//This will be usable only by Admin
         boolean found = false;

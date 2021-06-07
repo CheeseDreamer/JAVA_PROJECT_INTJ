@@ -9,7 +9,7 @@ public class Material extends Entity
         super(name, description, id);
     }
 
-    //A getter for the levels, it might be needed
+    //A getter for the levels, it might  be needed
     //Depending on what index you choose, it will set the corresponding level value
 
     public double getLevel(Beneficiary ben){

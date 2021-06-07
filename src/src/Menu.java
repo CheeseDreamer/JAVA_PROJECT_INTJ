@@ -7,7 +7,7 @@ public class Menu {
     Admin admin = new Admin();
     Beneficiary ben = new Beneficiary();
     Donator don = new Donator();
-    public void initMenu(Organization organization) {
+    public void initMenu(Organization organization) throws AddEntityOrgException {
         try (Scanner scan = new Scanner(System.in)) {
             //System.out.println("Welcome to System: Organization of Beneficiaries and Donators");
             JOptionPane.showMessageDialog(null,"Welcome to System: Organization of Beneficiaries and Donators");

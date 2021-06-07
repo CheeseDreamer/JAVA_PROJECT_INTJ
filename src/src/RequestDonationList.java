@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class RequestDonationList {
     private int entityTypesCount = 2;//0 for Material, 1 for Services
     private ArrayList<ArrayList<RequestDonation>> rdEntities = new ArrayList<>(entityTypesCount);
+//
     public RequestDonationList(){
         //Initialize rdEntities
         for(int i=0; i<entityTypesCount;i++){

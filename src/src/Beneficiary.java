@@ -5,7 +5,9 @@ public class Beneficiary extends User
 {
     private int noPersons = 1;
     private static int pos;
-    public  Beneficiary(){ }
+
+    //constructors
+    public  Beneficiary(){}
     public Beneficiary(String name, String phone, int noPersons)
     {
         super(name,phone);

@@ -54,6 +54,7 @@ public class Donator extends User
                          entityID = -1;
                     }
                 }
+
                 System.out.println("ENTITY ID: "+ entityID);
                 if(entityID != -1){//if requestDonation found in organization do below stuff
                     System.out.println("Insert how much you want to give");
